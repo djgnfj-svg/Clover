@@ -1,44 +1,66 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import {useNavigate} from 'react-router-dom'
 import './MyNavbar.css'
 
 function MyNavbar() {
+  
+    const url = window.location.pathname
+    const page =  url.split("/")[1] 
+    const navigate = useNavigate("")
 
-    const [showDropdown , setShowDropdown] = useState({
+    const pageurls = {
+      home : "",
+      club : "club",
+      test : "clover"
+    }
+
+    const [selectPages , setSelectPages] = useState({
       home : true,
       club : false,
       test : false,
 
     })
-    const {home , club , test} = showDropdown
-    
-    const handleClickCategory = (e) => {
-      const { className } = e.target;
+    const {home , club , test} = selectPages
 
+    useEffect(() => {
       const home = {
-        ...showDropdown,
+        ...selectPages,
         home : true,
         club : false,
         test : false,
       }
       const club = {
-        ...showDropdown,
+        ...selectPages,
         home : false,
         club : true,
         test : false,
       }
       const test = {
-        ...showDropdown,
+        ...selectPages,
         home : false,
         club : false,
         test : true,
       }
 
+      if(page === pageurls.home){
+        setSelectPages(home)
+      }else if(page === pageurls.club) {
+        setSelectPages(club)
+      }else if(page === pageurls.test){
+        setSelectPages(test)
+      }
+
+    },[url])
+    
+    const handleClickCategory = (e) => {
+      const { className } = e.target
+
       if(className === "NavHome"){
-        setShowDropdown(home)
+        navigate("/" + pageurls.home)
       }else if(className === "NavClub") {
-        setShowDropdown(club)
+        navigate("/" + pageurls.club)
       }else if(className === "NavTest"){
-        setShowDropdown(test)
+        navigate("/" + pageurls.test)
       }
     }
 
@@ -61,10 +83,7 @@ function MyNavbar() {
      </div>
 
      <div className={test ? "selectCategory" : "NavCategoryTest" }>
-        <span className="material-symbols-outlined">
-          favorite
-        </span>
-        <p className='NavTest' onClick={(e) => handleClickCategory(e)}>Test Clover</p>
+        <p className='NavTest' onClick={(e) => handleClickCategory(e)}>Clover</p>
      </div> 
 
     <div className="NavNotice">
@@ -74,8 +93,9 @@ function MyNavbar() {
     </div>
 
     <div className="NavProfile">
-        <button className = "ProfileBtn">닉네임
-         <button className = "ProfileDropdown"></button>
+        <button className = "ProfileBtn">
+          <span>닉네임</span>
+          <img />
         </button>
         {/* {showDropdown && (
             <div>
