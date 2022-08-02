@@ -1,0 +1,143 @@
+.MyNavbar{
+    height: 87px;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+    border-bottom: 1px solid gray;
+}
+
+.Nav_title{
+    position: absolute;
+    left: 100px;
+    color: black;
+    font-weight: bold;
+}
+
+.NavCategoryHome , .NavCategoryTest , .NavCategoryClub , .selectCategory{
+    margin-right: 90px;
+    font-family: sans-serif;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    color: rgb(63, 226, 132)
+}
+
+/*
+    구글 아이콘
+*/
+.NavCategoryHome .material-symbols-outlined {
+    font-size: 30px;
+    margin-right: 10px;
+    font-variation-settings:
+    'FILL' 0,
+    'wght' bold,
+    'GRAD' 0,
+    'opsz' 48
+}
+ .selectCategory .material-symbols-outlined {
+    font-size: 30px;
+    margin-right: 20px;
+    margin-bottom: 8px;
+    font-variation-settings:
+    'FILL' 0,
+    'wght' bold,
+    'GRAD' 0,
+    'opsz' 48
+}
+.NavCategoryClub .material-symbols-outlined  , .selectCategory .material-symbols-outlined{
+    font-size: 40px;
+    margin-right: 12px;
+    font-variation-settings:
+    'FILL' 0,
+    'wght' bold,
+    'GRAD' 0,
+    'opsz' 48
+}
+.NavCategoryTest .material-symbols-outlined , .selectCategory .material-symbols-outlined{
+    font-size: 35px;
+    margin-right: 10px;
+    margin-top: 5px;
+    font-variation-settings:
+    'FILL' 0,
+    'wght' bold,
+    'GRAD' 0,
+    'opsz' 48
+}
+.NavCategoryHome p, .NavCategoryClub p, .NavCategoryTest p{
+    margin-top: 28px;
+    color: rgb(27, 129, 70);
+    font-weight: bold;
+}
+
+.selectCategory{
+    border: 3px solid rgb(207,129,238);
+    width: max-content;
+    padding: 0.2rem 1rem;
+    height: 40px;
+    border-radius: 1rem;
+    
+}
+
+.selectCategory .material-symbols-outlined{
+    color :rgb(153,53,191)
+}
+.selectCategory p {
+    color: rgb(115,49,146);
+    font-weight: bold;
+}
+
+.NavNotice{
+    position: absolute;
+    right: 300px;
+    background-color: rgb(178, 245, 206);
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 25rem;
+
+}
+.NavNotice .material-symbols-outlined{
+    font-size: 30px;
+    margin-top: 7px;
+    margin-left: 2px;
+    color: rgb(62, 153, 135);
+    font-variation-settings:
+    'FILL' 0,
+    'wght' bold,
+    'GRAD' 0,
+    'opsz' 48
+}
+
+.NavProfile{
+    position: absolute;
+    right: 100px;
+    align-items: center;
+}
+.NavProfile .ProfileBtn{
+    width: 170px;
+    height: 45px;
+    font-size: 15px;
+    text-align: left;
+    padding-left: 1rem;
+    border-radius: 0.5rem;
+    border: 2px solid gray;
+    background-color: white;
+    line-height: 2rem;
+    font-weight: 500;
+}
+.NavProfile .ProfileDropdown{
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    right: 15px;
+    top: 17px;
+    background-color: white;
+    border: 1px solid gray;
+    
+}
+
