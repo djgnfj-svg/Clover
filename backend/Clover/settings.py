@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_BASE_FILE = os.path.join(BASE_DIR, 'secrets.json')
+SECRET_BASE_FILE = os.path.join(BASE_DIR, '.secrets.json')
 secrets = json.loads(open(SECRET_BASE_FILE).read())
 
 for key, value in secrets.items():
@@ -66,6 +66,7 @@ CORS_ORIGIN_WHITELIST = [
     "http://127.0.0.1:8000",
 ]
 CORS_ALLOW_CREDENTIALS = True
+
 ROOT_URLCONF = 'Clover.urls'
 
 TEMPLATES = [
@@ -95,6 +96,8 @@ WSGI_APPLICATION = 'Clover.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+
+AUTH_USER_MODEL = 'accounts.User'
 
 DATABASES = {
     'default': {
@@ -139,6 +142,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
