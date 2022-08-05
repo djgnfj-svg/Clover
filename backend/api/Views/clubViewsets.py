@@ -1,8 +1,13 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
-from api.Serializers.clubSerializer import ClubSerializer
-from club.models import Club
+from api.Serializers.clubSerializer import ClubSerializer, HashtagSerializer
+from club.models import Club, Hashtag
+
+
+class HashtagViewSet(viewsets.ModelViewSet):
+	serializer_class = HashtagSerializer
+	queryset = Hashtag.objects.all()
 
 class ClubViewSet(viewsets.ModelViewSet):
 	serializer_class = ClubSerializer
