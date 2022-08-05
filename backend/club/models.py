@@ -1,11 +1,15 @@
 from django.db import models
-from django.core.exceptions import ValidationError
 from accounts.models import User
 
 # Create your models here.
 
 class Club(models.Model):
+	CATEGORYS = (
+		('Game', '게임'),
+		('study', '스터디'),
+	)
 	title = models.CharField(max_length=20)
+	categoty = models.CharField(max_length=30,choices=CATEGORYS)
 	description = models.TextField()
 	club_admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name="club_master")
 	club_managerlist = models.ManyToManyField(User, related_name="club_managerlist")

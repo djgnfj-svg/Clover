@@ -19,14 +19,19 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
 
+from dj_rest_auth.registration.views import VerifyEmailView
+
 from api.urls import router
+from api.Views.userViewSet import ConfirmEmailView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     # path('api/oauth/', include(login_patterns)),
-    # path('api/accounts/', include('dj_rest_auth.urls')),
-    # path('api/accounts/', include('dj_rest_auth.registration.urls')),
+    path('api/accounts/', include('dj_rest_auth.urls')),
+    path('api/accounts/', include('dj_rest_auth.registration.urls')),
+    # re_path(r'^account-confirm-email/$',VerifyEmailView.as_view(), name='account_email_verification_sent'),
+    # re_path(r'^account-confirm-email/(?P<key>[-:\w]+)/$', ConfirmEmailView.as_view(), name='account_confirm_email'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += [

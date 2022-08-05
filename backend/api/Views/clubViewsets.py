@@ -1,0 +1,14 @@
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+
+from api.Serializers.clubSerializer import ClubSerializer
+from club.models import Club
+
+class ClubViewSet(viewsets.ModelViewSet):
+	serializer_class = ClubSerializer
+	queryset = Club.objects.all()
+
+	def list(self, request):
+		queryset = Club.objects.all()
+		serializer = ClubSerializer(queryset, many=True)
+		return Response(serializer.data, status=status.HTTP_200_OK)
