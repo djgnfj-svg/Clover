@@ -10,22 +10,34 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import datetime
 import json, os, sys
 from pathlib import Path
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+
+secret_file = os.path.join(BASE_DIR, '.secrets.json')  # secrets.json 파일 위치를 명시
+
+with open(secret_file) as f:
+    secrets = json.loads(f.read())
+
+def get_secret(setting):
+    """비밀 변수를 가져오거나 명시적 예외를 반환한다."""
+    try:
+        return secrets[setting]
+    except KeyError:
+        error_msg = "Set the {} environment variable".format(setting)
+        raise ImproperlyConfigured(error_msg)
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_BASE_FILE = os.path.join(BASE_DIR, '.secrets.json')
-secrets = json.loads(open(SECRET_BASE_FILE).read())
-
-for key, value in secrets.items():
-    setattr(sys.modules[__name__], key, value)
+SECRET_KEY = get_secret("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -46,8 +58,21 @@ INSTALLED_APPS = [
     'accounts',
     'club',
 
+    #rest-framework
     'rest_framework',
+    'rest_framework.authtoken',
+
+    # #dj-restauth
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
+    # #cors
     'corsheaders',
+    # #allauth
+	"allauth",
+	"allauth.account",
+	"allauth.socialaccount",
+	"allauth.socialaccount.providers.auth0",
+	# "allauth.socialaccount.providers.google",
 ]
 
 MIDDLEWARE = [
@@ -150,3 +175,58 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#etc
+
+#rest freamework
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework_simplejwt.authentication.JWTAuthentication',
+#     )
+# }
+# JWT Options
+REST_USE_JWT = True
+JWT_AUTH_COOKIE  = 'access_token'
+JWT_AUTH_REFRESH_COOKIE = 'refresh_token'
+
+SITE_ID = 1
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_EMAIL_REQUIRED = True
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(hours=2),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
+
+email_verifycation = get_secret("verify")
+if email_verifycation == 'back':
+    # JWT Options
+    # verify
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+    EMAIL_HOST = 'email-smtp.ap-northeast-2.amazonaws.com'
+    EMAIL_HOST_USER = get_secret('AWS_STMP_USER_NAME')
+    EMAIL_HOST_PASSWORD = get_secret('AWS_STMP_PASSWORD')
+    EMAIL_USE_TLS = True 
+    EMAIL_PORT = '587'
+    DEFAULT_FROM_EMAIL = 'djgnfj3795@gmail.com'
+    URL_FRONT = 'http://localhost:3000/' # 공개적인 웹페이지가 있다면 등록
+
+    ACCOUNT_CONFIRM_EMAIL_ON_GET = True # 유저가 받은 링크를 클릭하면 회원가입 완료되게끔
+    ACCOUNT_EMAIL_REQUIRED = True
+
+    ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+    # ACCOUNT_EMAIL_VERIFICATION = "none"
+
+    EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/' # 사이트와 관련한 자동응답을 받을 이메일 주소,'webmaster@localhost'
+
+    ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+
+    # 이메일에 자동으로 표시되는 사이트 정보
+    ACCOUNT_EMAIL_SUBJECT_PREFIX = "[Clover]"
+else :
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
