@@ -12,7 +12,7 @@ class ClubSerializer(serializers.ModelSerializer):
 	user_number = serializers.IntegerField(default = 0, read_only=True)
 	class Meta:
 		model = Club
-		fields = ['title', 'description', 'user_number']
+		fields = ['title', 'description', 'user_number', 'thumbnail']
 
 
 
