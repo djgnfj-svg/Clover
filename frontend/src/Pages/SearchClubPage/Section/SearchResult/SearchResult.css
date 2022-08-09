@@ -1,0 +1,98 @@
+.Wrapper_result{
+    width: 1500px;
+    height: max-content;    
+    min-height: 731px;
+    border: 1px solid rgb(235, 235, 235);
+    box-shadow: 2px 3px 5px 0px rgb(222, 222, 222);
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-bottom: 2rem;
+    margin-bottom: 50px;
+}
+.Result_num {
+    position: relative;
+    width: 100%;
+    height: 6vh;
+    padding-right: 3rem;
+    border-bottom: 1px solid rgb(213, 213, 213);
+    box-shadow: 3px 2px 5px 1px rgb(222, 222, 222);
+    font-size: 20px;
+    font-weight: bold;
+}
+.Result_num span{
+    position: absolute;
+    top: 20px;
+    width: max-content;
+    right: 40px
+}
+
+.Result_box{
+    width: 700px;
+    height: 340px;
+    box-shadow: 0px 0px 5px 2px rgb(222,222,222);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+.Result_box .material-symbols-outlined{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 35px;
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48
+}
+
+.Result_box .club_image{
+    width: 200px;
+    height: 180px;
+    padding: 1rem 1rem;
+   
+}
+.Result_box .club_image img{
+    width: 165px;
+    height: 165px;
+    object-fit: cover;
+    border: 1px solid black;
+    border-radius: 50%;
+}
+.Result_box .club_info{
+    width: 59%;
+    height: 48%;
+    padding-left: 10px;
+    font-size: 20px;
+    padding-top: 10px;
+}
+.Result_box .club_info .Club_content{
+    margin-bottom: 10px;
+    width: max-content;
+    height: 20px;
+    border: 1px solid black;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.5rem;
+    background-color: aqua;
+}
+.Result_box .club_info .Club_name{
+    width: max-content;
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: rgb(109, 109, 109);
+}
+.Result_box .club_description{
+    width: 100%;
+    height: 50%;
+    font-size: 22px;
+    padding: 1rem 1rem;
+    color: rgb(123, 123, 123);
+}
