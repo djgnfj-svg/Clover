@@ -6,6 +6,7 @@ import MyNavbar from './Components/MyNavbar/MyNavbar';
 import SearchClubPage from './Pages/SearchClubPage/SearchClubPage';
 import Clover from './Pages/CloverPage/Clover';
 import Login from './Pages/Login/Login';
+import SignUp from './Pages/SignUp/SignUp';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
 					<Route path="/club" element={<SearchClubPage />} />
 					<Route path="/clover" element={<Clover />} />
 					<Route path="/login" element ={<Login />} />
+					<Route path='/signup' element={<SignUp/>} />
 				</Routes>
 		</div>
   );
