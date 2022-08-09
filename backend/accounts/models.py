@@ -61,7 +61,6 @@ class UserProfile(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	image = models.ImageField(blank=True, upload_to='images', null=True)
 	description = models.TextField(null=False, default="본인어필하세요")
-	phonenumber = models.CharField(max_length=13,null=True)
 	club_list = models.JSONField()
 
 	# 최대 가입 클럽 관리 

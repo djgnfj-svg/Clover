@@ -1,9 +1,14 @@
 from django.http import HttpResponseRedirect
+from rest_framework import viewsets, status
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
+
 from allauth.account.models import EmailConfirmation, EmailConfirmationHMAC
 from allauth.account.adapter import DefaultAccountAdapter
 
+from api.Serializers.userSerializer import customUserDetailsSerializer
+
+from accounts.models import User
 
 class ConfirmEmailView(APIView):
     def get(self, *args, **kwargs):
@@ -29,3 +34,4 @@ class ConfirmEmailView(APIView):
         qs = EmailConfirmation.objects.all_valid()
         qs = qs.select_related("email_address__user")
         return qs
+
