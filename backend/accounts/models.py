@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 
@@ -59,9 +60,9 @@ class UserVerification(models.Model):
 
 class UserProfile(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
-	image = models.ImageField(blank=True, upload_to='images', null=True)
+	image = models.ImageField(blank=True, upload_to='images', null=True,)
 	description = models.TextField(null=False, default="본인어필하세요")
-	club_list = models.JSONField()
+	club_list = models.JSONField(null=True)
 
 	# 최대 가입 클럽 관리 
 	# def clean(self, *args, **kwargs):

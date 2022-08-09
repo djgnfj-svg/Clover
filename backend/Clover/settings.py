@@ -180,6 +180,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'api.Serializers.userSerializer.customUserDetailsSerializer',
 }
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'api.Serializers.userSerializer.customRegistrationSerializer',
+}
 #rest freamework
 # REST_FRAMEWORK = {
 #     'DEFAULT_AUTHENTICATION_CLASSES': (
