@@ -94,8 +94,10 @@ function MyNavbar() {
 
     <div className="NavProfile">
         <button className = "ProfileBtn">
-          <span>닉네임</span>
-          <img />
+          <span>UserState</span>
+          <span class="material-symbols-outlined">
+              keyboard_arrow_down
+            </span>
         </button>
         {/* {showDropdown && (
             <div>
