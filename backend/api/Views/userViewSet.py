@@ -1,9 +1,16 @@
 from django.http import HttpResponseRedirect
+from rest_framework import viewsets, status
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny
-from allauth.account.models import EmailConfirmation, EmailConfirmationHMAC
-from allauth.account.adapter import DefaultAccountAdapter
 
+from allauth.account.models import EmailConfirmation, EmailConfirmationHMAC
+
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from dj_rest_auth.registration.views import RegisterView
+
+from api.Serializers.userSerializer import UserPofileSerializer
+from accounts.models import UserProfile
+from api.Utils.error_msg import error_msg
 
 class ConfirmEmailView(APIView):
     def get(self, *args, **kwargs):
@@ -29,3 +36,18 @@ class ConfirmEmailView(APIView):
         qs = EmailConfirmation.objects.all_valid()
         qs = qs.select_related("email_address__user")
         return qs
+
+class UserProfileViewSet(viewsets.ModelViewSet):
+    serializer_class = UserPofileSerializer
+    queryset = UserProfile.objects.all()
+
+    def list(self, request, *args, **kwargs):
+        queryset = UserProfile.objects.filter(user = request.user.id)
+        if not queryset:
+            return Response(error_msg(404), status=status.HTTP_200_OK)
+        serializer = self.get_serializer_class()
+        rtn = serializer(queryset, many=True)
+        return Response(rtn.data, status=status.HTTP_200_OK)
+    
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)

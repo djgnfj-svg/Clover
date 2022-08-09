@@ -9,6 +9,11 @@ class HashtagViewSet(viewsets.ModelViewSet):
 	serializer_class = HashtagSerializer
 	queryset = Hashtag.objects.all()
 
+	def list(self, request):
+		tag = request.GET.get('tag', None)
+		
+		return Response()
+
 class ClubViewSet(viewsets.ModelViewSet):
 	serializer_class = ClubSerializer
 	queryset = Club.objects.all()
