@@ -1,11 +1,5 @@
 import React from 'react'
 
-function IsLogin() {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+const IsLogin = () => !!localStorage.getItem('access_token')
 
 export default IsLogin

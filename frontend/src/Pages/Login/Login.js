@@ -1,7 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
+import axios from 'axios'
 import './Login.css'
+import { useNavigate } from 'react-router-dom'
 
 function Login() {
+
+  const navigate = useNavigate();
+  const loginUrl = ''
+
+  const [loginForm  , setLoginForm] = useState({
+    id : '',
+    password  : ''
+  })
+
+  const {id , password} = loginForm
+
+  const handleChangeInput = (e) => {
+    const {name , value} = e.taget
+    setLoginForm({
+      ...loginForm,
+      [name] : value
+    })
+  }
+  
+
   return (
     <div className='Wrapper_Login'>
       <div className='Login'>
@@ -9,8 +31,17 @@ function Login() {
           Clover
         </div>
         <div className='Login_Form'>
-          <input className='Id' />
-          <input className='Password' />
+          <input className='Id'
+            name='id'
+            onChange={handleChangeInput}
+            value={id}
+          />
+          <input className='Password'
+            name='password'
+            type='password'
+            onChange={handleChangeInput}
+            value={password}
+            />
         </div>
           <div className='Login_Status'>
           <span class="material-symbols-outlined">
