@@ -1,44 +1,46 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios'
 import './SignUp.css';
 
 
 
 function SignUp() {
+
   const navigate = useNavigate();
 
-  const onClick = () => {
-    navigate("/login");
+  const signUrl = 'http://localhost:8000/api/accounts/'
+
+  
+  const [signForm , setSignForm] = useState({
+    username : "",
+    email : "",
+    password1 : "",
+    password2 : "",
+  })
+  
+  const {username , email , password1 , password2 } = signForm
+  
+  const handleChangeInput = (e) => {
+    const {name , value} = e.target;
+    setSignForm({
+      ...signForm,
+      [name] : value
+    })
   }
 
-  const [Name,setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordconfirm,setPasswordconfirm] = useState("");
-
-  const handleNameChange = (event) => {
-    console.log("event.target.value", event.target.value);
-    setName(event.target.value);
+  const onClickSignUpBtn = () => {
+    axios.post(signUrl,signForm)
+    .then(res => {
+      alert("회원가입 성공")
+      navigate("/");
+      localStorage.setItem('access_token' , 'locin success')
+    })
+    .catch(error => {
+      alert("username : " + username + "  email : "+ email + "  password1 : "+ password1 + "  password2 : "+ password2)
+      alert(error)
+    })
   }
-
-  const handleEmailChange = (event) => {
-    console.log("event.target.value", event.target.value);
-    setEmail(event.target.value);
-  }
-
-  const handlePasswordChange = (event) => {
-    console.log("event.target.value", event.target.value);
-    setPassword(event.target.value);
-  }
-
-  const handleChangePasswordConfirm = (event) => {
-    console.log("event.target.value", event.target.value);
-    setPasswordconfirm(event.target.value);
-  }
-
-
-
-
 
   return (
     <div className="wrapper_SignUp">
@@ -50,36 +52,35 @@ function SignUp() {
       <div className="SignUp_Form">
         <label>이름</label>
         <input className="signup_inputname"
-          onChange={handleNameChange}
+          onChange={handleChangeInput}
           placeholder="Name"
           type="name"
-          name="name"
-          value={Name} />
+          name="username"
+          value={username} />
           <label>이메일</label>
         <input className="signup_inputemail"
-          onChange={handleEmailChange}
+          onChange={handleChangeInput}
           placeholder="e-mail"
-          type="email"
           name="email" 
           value={email}/>
           <label>비밀번호</label>
         <input className="signup_inputpassword"
-          onChange={handlePasswordChange}
+          onChange={handleChangeInput}
           placeholder="Password"
           type="password"
-          name="password" 
-          value={password}/>
+          name="password1" 
+          value={password1}/>
           <label>비밀번호 확인</label>
         <input className="signup_inputpassword_confirm"
-          onChange={handleChangePasswordConfirm}
+          onChange={handleChangeInput}
           placeholder="Confrim Password"
-          type="password_confirm"
-          name="password_confirm"
-          value={passwordconfirm} />
+          name="password2"
+          type='password'
+          value={password2} />
       </div>
       <div className="SignUp_btn">
         <button
-        onClick={() => onClick()}
+        onClick={() => onClickSignUpBtn()}
         className="SignUp_text" 
         type="subit">
           가입하기

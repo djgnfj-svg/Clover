@@ -40,3 +40,6 @@ div{
     transform: rotate(360deg);
   }
 }
+div{
+  cursor: pointer;
+}

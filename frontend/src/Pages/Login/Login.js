@@ -6,20 +6,30 @@ import { useNavigate } from 'react-router-dom'
 function Login() {
 
   const navigate = useNavigate();
-  const loginUrl = ''
+  const loginUrl =  'http://localhost:8000/api/accounts/login/'
 
   const [loginForm  , setLoginForm] = useState({
-    id : '',
-    password  : ''
+    email : "",
+    password  : ""
   })
 
-  const {id , password} = loginForm
+  const {email , password} = loginForm
 
   const handleChangeInput = (e) => {
-    const {name , value} = e.taget
+    const {name , value} = e.target
     setLoginForm({
       ...loginForm,
       [name] : value
+    })
+  }
+  const handleClickLogin = () => {
+    axios.post(loginUrl,loginForm)
+    .then(res => {
+      localStorage.setItem('access_token' , res.data.access)
+      navigate("/")
+    })
+    .catch(error => {
+      console.log(error)
     })
   }
   
@@ -32,9 +42,9 @@ function Login() {
         </div>
         <div className='Login_Form'>
           <input className='Id'
-            name='id'
+            name='email'
             onChange={handleChangeInput}
-            value={id}
+            value={email}
           />
           <input className='Password'
             name='password'
@@ -52,7 +62,7 @@ function Login() {
           </span>
           </div>
           <div className='Clover_login'>
-            <button className='login_btn'>Clover 로그인</button>
+            <button className='login_btn' onClick={() => handleClickLogin()}>Clover 로그인</button>
             <button className='sign_up'>회원가입</button>
             <button className='find_id'>아이디찾기</button>
             <button className='find_password'>비밀번호 찾기</button>

@@ -127,10 +127,11 @@
 .Search_catrgorylist div{
     width: max-content;
     height: 20px;
-    margin-left: 30px;
+    margin-left: 20px;
     font-weight: 500;
     border-radius: 0.7rem;
     padding: 0.3rem 0.5rem;
+    font-size: 14px;
 }
 .select_category{
     width: max-content;
