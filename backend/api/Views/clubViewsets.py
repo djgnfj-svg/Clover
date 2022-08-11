@@ -22,3 +22,5 @@ class ClubViewSet(viewsets.ModelViewSet):
 		queryset = Club.objects.all()
 		serializer = ClubSerializer(queryset, many=True)
 		return Response(serializer.data, status=status.HTTP_200_OK)
+
+	

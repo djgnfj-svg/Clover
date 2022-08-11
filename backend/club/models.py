@@ -6,14 +6,9 @@ class Hashtag(models.Model):
 	name = models.CharField(max_length=15)
 
 class Club(models.Model):
-	CATEGORYS = (
-		('게임', 'Game'),
-		('프로그래밍', 'Programing'),
-		('스터디', 'study'),
-		('기타', 'etc')
-	)
 	title = models.CharField(max_length=20)
-	categoty = models.CharField(max_length=30,choices=CATEGORYS, default=CATEGORYS[0][0])
+	topic = models.CharField(max_length=20, null=True)
+	brief_introduction = models.CharField(max_length=20, null=True)
 	description = models.TextField(blank=True)
 	thumbnail = models.ImageField(upload_to="images", null=True, blank=True)
 	club_admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name="club_master")
