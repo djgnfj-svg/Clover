@@ -168,7 +168,7 @@ function MyNavbar() {
                     <span className='Profile_category'>안녕하세요 반가워요 !</span>
                   </div>
                 </div>
-                <div>
+                <div onClick={modalClose}>
                 <span class="material-symbols-outlined">
                   diversity_3
                 </span>
