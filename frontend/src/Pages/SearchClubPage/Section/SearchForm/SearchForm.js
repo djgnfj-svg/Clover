@@ -5,9 +5,12 @@ function SearchForm() {
 
   const [userSearch , setUserSearch] = useState("");
   const [test , setTest] = useState("")
-  const [categoryNameId , setCategoryNameId] = useState([]);
+
+  const [categoryDateId , setCategoryDateId] = useState([]);
   const [categoryTimeId , setCategoryTimeId] = useState();
   const [categoryAgeId , setCategoryAgeId] = useState();
+  const [categoryGenderId , setCategoryGenderId] = useState();
+
   const [clicked , setClicked] = useState(false)
   const ref = useRef(null)
 
@@ -18,16 +21,34 @@ function SearchForm() {
     alert("클릭입니다.")
   }
 
-  const CategoryName = {
-      CategoryTitle : '카테고리 명',
+  const CategoryDate = {
+      CategoryTitle : '날짜',
       CategoryId : 0,
       categoryMenu : [
         {
-          menuName : "유연한"
+          menuName : "월요일"
         },
         {
-          menuName : "유연하지 않은"
-        }
+          menuName : "화요일"
+        },
+        {
+          menuName : "수요일"
+        },
+        {
+          menuName : "목요일"
+        },
+        {
+          menuName : "금요일"
+        },
+        {
+          menuName : "토요일"
+        },
+        {
+          menuName : "일요일"
+        },
+        {
+          menuName : "All"
+        },
       ]
     }
   const CategoryTime = {
@@ -52,22 +73,47 @@ function SearchForm() {
     ]
   }
   const CategoryAge = {
-    CategoryTitle : '이명한',
+    CategoryTitle : '평균 나이',
     CategoryId : 2,
     categoryMenu : [
       {
-        menuName : "유명한"
+        menuName : "10세 이상 "
       },
       {
-        menuName : "유명하지 않은"
+        menuName : "20세 이상"
+      },
+      {
+        menuName : "30세 이상"
+      },
+      {
+        menuName : "40세 이상"
+      },
+      {
+        menuName : "50세 이상"
+      }
+    ]
+  }
+  const CategoryGender = {
+    CategoryTitle : '성별',
+    CategoryId : 3,
+    categoryMenu : [
+      {
+        menuName : "남성"
+      },
+      {
+        menuName : "여성"
+      },
+      {
+        menuName : "성별 무관"
       }
     ]
   }
 
   const Category = [
-    CategoryName,
+    CategoryDate,
     CategoryTime,
     CategoryAge,
+    CategoryGender,
   ]
 
   const handleClickCategory = (item , Menuitem) => {
@@ -75,26 +121,30 @@ function SearchForm() {
     const List = Menuitem.menuName
 
     if(Categoryid === 0){
-      setCategoryNameId(
-        categoryNameId.concat(List)
+      setCategoryDateId(
+        categoryDateId.concat(List)
       )
     }else if(Categoryid === 1){
       setCategoryTimeId(List)
     }else if(Categoryid === 2){
       setCategoryAgeId(List)
+    }else if(Categoryid === 3){
+      setCategoryGenderId(List)
     }
     handleRemoveCategory(List);
   }
 
   const handleRemoveCategory = (List) =>{
-    let arr = categoryNameId.filter(categoryNameId => categoryNameId.indexOf(List))
+    let arr = categoryDateId.filter(categoryDateId => categoryDateId.indexOf(List))
 
-    if(categoryNameId.includes(List)){
-      setCategoryNameId(arr)
+    if(categoryDateId.includes(List)){
+      setCategoryDateId(arr)
     }else if(List === categoryTimeId){
       setCategoryTimeId("")
     }else if(List === categoryAgeId){
       setCategoryAgeId("")
+    }else if(List === categoryGenderId){
+      setCategoryGenderId("")
     }
   }
 
@@ -113,11 +163,14 @@ function SearchForm() {
               {item.categoryMenu.map((Menuitem) => (
                 <div className=
                 {
-                  categoryNameId.includes(Menuitem.menuName) ? 'select_category' : ""
+                  categoryDateId.includes(Menuitem.menuName) ? 'select_category' : ""
                   ||
                   Menuitem.menuName === categoryTimeId ? 'select_category' : ""
                   ||
                   Menuitem.menuName === categoryAgeId ? 'select_category' : ""
+                  ||
+                  Menuitem.menuName === categoryGenderId ? 'select_category' : ""
+
                 }
                  onClick={(e) =>handleClickCategory(item , Menuitem )}>{Menuitem.menuName}</div>
               ))}

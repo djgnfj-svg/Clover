@@ -1,0 +1,101 @@
+.SignUP{
+    width: 428px;
+    height: 100px;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+.SignUp_Title{
+    font-size: 45px;
+    width: 428px;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+.SignUp_Form{
+    width: 428px;
+    margin-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    text-align: left;
+    align-items: center;
+}
+.SignUp_Form label{
+    margin-bottom: 10px;
+    margin-left: 68px;
+    margin-inline-end: auto;
+}
+.signup_inputname{
+    padding: 6px 10px;
+    width: 300px;
+    height: 40px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+    box-sizing: border-box;
+    resize: none;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+.signup_inputemail{
+    padding: 6px 10px;
+    width: 300px;
+    height: 40px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+    box-sizing: border-box;
+    resize: none;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+.signup_inputpassword{
+    padding: 6px 10px;
+    width: 300px;
+    height: 40px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+    box-sizing: border-box;
+    resize: none;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+.signup_inputpassword_confirm{
+    padding: 6px 10px;
+    width: 300px;
+    height: 40px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+    box-sizing: border-box;
+    resize: none;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+.SignUp_btn{
+    width: 300px;
+    height: 40px;
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    line-height: 2.5em;
+    border-radius: 4px;
+    background-color: rgb(94, 94, 94);
+    margin: auto;
+    margin-top: 20px;
+}
+.SignUp_text{
+    width: 300px;
+    height: 40px;
+    font-size: 16px;
+    color: rgb(255,255,255);
+    text-align: center;
+    line-height: 2.5em;
+    background-color: rgb(94,94,94);
+    margin-bottom: 20px;
+}
+
