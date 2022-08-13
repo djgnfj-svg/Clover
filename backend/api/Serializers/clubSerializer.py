@@ -13,7 +13,7 @@ class ClubSerializer(serializers.ModelSerializer):
 	user_number = serializers.IntegerField(default = 0, read_only=True)
 	class Meta:
 		model = Club
-		fields = ['title','topic', 'brief_introduction', 'user_number', 'thumbnail']
+		fields = ['id','title','topic', 'brief_introduction', 'user_number', 'thumbnail','creator']
 
 	def save(self, **kwargs):
 		print('seri. save')

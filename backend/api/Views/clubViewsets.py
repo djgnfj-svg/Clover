@@ -1,10 +1,13 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+
 
 from api.Serializers.clubSerializer import ClubSerializer, HashtagSerializer
 from api.Utils.error_msg import error_msg
+from api.Utils.permission import IsMeneger
 from club.models import Club, Hashtag
-
 
 class HashtagViewSet(viewsets.ModelViewSet):
 	serializer_class = HashtagSerializer
@@ -18,9 +21,12 @@ class HashtagViewSet(viewsets.ModelViewSet):
 class ClubViewSet(viewsets.ModelViewSet):
 	serializer_class = ClubSerializer
 	queryset = Club.objects.all()
+	# todo : Session이 아니라 jwt로 바꿀꺼임
+	authentication_classes = [BasicAuthentication, SessionAuthentication]
+	permission_classes = [IsAuthenticatedOrReadOnly]
 
 	def list(self, request):
-		queryset = Club.objects.all()
+		queryset = self.get_queryset()
 		serializer = ClubSerializer(queryset, many=True)
 		return Response(serializer.data, status=status.HTTP_200_OK)
 	
@@ -34,5 +40,22 @@ class ClubViewSet(viewsets.ModelViewSet):
 			return Response(error_msg(serializer=serializer),status=status.HTTP_400_BAD_REQUEST)
 			
 	
+class ClubManagerView(viewsets.ModelViewSet):
+	serializer_class = ClubSerializer
+	# queryset = Club.objects.all()
+	# authentication_classes = [BasicAuthentication, SessionAuthentication]
+	permission_classes = [IsMeneger]
 
-	
+	def list(self, request, club_id):
+		print("meneger")
+		return Response()
+
+class ClubMasterView(viewsets.ModelViewSet):
+	serializer_class = ClubSerializer
+	# queryset = Club.objects.all()
+	# authentication_classes = [BasicAuthentication, SessionAuthentication]
+	# permission_classes = [IsMaster]
+
+	def list(self, request, club_id):
+		print("master")
+		return Response()
