@@ -1,0 +1,9 @@
+.Detail_clubinfo{
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 100px;
+}
+.Detail_clubinfo div{
+    text-align: left;
+    padding: 0.3rem 0.3rem;
+}

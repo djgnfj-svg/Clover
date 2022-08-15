@@ -75,12 +75,9 @@
     margin-bottom: 10px;
     width: max-content;
     height: 20px;
-    border: 1px solid black;
     align-items: center;
     justify-content: center;
     padding: 0.3rem 0.6rem;
-    border-radius: 0.5rem;
-    background-color: aqua;
 }
 .Result_box .club_info .Club_name{
     width: max-content;

@@ -19,7 +19,7 @@ function MyNavbar() {
   const pageurls = {
     home: "",
     club: "club",
-    test: "clover"
+    test: "club/clubdetail"
   }
 
   const [selectPages, setSelectPages] = useState({
@@ -112,13 +112,13 @@ function MyNavbar() {
       navigate("/login")
       setIsOpen(false)
     }else{
-      alert("왜 에러야 ㅅㅂ")
+      alert("왜 에러야")
     }
   }
 
   return (
     <div className="MyNavbar">
-      <div className="Nav_title">Clover</div>
+      <div className="Nav_title"><img src={`${process.env.PUBLIC_URL}/image/`} /></div>
 
       <div className={home ? "selectCategory" : "NavCategoryHome"} >
         <span className="material-symbols-outlined">
