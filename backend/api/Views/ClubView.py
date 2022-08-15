@@ -6,7 +6,7 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 
 from api.Serializers.clubSerializer import ClubSerializer, HashtagSerializer
 from api.Utils.error_msg import error_msg
-from api.Utils.permission import IsMeneger
+from api.Utils.permission import IsMeneger, IsMaster
 from club.models import Club, Hashtag
 
 class HashtagViewSet(viewsets.ModelViewSet):
@@ -44,8 +44,12 @@ class ClubManagerView(viewsets.ModelViewSet):
 	serializer_class = ClubSerializer
 	# queryset = Club.objects.all()
 	# authentication_classes = [BasicAuthentication, SessionAuthentication]
-	permission_classes = [IsMeneger]
+	permission_classes = [IsMeneger, IsMaster]
 
+
+	# 신청 승인
+	# 신청 거절
+	# 유저 관리?
 	def list(self, request, club_id):
 		print("meneger")
 		return Response()
@@ -54,8 +58,14 @@ class ClubMasterView(viewsets.ModelViewSet):
 	serializer_class = ClubSerializer
 	# queryset = Club.objects.all()
 	# authentication_classes = [BasicAuthentication, SessionAuthentication]
-	# permission_classes = [IsMaster]
+	permission_classes = [IsMaster]
 
 	def list(self, request, club_id):
-		print("master")
 		return Response()
+	
+	# 매니져 임명
+	# 매니져 삭제
+	# 클럽 삭제
+	# 클럽 수정
+	# 신청 승인
+	# 신청 수락
