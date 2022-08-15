@@ -51,15 +51,20 @@ class ClubViewSet(viewsets.ModelViewSet):
 		club = get_object_or_404(Club, id=request.data['clubid'])
 		if request.user in club.user_list.all():
 			return Response(error_msg(2001), status=status.HTTP_403_FORBIDDEN)
-		club.user_list.add(request.user.id)
+		# club.user_list.add(request.user.id)
+
+		if len(club.appli_list) == 0:
+			club.appli_list[1] = request.user.id
+		else:
+			club.appli_list[len(club.appli_list) + 1 ] = request.user.id
+		club.save()
 		return Response(success_msg(1001), status=status.HTTP_200_OK)
 
 	@action(detail=False, methods=['post'], serializer_class=JoinClubSerializer,
 	name="outclub")
 	def outclub(self, request):
-		# 유저인가 마스터인가 매니저인가 전부아니라면 에러
+		# 유저인가 마스터인가 매니저인가 전부아니라면 에러 permission으로 가능한가?
 		club = get_object_or_404(Club, id=request.data['clubid'])
-		# 없는 클럽이면?
 		try :
 			temp = club.user_list.get(id = request.user.id)
 		except :

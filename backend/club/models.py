@@ -19,5 +19,6 @@ class Club(models.Model):
 	user_list = models.ManyToManyField(User, related_name="user_list", null=False)
 	creator = models.ForeignKey(User, on_delete=models.CASCADE,null=False, related_name="creator")
 
+	appli_list = models.JSONField(default = {}, null=True)
 	def Joinclub(self, user:User):
 		self.user_list.add(user)

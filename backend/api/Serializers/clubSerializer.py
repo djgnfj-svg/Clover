@@ -29,7 +29,7 @@ class ClubSerializer(serializers.ModelSerializer):
 			topic = validated_data['topic'],
 			brief_introduction= validated_data['brief_introduction'],
 			thumbnail= thumbnail,
-			club_master = user,
+			master = user,
 			creator = user,
 		)
 		instance.user_list.add(user)
