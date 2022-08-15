@@ -1,5 +1,5 @@
-from dataclasses import field
 from rest_framework import serializers
+
 from accounts.models import User
 
 from club.models import Club, Hashtag

@@ -1,10 +1,9 @@
 from rest_framework import routers
 
-from api.Views.clubViewsets import ClubViewSet, ClubManagerView
-from api.Views.userViewSet import UserProfileViewSet
-from api.Views.searchViewSets import SearchViewSet
-from api.Views.homeViewset import HomeViewSet
-from api.Views.clubViewsets import ClubMasterView
+from api.Views.ClubView import ClubViewSet, ClubManagerView, ClubMasterView
+from api.Views.UserView import UserProfileViewSet
+from api.Views.SearchView import SearchViewSet
+from api.Views.HomeView import HomeViewSet
 
 router = routers.DefaultRouter()
 router.register(r'club', ClubViewSet, basename="Club")
