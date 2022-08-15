@@ -23,7 +23,7 @@ function Home() {
               <span className='foot_img'><BsFillPersonFill /></span>
               <span>Frontend : 박형석</span>
             </div>
-            <div>
+            <div onClick={() => window.open(['https://github.com/b-hyoung'],['_blank'])}>
               <span className='foot_img'><FaGithub /></span>
               <span>https://github.com/b-hyoung</span>
             </div>
@@ -33,7 +33,7 @@ function Home() {
               <span className='foot_img'><BsFillPersonFill /></span>
               <span>Backend : 송영재</span>
             </div>
-            <div>
+            <div onClick={() => window.open(['https://github.com/djgnfj-svg'],['_blank'])}>
               <span className='foot_img'><FaGithub /></span>
               <span>https://github.com/djgnfj-svg</span>
             </div>
