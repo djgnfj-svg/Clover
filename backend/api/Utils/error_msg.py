@@ -3,7 +3,7 @@ ERROR_MSG = {
 }
 
 def error_msg(error_code : int = 0, serializer = None,):
-	if serializer is not None:
+	if serializer:
 		return {'error_msg' : serializer.errors}
 	else :
 		msg = ERROR_MSG[error_code]
