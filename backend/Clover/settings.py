@@ -178,10 +178,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #etc
 REST_AUTH_SERIALIZERS = {
-    'USER_DETAILS_SERIALIZER': 'api.Serializers.userSerializer.customUserDetailsSerializer',
+    'USER_DETAILS_SERIALIZER': 'api.Serializers.UserSerializer.customUserDetailsSerializer',
 }
 REST_AUTH_REGISTER_SERIALIZERS = {
-    'REGISTER_SERIALIZER': 'api.Serializers.userSerializer.customRegistrationSerializer',
+    'REGISTER_SERIALIZER': 'api.Serializers.UserSerializer.customRegistrationSerializer',
 }
 #rest freamework
 REST_FRAMEWORK = {

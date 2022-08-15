@@ -1,11 +1,16 @@
+from django.shortcuts import get_object_or_404
+
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.decorators import action
+from api.Serializers.ClubSerializer import JoinClubSerializer
 
-from api.Utils.Error_msg import error_msg
-from api.Utils.Permission import IsMeneger, IsMaster
+from api.Utils.Error_msg import error_msg, success_msg
+from api.Utils.Permission import IsManager, IsMaster
 
+from api.Serializers.UserSerializer import UserSerializer
 from api.Serializers.ClubSerializer import ClubSerializer, HashtagSerializer
 
 from club.models import Club, Hashtag
@@ -24,7 +29,7 @@ class ClubViewSet(viewsets.ModelViewSet):
 	queryset = Club.objects.all()
 	# todo : Session이 아니라 jwt로 바꿀꺼임
 	authentication_classes = [BasicAuthentication, SessionAuthentication]
-	permission_classes = [IsAuthenticatedOrReadOnly]
+	# permission_classes = [IsAuthenticatedOrReadOnly]
 
 	def list(self, request):
 		queryset = self.get_queryset()
@@ -39,34 +44,25 @@ class ClubViewSet(viewsets.ModelViewSet):
 				return Response(ClubSerializer(rtn).data, status=status.HTTP_200_OK)
 		else:
 			return Response(error_msg(serializer=serializer),status=status.HTTP_400_BAD_REQUEST)
-			
-	
-class ClubManagerView(viewsets.ModelViewSet):
-	serializer_class = ClubSerializer
-	# queryset = Club.objects.all()
-	# authentication_classes = [BasicAuthentication, SessionAuthentication]
-	permission_classes = [IsMeneger, IsMaster]
 
+	@action(detail=False, methods=['post'], serializer_class=JoinClubSerializer,
+	name="joinclub")
+	def joinclub(self, request):
+		club = get_object_or_404(Club, id=request.data['clubid'])
+		if request.user in club.user_list.all():
+			return Response(error_msg(2001), status=status.HTTP_403_FORBIDDEN)
+		club.user_list.add(request.user.id)
+		return Response(success_msg(1001), status=status.HTTP_200_OK)
 
-	# 신청 승인
-	# 신청 거절
-	# 유저 관리?
-	def list(self, request, club_id):
-		print("meneger")
-		return Response()
-
-class ClubMasterView(viewsets.ModelViewSet):
-	serializer_class = ClubSerializer
-	# queryset = Club.objects.all()
-	# authentication_classes = [BasicAuthentication, SessionAuthentication]
-	permission_classes = [IsMaster]
-
-	def list(self, request, club_id):
-		return Response()
-	
-	# 매니져 임명
-	# 매니져 삭제
-	# 클럽 삭제
-	# 클럽 수정
-	# 신청 승인
-	# 신청 수락
+	@action(detail=False, methods=['post'], serializer_class=JoinClubSerializer,
+	name="outclub")
+	def outclub(self, request):
+		# 유저인가 마스터인가 매니저인가 전부아니라면 에러
+		club = get_object_or_404(Club, id=request.data['clubid'])
+		# 없는 클럽이면?
+		try :
+			temp = club.user_list.get(id = request.user.id)
+		except :
+			return Response(error_msg(404),status=status.HTTP_404_NOT_FOUND)
+		club.user_list.remove(temp.id)
+		return Response(success_msg(1002),status=status.HTTP_200_OK)

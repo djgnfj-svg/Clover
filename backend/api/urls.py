@@ -1,6 +1,10 @@
+from django.urls import path
+
 from rest_framework import routers
 
-from api.Views.ClubView import ClubViewSet, ClubManagerView, ClubMasterView
+from api.Views.ClubView import ClubViewSet
+from api.Views.ManagetVeiw import ClubManagerView
+from api.Views.MasterView import ClubMasterView
 from api.Views.UserView import UserProfileViewSet
 from api.Views.SearchView import SearchViewSet
 from api.Views.HomeView import HomeViewSet

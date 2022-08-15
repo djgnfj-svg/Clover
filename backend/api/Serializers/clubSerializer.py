@@ -36,3 +36,5 @@ class ClubSerializer(serializers.ModelSerializer):
 		instance.save()
 		return instance
 
+class JoinClubSerializer(serializers.Serializer):
+	clubid = serializers.IntegerField(default=0)
