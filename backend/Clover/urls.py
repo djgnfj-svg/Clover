@@ -22,7 +22,7 @@ from django.views.generic import TemplateView
 from dj_rest_auth.registration.views import VerifyEmailView
 
 from api.urls import router
-from api.Views.userViewSet import ConfirmEmailView
+from api.Views.UserView import ConfirmEmailView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
