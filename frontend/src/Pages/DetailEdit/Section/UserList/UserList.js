@@ -5,8 +5,8 @@ import { CgCloseR } from "@react-icons/all-files/cg/CgCloseR";
 function UserList() {
     return (
         <div>
-            <headers className="Search_title">Clover</headers>
-            <div className='Search_inputForm'>
+            <headers className="Edit_title">Clover</headers>
+            <div className='Edit_inputForm'>
                 <input placeholder='유저 이름을 검색해 주세요 !' />
                 <span className="material-symbols-outlined">search</span> {/* 구글 아이콘  */}
             </div>

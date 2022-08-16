@@ -1,10 +1,13 @@
 import React, { useState , useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import './DetailProfile.css'
 
 function DetailProfile() {
   
-  const [showDropdown  , setShowDropdown] = useState(false)
   const dropdownRef = React.createRef();
+  const navigate = useNavigate();
+
+  const [showDropdown  , setShowDropdown] = useState(false)
 
   useEffect(() => {
     if (showDropdown) document.addEventListener('click', handleClickOutSide)
@@ -36,7 +39,7 @@ function DetailProfile() {
         <div className='clubinfo_name'>클럽 명</div>
         <div className='clubinfo_description'>20자 이로 설명을 적어주세요 </div>
         <div className='clubinfo_edit'>
-            <button>Edit Club</button>
+            <button onClick={() => navigate("/club/clubedit")}>Edit Club</button>
             <button ref={dropdownRef} onClick={() => handleClickDropdown()}>•••</button>
         </div>
             {showDropdown && (
