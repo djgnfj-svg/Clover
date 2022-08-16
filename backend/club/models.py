@@ -21,5 +21,7 @@ class Club(models.Model):
 
 	appli_list = models.ManyToManyField(User,related_name="appli_list", null=True)
 
+	updated_at = models.DateTimeField(auto_now=True)
+	created_at = models.DateTimeField(auto_now_add=True)
 	def Joinclub(self, user:User):
 		self.user_list.add(user)
