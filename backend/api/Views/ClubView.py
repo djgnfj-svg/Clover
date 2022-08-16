@@ -56,7 +56,7 @@ class ClubViewSet(viewsets.ModelViewSet):
 		if len(club.appli_list) == 0:
 			club.appli_list[1] = request.user.id
 		else:
-			club.appli_list[len(club.appli_list) + 1 ] = request.user.id
+			club.appli_list[len(club.appli_list) + 1] = request.user.id
 		club.save()
 		return Response(success_msg(1001), status=status.HTTP_200_OK)
 
@@ -71,3 +71,4 @@ class ClubViewSet(viewsets.ModelViewSet):
 			return Response(error_msg(404),status=status.HTTP_404_NOT_FOUND)
 		club.user_list.remove(temp.id)
 		return Response(success_msg(1002),status=status.HTTP_200_OK)
+
