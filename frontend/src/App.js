@@ -9,6 +9,7 @@ import Clover from './Pages/CloverPage/Clover';
 import Login from './Pages/Login/Login';
 import SignUp from './Pages/SignUp/SignUp';
 import ClubDetailPage from './Pages/ClubDetailPage/ClubDetailPage';
+import DetailEdit from './Pages/DetailEdit/DetailEdit';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
 				<Routes>
 					<Route path="/" element={<Home />}/>
 					<Route path="/club" element={<SearchClubPage />} />
+					<Route path="/club/clubedit" element={<DetailEdit />} />
 					<Route path="/club/clubdetail" element={<ClubDetailPage />} />
 					<Route path="/clover" element={<Clover />} />
 					<Route path="/login" element ={<Login />} />

@@ -8,9 +8,7 @@ function SearchResult() {
         <span>24 results</span>
       </div>
       <div className='Result_box'>
-          <span className="material-symbols-outlined">
-            grade
-            </span>
+          <button>상세보기</button>
         <div className='club_image'>
             <img src={`${process.env.PUBLIC_URL}/image/Clover.png`} />
         </div>
