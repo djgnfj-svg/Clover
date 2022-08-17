@@ -25,7 +25,8 @@ function Login() {
   const handleClickLogin = () => {
     axios.post(loginUrl,loginForm)
     .then(res => {
-      localStorage.setItem('access_token' , res.data.access)
+      localStorage.setItem('access_token' , res.data.access_token)
+      localStorage.setItem('refresh_token' , res.data.refresh_token)
       navigate("/")
     })
     .catch(error => {

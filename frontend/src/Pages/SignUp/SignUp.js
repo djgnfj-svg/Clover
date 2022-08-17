@@ -34,10 +34,11 @@ function SignUp() {
     .then(res => {
       alert("회원가입 성공")
       navigate("/");
-      localStorage.setItem('access_token' , res.data.access)
+      localStorage.setItem('access_token' , res.data.access_token)
+      localStorage.setItem('refresh_token' , res.data.refresh_token)
+      console.log(res.data)
     })
     .catch(error => {
-      alert("username : " + username + "  email : "+ email + "  password1 : "+ password1 + "  password2 : "+ password2)
       alert(error)
     })
   }

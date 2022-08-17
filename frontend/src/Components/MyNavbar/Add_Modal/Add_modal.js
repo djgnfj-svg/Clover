@@ -14,7 +14,7 @@ function Add_modal({ show }) {
       brief_introduction : "",
       thumbnail  : "",
     })
-    const inputRef = useRef(null);
+    const inputRef = React.createRef()
     const imageRef = useRef(null);
 
     const { title , brief_introduction , thumbnail , topic} = clubData
@@ -28,11 +28,11 @@ function Add_modal({ show }) {
       })
     }
 
-    useEffect(() => {
-      preview()
+    // useEffect(() => {
+    //   preview()
 
-      return () => preview()
-    })
+    //   return () => preview()
+    // },[inputRef])
     
     const handleSubmit = () =>{
       alert(clubData)
@@ -42,17 +42,13 @@ function Add_modal({ show }) {
           alert("설명을 5글자 이내로 써주세요"); 
         }else{
           axios.post(makeClubUrl,
-            {
-              title:title,
-              brief_introduction : brief_introduction,
-              topic : topic,
-              thumbnail :thumbnail ,
-            },
+          clubData,
           {
             headers:{
               "Content-Type": "multipart/form-data",
             }   
-          }).then(res => {
+          }
+          ).then(res => {
             if(res.data.msg){
               alert("공백이 제목이 될 수 없어요 !")
             }else{
@@ -66,31 +62,14 @@ function Add_modal({ show }) {
         }
         
   
-    const onUploadImage = useCallback((e , blob) => {
+    const onUploadImage = useCallback((e) => {
       if (!e.target.files[0]) {
         return;
       }
-      const formData = new FormData();
-      formData.append('image', e.target.files[0]);
       setClubData({
         ...clubData,
         thumbnail : e.target.files[0]
       })
-      console.log(blob)
-
-      // axios.post('url' ,formData ,
-      // {
-      //   headers: {
-      //     'Content-Type': 'multipart/form-data',
-      //   },
-      // })
-      //   .then(response => {
-      //     console.log(response.data);
-      //   })
-      //   .catch(error => {
-      //     console.error(error);
-      //   });
-
     }, []);
 
     const onUploadImageButtonClick = useCallback(() => {
@@ -98,7 +77,7 @@ function Add_modal({ show }) {
         return;
       }
       inputRef.current.click();
-    }, []);
+    }, [inputRef]);
     
     const preview = () => {
       if (!thumbnail) return false;
@@ -113,33 +92,6 @@ function Add_modal({ show }) {
         reader.readAsDataURL(thumbnail)
     }
     
-    // const changeconvertBase64IntoFile  = (image, fileName) =>  {
-    //   const mimeType = image?.match(/[^:]\w+\/[\w-+\d.]+(?=;|,)/)[0]   // image/jpeg
-    //   const realData = image.split(',')[1]   // 이 경우에선 /9j/4AAQSkZJRgABAQAAAQABAAD...
-    
-    //   const blob = b64toBlob(realData, mimeType)
-    //   const raw = new File([blob], fileName, { type: mimeType })
-    
-    //   const fileList = [{ name: raw.name, size: raw.size, uid: 1, raw }]
-    //   setFileUrl(raw.name)
-    // }
-
-    // const b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
-    //   if (b64Data === '' || b64Data === undefined) return
-    
-    //   const byteCharacters = atob(b64Data)
-    //   const byteArrays = []
-    
-    //   for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-    //     const slice = byteCharacters.slice(offset, offset + sliceSize)
-    //     const byteNumbers = new Array(slice.length)
-    //     for (let i = 0; i < slice.length; i++) {
-    //       byteNumbers[i] = slice.charCodeAt(i)
-    //     }
-    //     const byteArray = new Uint8Array(byteNumbers)
-    //     byteArrays.push(byteArray)
-    //   }
-    // }
       return (
       <>
         <Modal show={show} onHide={show} centered size='lg' style={{borderRadius:"0.3rem"}}>
@@ -150,7 +102,7 @@ function Add_modal({ show }) {
             <div className='add_profile'>
               <img className='img_box'/>
             </div>
-              <input type="file" id="upload" accept="image/*" ref={inputRef} onChange={onUploadImage} ref={imageRef} />
+              <input type="file" id="upload" accept="image/*" ref={inputRef} onChange={onUploadImage} />
               <div className='add_title'>
                   <div className='title'>제목</div>
                   <input placeholder='제목을 입력해주세요' maxLength={10} value={title} name="title" onChange={handleChangeInput} />
