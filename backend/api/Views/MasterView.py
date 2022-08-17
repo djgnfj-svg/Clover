@@ -21,4 +21,5 @@ class ClubMasterView(viewsets.ModelViewSet):
 	# 클럽 삭제
 	# 클럽 수정
 	# 신청 승인
-	# 신청 수락
+	# 신청 수락 
+	# 유지보수도 중요하다고 생각해서 클래스에 action이라는 데코레이터를 넣었다.

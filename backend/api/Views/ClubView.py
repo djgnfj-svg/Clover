@@ -50,12 +50,8 @@ class ClubViewSet(viewsets.ModelViewSet):
 		club = get_object_or_404(Club, id=request.data['clubid'])
 		if request.user in club.user_list.all():
 			return Response(error_msg(2001), status=status.HTTP_403_FORBIDDEN)
-		# club.user_list.add(request.user.id)
 
-		if len(club.appli_list) == 0:
-			club.appli_list[1] = request.user.id
-		else:
-			club.appli_list[len(club.appli_list) + 1] = request.user.id
+		club.appli_list.add(request.user.id)
 		club.save()
 		return Response(success_msg(1001), status=status.HTTP_200_OK)
 

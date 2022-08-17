@@ -210,7 +210,8 @@ ACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_EMAIL_REQUIRED = True
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(hours=2),
+    #todo : access_token 배포할떄 바꾸기
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=7),
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=7),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,

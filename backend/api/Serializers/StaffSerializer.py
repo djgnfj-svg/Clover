@@ -3,12 +3,12 @@ from rest_framework import serializers
 from accounts.models import User
 from club.models import Club
 
-class AppliSerializer(serializers.ModelField):
+class AppliSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = Club
-		fields = ['apply']
+		model = User
+		fields = ('id','username')
 
 class StaffSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = User
-		fields = ['username']
+		fields = ['id','username']
