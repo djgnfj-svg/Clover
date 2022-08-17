@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import './Home.css'
 import HeroClubList from './Section/Cards/HeroClubList'
 import HeroImage from './Section/HeroImage'
-import { FaGithub } from "@react-icons/all-files/fa/FaGithub";
-import { BsFillPersonFill } from "@react-icons/all-files/bs/BsFillPersonFill";
+
+import Footbar from './Section/Footbar/Footbar'
 
 
 function Home() {
+
+  
+
   return (
     <div className='home' style={{position:"relative" , margin:"0 auto" , display:"flex" , flexDirection:"column" , height : "maxContent"}}>
        <div className='hero-image'>
@@ -16,29 +20,7 @@ function Home() {
         <HeroClubList />
        </div>
        <div className='footbar'>
-        <div>Developer</div>
-        <div className='develop'>
-          <div className='frontend'>
-            <div>
-              <span className='foot_img'><BsFillPersonFill /></span>
-              <span>Frontend : 박형석</span>
-            </div>
-            <div onClick={() => window.open(['https://github.com/b-hyoung'],['_blank'])}>
-              <span className='foot_img'><FaGithub /></span>
-              <span>https://github.com/b-hyoung</span>
-            </div>
-          </div>
-          <div className='frontend'>
-            <div>
-              <span className='foot_img'><BsFillPersonFill /></span>
-              <span>Backend : 송영재</span>
-            </div>
-            <div onClick={() => window.open(['https://github.com/djgnfj-svg'],['_blank'])}>
-              <span className='foot_img'><FaGithub /></span>
-              <span>https://github.com/djgnfj-svg</span>
-            </div>
-          </div>
-        </div>
+        <Footbar />
        </div>
     </div>
   )
