@@ -10,13 +10,13 @@ function Add_modal({ show }) {
     const [fileUrl , setFileUrl] = useState()
     const [clubData , setClubData] = useState({
       title : "",
-      description : "",
-      imgUrl  : "",
-      topic : ""
+      topic : "",
+      brief_introduction : "",
+      thumbnail  : "",
     })
     const inputRef = useRef(null);
 
-    const { title , description , imgUrl , topic} = clubData
+    const { title , brief_introduction , thumbnail , topic} = clubData
 
     const handleChangeInput = (e) => {
       const {name , value} = e.target;
@@ -37,7 +37,7 @@ function Add_modal({ show }) {
     const handleSubmit = () =>{
         if(title.length  < 2 ){
           alert("제목을 2글자 이상 입력해주세요 !");
-        }else if(description.length < 5){
+        }else if(brief_introduction.length < 5){
           alert("설명을 5글자 이내로 써주세요"); 
         }else{
           axios.post(makeClubUrl,
@@ -69,7 +69,7 @@ function Add_modal({ show }) {
       formData.append('image', e.target.files[0]);
       setClubData({
         ...clubData,
-        imgUrl : e.target.files[0]
+        thumbnail : e.target.files[0]
       })
 
       // axios.post('url' ,formData ,
@@ -95,7 +95,7 @@ function Add_modal({ show }) {
     }, []);
     
     const preview = () => {
-      if (!imgUrl) return false;
+      if (!thumbnail) return false;
 
       const imgEl = document.querySelector('.img_box')
 
@@ -103,8 +103,9 @@ function Add_modal({ show }) {
 
       reader.onload = () =>{
         (imgEl.style.backgroundImage = `url(${reader.result})`)
+       
       }
-        reader.readAsDataURL(imgUrl)
+        reader.readAsDataURL(thumbnail)
     }
     
     // const changeconvertBase64IntoFile  = (image, fileName) =>  {
@@ -147,15 +148,15 @@ function Add_modal({ show }) {
               <input type="file" id="upload" accept="image/*" ref={inputRef} onChange={onUploadImage} />
               <div className='add_title'>
                   <div className='title'>제목</div>
-                  <input placeholder='제목을 입력해주세요' maxLength={10} value={title} name={title} onChange={handleChangeInput} />
+                  <input placeholder='제목을 입력해주세요' maxLength={10} value={title} name="title" onChange={handleChangeInput} />
               </div>
               <div className='add_title'>
                   <div className='title'>소모임 주제</div>
-                  <input placeholder='소모임 주제를 입력해주세요' maxLength={10} value={topic} name={topic} onChange={handleChangeInput} />
+                  <input placeholder='소모임 주제를 입력해주세요' maxLength={10} value={topic} name="topic" onChange={handleChangeInput} />
               </div>
               <div className='add_description'>
-                  <div className='description'>설명</div>
-                  <textarea placeholder='30자 이내 설명을 입력해주세요.' maxLength={33} style={{textAlign:"left"}} value={description} name={description} onChange={handleChangeInput} />
+                  <div className='brief_introduction'>설명</div>
+                  <textarea placeholder='30자 이내 설명을 입력해주세요.' maxLength={33} style={{textAlign:"left"}} value={brief_introduction} name="brief_introduction" onChange={handleChangeInput} />
               </div>
           </Modal.Body>
           <Modal.Footer style={{backgroundColor:"#31313c",border:"none"}}>

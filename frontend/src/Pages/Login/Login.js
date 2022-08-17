@@ -63,7 +63,7 @@ function Login() {
           </div>
           <div className='Clover_login'>
             <button className='login_btn' onClick={() => handleClickLogin()}>Clover 로그인</button>
-            <button className='sign_up'>회원가입</button>
+            <button className='sign_up' onClick={() => navigate("/signup")}>회원가입</button>
             <button className='find_id'>아이디찾기</button>
             <button className='find_password'>비밀번호 찾기</button>
           </div>

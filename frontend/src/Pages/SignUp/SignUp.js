@@ -34,7 +34,7 @@ function SignUp() {
     .then(res => {
       alert("회원가입 성공")
       navigate("/");
-      localStorage.setItem('access_token' , 'locin success')
+      localStorage.setItem('access_token' , res.data.access)
     })
     .catch(error => {
       alert("username : " + username + "  email : "+ email + "  password1 : "+ password1 + "  password2 : "+ password2)
