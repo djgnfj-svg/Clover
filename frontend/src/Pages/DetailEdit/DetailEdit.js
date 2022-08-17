@@ -4,6 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 import { useNavigate } from 'react-router-dom';
+import ApplyUser from './Section/ApplyUser/ApplyUser';
 import ClubInfo from './Section/ClubInfo/ClubInfo';
 import UserList from './Section/UserList/UserList';
 
@@ -31,6 +32,9 @@ function DetailEdit() {
               <Nav.Link eventKey="users">유저 관리</Nav.Link>
             </Nav.Item>
             <Nav.Item>
+              <Nav.Link eventKey="apply">가입 신청</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
               <Nav.Link eventKey="close_club">클럽 해체하기</Nav.Link>
             </Nav.Item>
             <Nav.Item>
@@ -45,6 +49,9 @@ function DetailEdit() {
             </Tab.Pane>
             <Tab.Pane eventKey="users">
               <UserList />
+            </Tab.Pane>
+            <Tab.Pane eventKey="apply">
+              <ApplyUser />
             </Tab.Pane>
             <Tab.Pane eventKey="close_club">
               helloasd

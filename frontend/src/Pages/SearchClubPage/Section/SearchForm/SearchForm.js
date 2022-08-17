@@ -1,7 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import './SearchForm.css'
 
 function SearchForm() {
+
+  const navigate = useNavigate("")
+
+  const [searchParams, setSeratchParams] = useSearchParams();
+
+  const categoryDate = searchParams.get('categoryDateId');
+  const categoryTime = searchParams.get('categoryTimeId');
+  const categoryAge = searchParams.get('categoryTimeId');
+  const categoryGender = searchParams.get('categoryTimeId');
 
   const [userSearch , setUserSearch] = useState("");
 
@@ -10,12 +20,25 @@ function SearchForm() {
   const [categoryAgeId , setCategoryAgeId] = useState();
   const [categoryGenderId , setCategoryGenderId] = useState();
 
+  const [one , setOne] = useState([]);
+  const [two , setTwo] = useState();
+  const [three , setThree] = useState();
+  const [forth , setForth] = useState();
+
   const onChangeInput = (e) => {
     setUserSearch(e.target.value);
   }
   const handleClickSearch = () => {
     alert("클릭입니다.")
   }
+
+  useEffect(() => {
+      setSeratchParams({
+      categoryDate : categoryDateId,
+      categoryTime : categoryTimeId ,
+      categoryAge :categoryAgeId ,
+      categoryGender : categoryGenderId})
+  },[one])
 
   const CategoryDate = {
       CategoryTitle : '날짜',
@@ -115,11 +138,10 @@ function SearchForm() {
   const handleClickCategory = (item , Menuitem) => {
     const Categoryid = item.CategoryId
     const List = Menuitem.menuName
+    setOne(Categoryid)
 
     if(Categoryid === 0){
-      setCategoryDateId(
-        categoryDateId.concat(List)
-      )
+      setCategoryDateId(categoryDateId.concat(List))
     }else if(Categoryid === 1){
       setCategoryTimeId(List)
     }else if(Categoryid === 2){
@@ -129,6 +151,8 @@ function SearchForm() {
     }
     handleRemoveCategory(List);
   }
+
+  
 
   const handleRemoveCategory = (List) =>{
     let arr = categoryDateId.filter(categoryDateId => categoryDateId.indexOf(List))
