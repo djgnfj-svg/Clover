@@ -15,6 +15,7 @@ function Add_modal({ show }) {
       thumbnail  : "",
     })
     const inputRef = useRef(null);
+    const imageRef = useRef(null);
 
     const { title , brief_introduction , thumbnail , topic} = clubData
 
@@ -32,21 +33,24 @@ function Add_modal({ show }) {
 
       return () => preview()
     })
-
     
     const handleSubmit = () =>{
+      alert(clubData)
         if(title.length  < 2 ){
           alert("제목을 2글자 이상 입력해주세요 !");
         }else if(brief_introduction.length < 5){
           alert("설명을 5글자 이내로 써주세요"); 
         }else{
           axios.post(makeClubUrl,
-          {
-            clubData
-          },
+            {
+              title:title,
+              brief_introduction : brief_introduction,
+              topic : topic,
+              thumbnail :thumbnail ,
+            },
           {
             headers:{
-              Authorization : `Bearer ${localStorage.getItem('access_token')}`
+              "Content-Type": "multipart/form-data",
             }   
           }).then(res => {
             if(res.data.msg){
@@ -56,12 +60,13 @@ function Add_modal({ show }) {
             }
           }).catch(error => {
             console.log(error)
+            alert("실패")
           })
         }
         }
         
   
-    const onUploadImage = useCallback((e) => {
+    const onUploadImage = useCallback((e , blob) => {
       if (!e.target.files[0]) {
         return;
       }
@@ -71,6 +76,7 @@ function Add_modal({ show }) {
         ...clubData,
         thumbnail : e.target.files[0]
       })
+      console.log(blob)
 
       // axios.post('url' ,formData ,
       // {
@@ -103,7 +109,6 @@ function Add_modal({ show }) {
 
       reader.onload = () =>{
         (imgEl.style.backgroundImage = `url(${reader.result})`)
-       
       }
         reader.readAsDataURL(thumbnail)
     }
@@ -145,7 +150,7 @@ function Add_modal({ show }) {
             <div className='add_profile'>
               <img className='img_box'/>
             </div>
-              <input type="file" id="upload" accept="image/*" ref={inputRef} onChange={onUploadImage} />
+              <input type="file" id="upload" accept="image/*" ref={inputRef} onChange={onUploadImage} ref={imageRef} />
               <div className='add_title'>
                   <div className='title'>제목</div>
                   <input placeholder='제목을 입력해주세요' maxLength={10} value={title} name="title" onChange={handleChangeInput} />
