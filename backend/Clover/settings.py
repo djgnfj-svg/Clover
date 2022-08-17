@@ -185,12 +185,18 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 }
 #rest freamework
 REST_FRAMEWORK = {
-    # 'DEFAULT_AUTHENTICATION_CLASSES': (
-    #     'rest_framework_simplejwt.authentication.JWTAuthentication',
-    # )
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ]
+    'DEFAULT_PERMISSION_CLASSES': (
+        # 'rest_framework.permissions.IsAuthenticated', # 인증된 사용자만 접근 가능
+        # 'rest_framework.permissions.IsAdminUser', # 관리자만 접근 가능
+        'rest_framework.permissions.AllowAny', # 누구나 접근 가능
+    ),
+	
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication', 
+        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
+    ),
 }
 # JWT Options
 REST_USE_JWT = True

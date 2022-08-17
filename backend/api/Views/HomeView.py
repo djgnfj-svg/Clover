@@ -2,6 +2,7 @@ from django.core import serializers
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from ..Serializers.ClubSerializer import ClubSerializer
 
 from api.Utils.Error_msg import error_msg
 
@@ -12,5 +13,5 @@ class HomeViewSet(viewsets.ViewSet):
 		queryset = Club.objects.all().order_by("-created_at")
 		if not queryset:
 			return Response(error_msg(404), status=status.HTTP_200_OK)
-		rtn = serializers.serialize('json', queryset)
-		return Response(rtn, status=status.HTTP_200_OK)
+		rtn = ClubSerializer(queryset, many=True)
+		return Response(rtn.data, status=status.HTTP_200_OK)

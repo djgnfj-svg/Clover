@@ -1,19 +1,16 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.authentication import SessionAuthentication
 
-from api.Utils.Error_msg import error_msg
-from api.Utils.Permission import IsManager, IsMaster
+from api.Utils.Permission import IsMaster
+from api.Serializers.ClubSerializer import ClubSerializer
 
-from api.Serializers.ClubSerializer import ClubSerializer, HashtagSerializer
-
-from club.models import Club, Hashtag
 
 class ClubMasterView(viewsets.ModelViewSet):
 	serializer_class = ClubSerializer
 	# queryset = Club.objects.all()
-	# authentication_classes = [BasicAuthentication, SessionAuthentication]
+	authentication_classes = [JWTAuthentication, SessionAuthentication]
 	permission_classes = [IsMaster]
 
 	def list(self, request, club_id):

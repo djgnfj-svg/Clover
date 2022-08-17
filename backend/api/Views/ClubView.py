@@ -3,14 +3,14 @@ from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import action
 from api.Serializers.ClubSerializer import JoinClubSerializer
 
-from api.Utils.Error_msg import error_msg, success_msg
-from api.Utils.Permission import IsManager, IsMaster
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from api.Serializers.UserSerializer import UserSerializer
+from api.Utils.Error_msg import error_msg, success_msg
+
 from api.Serializers.ClubSerializer import ClubSerializer, HashtagSerializer
 
 from club.models import Club, Hashtag
@@ -27,9 +27,8 @@ class HashtagViewSet(viewsets.ModelViewSet):
 class ClubViewSet(viewsets.ModelViewSet):
 	serializer_class = ClubSerializer
 	queryset = Club.objects.all()
-	# todo : Session이 아니라 jwt로 바꿀꺼임
-	# authentication_classes = [BasicAuthentication, SessionAuthentication]
-	# permission_classes = [IsAuthenticatedOrReadOnly]
+	authentication_classes = [SessionAuthentication, JWTAuthentication]
+	permission_classes = [IsAuthenticatedOrReadOnly]
 
 	def list(self, request):
 		queryset = self.get_queryset()
