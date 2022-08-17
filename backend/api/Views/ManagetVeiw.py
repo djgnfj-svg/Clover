@@ -16,7 +16,7 @@ from club.models import Club, Hashtag
 class ClubManagerView(viewsets.ModelViewSet):
 	serializer_class = ClubSerializer
 	queryset = Club.objects.all()
-	# authentication_classes = [BasicAuthentication, SessionAuthentication]
+	authentication_classes = [BasicAuthentication, SessionAuthentication]
 	permission_classes = [IsManager]
 
 	# 유저 관리?

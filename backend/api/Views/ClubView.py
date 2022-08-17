@@ -28,7 +28,7 @@ class ClubViewSet(viewsets.ModelViewSet):
 	serializer_class = ClubSerializer
 	queryset = Club.objects.all()
 	# todo : Session이 아니라 jwt로 바꿀꺼임
-	authentication_classes = [BasicAuthentication, SessionAuthentication]
+	# authentication_classes = [BasicAuthentication, SessionAuthentication]
 	# permission_classes = [IsAuthenticatedOrReadOnly]
 
 	def list(self, request):
