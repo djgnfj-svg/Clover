@@ -46,6 +46,7 @@ function Add_modal({ show }) {
           {
             headers:{
               "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${localStorage.getItem('access_token')}`
             }   
           }
           ).then(res => {
