@@ -24,6 +24,7 @@
     margin-bottom: 30px;
     top: 70px;
     text-align: left;
+    display: flex;
 }
 .footbar{
     position: absolute;

@@ -7,6 +7,8 @@ import { makeClubUrl } from '../../url';
 
 function Add_modal({ show }) {
 
+    const [fuck , setFuck] = useState(false)
+
     const [fileUrl , setFileUrl] = useState()
     const [clubData , setClubData] = useState({
       title : "",
@@ -28,18 +30,18 @@ function Add_modal({ show }) {
       })
     }
 
-    // useEffect(() => {
-    //   preview()
+    useEffect(() => {
+      preview()
 
-    //   return () => preview()
-    // },[inputRef])
+      return () => preview()
+    },[fuck])
     
     const handleSubmit = () =>{
       alert(clubData)
         if(title.length  < 2 ){
           alert("제목을 2글자 이상 입력해주세요 !");
-        }else if(brief_introduction.length < 5){
-          alert("설명을 5글자 이내로 써주세요"); 
+        }else if(topic < 2){
+          alert("주제을 2글자 이내로 써주세요"); 
         }else{
           axios.post(makeClubUrl,
           clubData,
@@ -48,16 +50,10 @@ function Add_modal({ show }) {
               "Content-Type": "multipart/form-data",
               Authorization: `Bearer ${localStorage.getItem('access_token')}`
             }   
-          }
-          ).then(res => {
-            if(res.data.msg){
-              alert("공백이 제목이 될 수 없어요 !")
-            }else{
+          }).then(res => {
               show();
-            }
           }).catch(error => {
             console.log(error)
-            alert("실패")
           })
         }
         }
@@ -71,6 +67,11 @@ function Add_modal({ show }) {
         ...clubData,
         thumbnail : e.target.files[0]
       })
+      if(!fuck){
+        setFuck(true)
+      }else if(!!fuck){
+        setFuck(false)
+      }
     }, []);
 
     const onUploadImageButtonClick = useCallback(() => {

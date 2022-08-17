@@ -4,15 +4,11 @@ import './SearchForm.css'
 function SearchForm() {
 
   const [userSearch , setUserSearch] = useState("");
-  const [test , setTest] = useState("")
 
   const [categoryDateId , setCategoryDateId] = useState([]);
   const [categoryTimeId , setCategoryTimeId] = useState();
   const [categoryAgeId , setCategoryAgeId] = useState();
   const [categoryGenderId , setCategoryGenderId] = useState();
-
-  const [clicked , setClicked] = useState(false)
-  const ref = useRef(null)
 
   const onChangeInput = (e) => {
     setUserSearch(e.target.value);
