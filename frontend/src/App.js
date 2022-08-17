@@ -25,7 +25,7 @@ function App() {
 					<Route path='/signup' element={<SignUp/>} />
 				</Routes>
 		</div>
-  );
+  )
 }
 
 export default App;
