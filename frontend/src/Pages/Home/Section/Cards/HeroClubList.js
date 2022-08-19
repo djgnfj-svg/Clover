@@ -28,7 +28,7 @@ function HeroClubList() {
   }
 
   return (
-    <>
+    <div style={{display:"flex" ,flexDirection:"row" }}>
     {console.log(newClubData)}
       {newClubData && newClubData.map((item) => (
         <Card style={{ width: '18rem', marginRight:"30px" }}>
@@ -44,7 +44,7 @@ function HeroClubList() {
           </Card.Body>
         </Card>
       ))}
-    </>
+      </div>
   );
 }
 
