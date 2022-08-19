@@ -21,11 +21,6 @@ class ClubManagerView(viewsets.ModelViewSet):
 
 	# 유저 관리?
 	def list(self, request, club_id):
-		#가입 유저목록을 보여준다,
-		# 신청 유저목록을 보여준다.
-		# 그걸 받거나 거절하는?
-		#가입유져
-		# @전 4글자 블럭처리 하고 리스트형태로보내주기
 		temp = Club.objects.get(id=club_id).user_list.all()
 		return Response(StaffSerializer(temp,many=True).data, status=status.HTTP_200_OK)
 
