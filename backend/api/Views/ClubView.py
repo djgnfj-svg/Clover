@@ -1,17 +1,14 @@
 from django.shortcuts import get_object_or_404
 
-from rest_framework import viewsets, status
+from rest_framework import generics, viewsets, status, mixins
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import action
-from api.Serializers.ClubSerializer import JoinClubSerializer
-
 from rest_framework_simplejwt.authentication import JWTAuthentication
-
 from api.Utils.Error_msg import error_msg, success_msg
+from api.Serializers.ClubSerializer import ClubSerializer, HashtagSerializer, JoinClubSerializer
 
-from api.Serializers.ClubSerializer import ClubSerializer, HashtagSerializer
 
 from club.models import Club, Hashtag
 
@@ -24,17 +21,12 @@ class HashtagViewSet(viewsets.ModelViewSet):
 		
 		return Response()
 
-class ClubViewSet(viewsets.ModelViewSet):
+class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
 	serializer_class = ClubSerializer
 	queryset = Club.objects.all()
 	authentication_classes = [SessionAuthentication, JWTAuthentication]
 	permission_classes = [IsAuthenticatedOrReadOnly]
 
-	def list(self, request):
-		queryset = self.get_queryset()
-		serializer = ClubSerializer(queryset, many=True)
-		return Response(serializer.data, status=status.HTTP_200_OK)
-	
 	def create(self, request, *args, **kwargs):
 		serializer = ClubSerializer(data=request.data, context={'request' : request})
 		if serializer.is_valid():
