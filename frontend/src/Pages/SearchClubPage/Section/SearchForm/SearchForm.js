@@ -16,14 +16,11 @@ function SearchForm() {
   const [userSearch , setUserSearch] = useState("");
 
   const [categoryDateId , setCategoryDateId] = useState([]);
-  const [categoryTimeId , setCategoryTimeId] = useState();
-  const [categoryAgeId , setCategoryAgeId] = useState();
-  const [categoryGenderId , setCategoryGenderId] = useState();
+  const [categoryTimeId , setCategoryTimeId] = useState([]);
+  const [categoryAgeId , setCategoryAgeId] = useState([]);
+  const [categoryGenderId , setCategoryGenderId] = useState([]);
 
   const [one , setOne] = useState([]);
-  const [two , setTwo] = useState();
-  const [three , setThree] = useState();
-  const [forth , setForth] = useState();
 
   const onChangeInput = (e) => {
     setUserSearch(e.target.value);
@@ -37,7 +34,8 @@ function SearchForm() {
       categoryDate : categoryDateId,
       categoryTime : categoryTimeId ,
       categoryAge :categoryAgeId ,
-      categoryGender : categoryGenderId})
+      categoryGender : categoryGenderId
+    })
   },[one])
 
   const CategoryDate = {

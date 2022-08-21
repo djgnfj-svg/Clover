@@ -1,36 +1,66 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './SearchResult.css'
+import axios from 'axios'
+import { applyClub, clubList } from '../../../../Components/url'
 
 function SearchResult() {
+
+  const [clubData,setClubData] = useState("")
+
+  useEffect(() => {
+    getSearchClubData();
+  },[])
+
+  const getSearchClubData = () => {
+    axios.get(clubList ,
+      {
+        headers : {
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`
+        }
+      })
+      .then(res => {
+        setClubData(res.data)
+      })
+  }
+
+  const handleApply = (id) => {
+    axios.post(applyClub ,{
+      clubid : id
+    },{
+      headers : {
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`
+      }
+    })
+    .then(res => {
+      alert("성공")
+    })
+    .catch(error => {
+      alert("실패")
+    })
+  }
+
   return (
     <div className='Wrapper_result'>
       <div className='Result_num'>
         <span>24 results</span>
       </div>
-      <div className='Result_box'>
-          <button>상세보기</button>
+      {clubData && clubData.map((item) => (
+        <div className='Result_box'>
+          <button onClick={(id) => handleApply(item.id)}>상세보기</button>
         <div className='club_image'>
             <img src={`${process.env.PUBLIC_URL}/image/Clover.png`} />
         </div>
         <div className='club_info'>
-            <div className='Club_name'>Club 이름 </div>
-            <div className='Club_content'>주제 : 프로그래밍 </div>
-            <div className='Club_content' >활동 시간 : 오후 7 ~ 2시 </div>
+            <div className='Club_name'>{item.title} </div>
+            <div className='Club_content'>주제 : {item.topic} </div>
+            <div className='Club_content' >활동 시간 : 오후 7 ~ 12시 </div>
             <div className='Club_content' >활동 인원 : 3명 </div>
         </div>
         <div className='club_description'>
-           우리 모임은 뼈대있는 모임이며 롤 개좋아함 당장 달려오셈ㄱ <br /> 발로 골드 미만 신청금지
+          {item.brief_introduction}
         </div>
       </div>
-      <div className='Result_box'>
-        
-      </div>
-      <div className='Result_box'>
-        
-      </div>
-      <div className='Result_box'>
-        
-      </div>
+      ))}
     </div>
   )
 }

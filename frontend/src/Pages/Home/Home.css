@@ -25,6 +25,11 @@
     top: 70px;
     text-align: left;
     display: flex;
+    flex-direction: column;
+}
+.hero-ClubList > .new_clubtitle{
+    font-size: 20px;
+    font-weight: bold;
 }
 .footbar{
     position: absolute;
