@@ -9,6 +9,7 @@ ERROR_MSG = {
 SUCCESS_MSG = {
 	1001 : "가입성공",
 	1002 : "탈퇴성공",
+	200 : "성공"
 }
 
 def error_msg(error_code : int = 0, serializer = None,):
