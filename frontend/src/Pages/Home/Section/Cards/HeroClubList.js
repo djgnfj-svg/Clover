@@ -2,7 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import  { useState, useEffect } from 'react'
 import axios from 'axios'
-import { getNewList } from '../../../../Components/url';
+import { clubList, getNewList } from '../../../../Components/url';
 
 function HeroClubList() {
 
@@ -13,7 +13,7 @@ function HeroClubList() {
   }, [])
 
   const getNewClub = () => {
-    axios.get(getNewList, {
+    axios.get(clubList, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('access_token')}`
       }
@@ -32,7 +32,7 @@ function HeroClubList() {
     {console.log(newClubData)}
       {newClubData && newClubData.map((item) => (
         <Card style={{ width: '18rem', marginRight:"30px" }}>
-          <Card.Img style={{ height: "200px" }} variant="top" src={`${item.thumbnail}`}></Card.Img>
+          <Card.Img style={{ height: "200px" }} variant="top" src={`http://127.0.0.1:8000${item.thumbnail}`}></Card.Img>
           <Card.Body>
             <Card.Title>{item.title}</Card.Title>
             <Card.Text>

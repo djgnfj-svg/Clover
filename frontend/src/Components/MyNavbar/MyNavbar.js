@@ -118,7 +118,7 @@ function MyNavbar() {
 
   return (
     <div className="MyNavbar">
-      <div className="Nav_title"><img src={`${process.env.PUBLIC_URL}/image/`} /></div>
+      <div className="Nav_title"><img src={`${process.env.PUBLIC_URL}/image/`} />Clover</div>
 
       <div className={home ? "selectCategory" : "NavCategoryHome"} >
         <span className="material-symbols-outlined">
