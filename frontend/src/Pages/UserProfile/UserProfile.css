@@ -1,0 +1,23 @@
+.CheckedPassword{
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+}
+.row{
+    position: relative;
+    animation-name: slide;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+}
+@keyframes slide {
+    from{
+        left: 300px;
+        opacity: 0.3;
+    }
+    to{
+        left: 0px;
+    }
+}

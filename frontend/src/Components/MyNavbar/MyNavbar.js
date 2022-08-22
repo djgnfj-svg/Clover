@@ -103,6 +103,11 @@ function MyNavbar() {
       setIsOpen(false)
     }
   }
+
+  const handleEditProfile = (e) => {
+    e.preventDefault();
+    navigate("/useredit")
+  }
  
   const handleLogoutBtn = () => {
     const logout =  window.confirm('정말 로그아웃 하시겟습니까?')
@@ -180,7 +185,7 @@ function MyNavbar() {
                   </span>
                   <span>코드 리팩토링</span>
                 </div>
-                <div>
+                <div onClick={(e) => handleEditProfile(e)}>
                 <span class="material-symbols-outlined">
                     settings
                   </span>

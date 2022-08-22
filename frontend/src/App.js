@@ -10,6 +10,7 @@ import Login from './Pages/Login/Login';
 import SignUp from './Pages/SignUp/SignUp';
 import ClubDetailPage from './Pages/ClubDetailPage/ClubDetailPage';
 import DetailEdit from './Pages/DetailEdit/DetailEdit';
+import UserProfile from './Pages/UserProfile/UserProfile';
 
 function App() {
   return (
@@ -17,12 +18,13 @@ function App() {
 				<MyNavbar />
 				<Routes>
 					<Route path="/" element={<Home />}/>
+					<Route path="/login" element ={<Login />} />
+					<Route path='/signup' element={<SignUp/>} />
+					<Route path='/useredit' element={<UserProfile/>} />
 					<Route path="/club" element={<SearchClubPage />} />
 					<Route path="/club/clubedit" element={<DetailEdit />} />
 					<Route path="/club/clubdetail" element={<ClubDetailPage />} />
 					<Route path="/clover" element={<Clover />} />
-					<Route path="/login" element ={<Login />} />
-					<Route path='/signup' element={<SignUp/>} />
 				</Routes>
 		</div>
   )

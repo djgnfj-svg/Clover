@@ -1,6 +1,6 @@
 import React from 'react'
 
-function SecedeUser() {
+function EditPassword() {
   return (
     <div>
       
@@ -8,4 +8,4 @@ function SecedeUser() {
   )
 }
 
-export default SecedeUser
+export default EditPassword
