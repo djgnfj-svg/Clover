@@ -1,14 +1,15 @@
 from django.shortcuts import get_object_or_404
 
-from rest_framework import generics, viewsets, status, mixins
+from rest_framework import viewsets, status, mixins
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import action
-from rest_framework_simplejwt.authentication import JWTAuthentication
-from api.Utils.Error_msg import error_msg, success_msg
-from api.Serializers.ClubSerializer import ClubSerializer, HashtagSerializer, JoinClubSerializer
 
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
+from api.Utils.Error_msg import error_msg, success_msg
+from api.Serializers.ClubSerializer import ClubDetailSerializer, ClubSerializer, HashtagSerializer, JoinClubSerializer
 
 from club.models import Club, Hashtag
 
@@ -21,11 +22,18 @@ class HashtagViewSet(viewsets.ModelViewSet):
 		
 		return Response()
 
-class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
-	serializer_class = ClubSerializer
+class ClubViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin,
+				 mixins.CreateModelMixin, mixins.UpdateModelMixin):
+	serializer_class = ClubDetailSerializer
 	queryset = Club.objects.all()
 	authentication_classes = [SessionAuthentication, JWTAuthentication]
-	permission_classes = [IsAuthenticatedOrReadOnly]
+	permission_classes = [IsAuthenticated]
+
+
+	def get_serializer_class(self):
+		if self.action in ('retrieve', 'update'):
+			return ClubDetailSerializer
+		return ClubSerializer
 
 	def create(self, request, *args, **kwargs):
 		serializer = ClubSerializer(data=request.data, context={'request' : request})
@@ -35,6 +43,9 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
 				return Response(ClubSerializer(rtn).data, status=status.HTTP_200_OK)
 		else:
 			return Response(error_msg(serializer=serializer),status=status.HTTP_400_BAD_REQUEST)
+
+	def retrieve(self, request, *args, **kwargs):
+		return super().retrieve(request, *args, **kwargs)
 
 	@action(detail=False, methods=['post'], serializer_class=JoinClubSerializer,
 	name="joinclub")
@@ -58,4 +69,3 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
 			return Response(error_msg(404),status=status.HTTP_404_NOT_FOUND)
 		club.user_list.remove(temp.id)
 		return Response(success_msg(1002),status=status.HTTP_200_OK)
-

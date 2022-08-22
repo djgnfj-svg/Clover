@@ -11,6 +11,13 @@ class HashtagSerializer(serializers.ModelSerializer):
 		model = Hashtag
 		field = ['name']
 
+class ClubDetailSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Club
+		fields = ['title','topic', 'brief_introduction',
+		'thumbnail', 'description', 'range_age',
+		'days', 'time_zone', 'gender']
+
 class ClubSerializer(serializers.ModelSerializer):
 	user_number = serializers.IntegerField(default = 0, read_only=True)
 	class Meta:
@@ -26,8 +33,6 @@ class ClubSerializer(serializers.ModelSerializer):
 		try :
 			user = User.objects.get(id = request.user.id)
 		except Exception  as e:
-			print(e)
-			print(request.user)
 			raise exceptions.PermissionDenied("로그인을 하시지 않습니다.")
 		img_data = self.context['request'].FILES
 	

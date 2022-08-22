@@ -21,7 +21,13 @@ class Club(models.Model):
 
 	appli_list = models.ManyToManyField(User,related_name="appli_list", null=True)
 
+	range_age = models.CharField(max_length=30, null=True)
+	days = models.CharField(max_length=30, null=True)
+	time_zone = models.CharField(max_length=30, null=True)
+	gender = models.CharField(max_length=30, null=True)
+
 	updated_at = models.DateTimeField(auto_now=True)
 	created_at = models.DateTimeField(auto_now_add=True)
+
 	def Joinclub(self, user:User):
 		self.user_list.add(user)
