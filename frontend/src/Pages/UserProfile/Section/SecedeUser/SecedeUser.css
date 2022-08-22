@@ -1,0 +1,12 @@
+.SecedeUser{
+    position: absolute;
+    top: 150%;
+    left: 50%;
+}
+.SecedeUser div{
+    text-align: center;
+}
+.SecedeUser button{
+    width: 50px;
+    margin-right: 10px;
+}

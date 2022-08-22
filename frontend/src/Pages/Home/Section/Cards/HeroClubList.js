@@ -7,19 +7,20 @@ import { clubList, getNewList } from '../../../../Components/url';
 function HeroClubList() {
 
   const [newClubData, setNewClubData] = useState()
+  const [hello , setHello] = useState(false)
 
   useEffect(() => {
     getNewClub()
   }, [])
 
   const getNewClub = () => {
-    axios.get(clubList, {
+    axios.get(getNewList, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('access_token')}`
       }
     })
       .then(res => {
-        setNewClubData(res.data)
+        setNewClubData(res.data.results)
         console.log(res.data)
       })
       .catch(error => {
@@ -29,7 +30,6 @@ function HeroClubList() {
 
   return (
     <div style={{display:"flex" ,flexDirection:"row" }}>
-    {console.log(newClubData)}
       {newClubData && newClubData.map((item) => (
         <Card style={{ width: '18rem', marginRight:"30px" }}>
           <Card.Img style={{ height: "200px" }} variant="top" src={`http://127.0.0.1:8000${item.thumbnail}`}></Card.Img>

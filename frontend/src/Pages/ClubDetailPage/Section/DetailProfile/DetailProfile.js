@@ -11,7 +11,7 @@ function DetailProfile() {
 
   const [showDropdown, setShowDropdown] = useState(false)
   const [showDropdownUser , setShowDropdownUser] = useState(false)
-  const [auth, setAuth] = useState(false)
+  const [auth, setAuth] = useState(true)
 
   useEffect(() => {
     if (showDropdown) document.addEventListener('click', handleClickOutSide)

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './SearchResult.css'
 import axios from 'axios'
-import { applyClub, clubList } from '../../../../Components/url'
+import { applyClub, clubList, getNewList } from '../../../../Components/url'
 
 function SearchResult() {
 
@@ -12,14 +12,14 @@ function SearchResult() {
   },[])
 
   const getSearchClubData = () => {
-    axios.get(clubList ,
+    axios.get(getNewList ,
       {
         headers : {
         Authorization: `Bearer ${localStorage.getItem('access_token')}`
         }
       })
       .then(res => {
-        setClubData(res.data)
+        setClubData(res.data.results)
       })
   }
 
