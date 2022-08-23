@@ -22,8 +22,8 @@ function App() {
 					<Route path='/signup' element={<SignUp/>} />
 					<Route path='/useredit' element={<UserProfile/>} />
 					<Route path="/club" element={<SearchClubPage />} />
-					<Route path="/club/clubedit" element={<DetailEdit />} />
-					<Route path="/club/clubdetail" element={<ClubDetailPage />} />
+					<Route path="/club/:id/edit" element={<DetailEdit />} />
+					<Route path="/club/:id" element={<ClubDetailPage />} />
 					<Route path="/clover" element={<Clover />} />
 				</Routes>
 		</div>

@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import './SearchResult.css'
 import axios from 'axios'
-import { applyClub, clubList, getNewList } from '../../../../Components/url'
+import { applyClub, clubDetail, clubList, getNewList } from '../../../../Components/Apiurl'
+import { useNavigate } from 'react-router-dom'
 
 function SearchResult() {
+
+  const navigate = useNavigate("")
 
   const [clubData,setClubData] = useState("")
 
@@ -24,20 +27,8 @@ function SearchResult() {
   }
 
   const handleApply = (id) => {
-    axios.post(applyClub ,{
-      clubid : id
-    },{
-      headers : {
-        Authorization: `Bearer ${localStorage.getItem('access_token')}`
-      }
-    })
-    .then(res => {
-      alert("성공")
-    })
-    .catch(error => {
-      alert("실패")
-    })
-  }
+    navigate(`/club/${id}`)
+  } 
 
   return (
     <div className='Wrapper_result'>
@@ -48,7 +39,7 @@ function SearchResult() {
         <div className='Result_box'>
           <button onClick={(id) => handleApply(item.id)}>상세보기</button>
         <div className='club_image'>
-            <img src={`${process.env.PUBLIC_URL}/image/Clover.png`} />
+            <img src={`${item.thumbnail}`} />
         </div>
         <div className='club_info'>
             <div className='Club_name'>{item.title} </div>

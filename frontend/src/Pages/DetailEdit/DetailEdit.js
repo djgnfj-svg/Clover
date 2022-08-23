@@ -1,23 +1,44 @@
-import react from 'react'
+import React, { useEffect, useState } from 'react'
 import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
-import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
+import { useNavigate, useParams } from 'react-router-dom';
+import { clubDetail } from '../../Components/Apiurl';
 import ApplyUser from './Section/ApplyUser/ApplyUser';
 import ClubInfo from './Section/ClubInfo/ClubInfo';
 import UserList from './Section/UserList/UserList';
 
 function DetailEdit() {
-  
+
+  const { id } = useParams();
   const navigate = useNavigate("")
+  const [profile, setProfile] = useState();
+
+  useEffect(() => {
+    getClubData()
+  }, [])
+
+  const getClubData = () => {
+    axios.get(`${clubDetail}${id}/`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`
+        }
+      })
+      .then(res => {
+        setProfile(res.data)
+        console.log(res.data)
+      })
+  }
 
   const handleClickPrev = () => {
     const yes = window.confirm("이전 페이지로 이동하시겟습니까?")
-    if(!!yes){
-      navigate("/club/clubdetail")
-    }else{
-      
+    if (!!yes) {
+      navigate(-1)
+    } else {
+
     }
   }
   return (
@@ -43,20 +64,22 @@ function DetailEdit() {
           </Nav>
         </Col>
         <Col sm={9}>
-          <Tab.Content>
-            <Tab.Pane eventKey="info">
-              <ClubInfo />
-            </Tab.Pane>
-            <Tab.Pane eventKey="users">
-              <UserList />
-            </Tab.Pane>
-            <Tab.Pane eventKey="apply">
-              <ApplyUser />
-            </Tab.Pane>
-            <Tab.Pane eventKey="close_club">
-              helloasd
-            </Tab.Pane>
-          </Tab.Content>
+          {profile && (
+            <Tab.Content>
+              <Tab.Pane eventKey="info">
+                <ClubInfo info={profile} />
+              </Tab.Pane>
+              <Tab.Pane eventKey="users">
+                <UserList />
+              </Tab.Pane>
+              <Tab.Pane eventKey="apply">
+                <ApplyUser />
+              </Tab.Pane>
+              <Tab.Pane eventKey="close_club">
+                helloasd
+              </Tab.Pane>
+            </Tab.Content>
+          )}
         </Col>
       </Row>
     </Tab.Container>

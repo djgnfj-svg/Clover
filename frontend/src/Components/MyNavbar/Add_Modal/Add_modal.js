@@ -2,7 +2,7 @@ import React,{ useCallback, useEffect, useRef, useState } from 'react'
 import axios from 'axios';
 import {Modal , Button } from 'react-bootstrap'
 import './Add_modal.css'
-import { makeClubUrl } from '../../url';
+import { makeClubUrl } from '../../Apiurl';
 
 
 function Add_modal({ show }) {

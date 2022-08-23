@@ -4,22 +4,39 @@ import axios from 'axios'
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { clubDetail } from '../../../../Components/Apiurl';
 
-function ClubInfo() {
+function ClubInfo({info}) {
+
+    const {id} = useParams();
 
     const textRef = React.createRef();
     const navigate = useNavigate("")
 
+    
     const [description, setDescription] = useState("")
-
+    
     const handleChangeInput = () => {
         setDescription(textRef.current.getInstance().getHTML())
     }
     
     const handleSubmitPost = () => {
-        alert("수정 완료 !")
+        axios.put(clubDetail+`${id}/`,description , 
+        {
+            headers : {
+                 Authorization: `Bearer ${localStorage.getItem('access_token')}`
+            }
+        })
+        .then(res => {
+            alert("수정 완료 !")
+        })
+        
     }
+
+    useEffect(() => {
+        setDescription(info.description)
+    },[])
 
     useEffect(() => {
         if (textRef.current) {
@@ -70,7 +87,7 @@ function ClubInfo() {
                 toolbarItems={[['bold', 'italic', 'strike'], ['image']]}
             />
             <div className='Write_addBtn' style={{ marginRight: "30px" }}>
-                <button onClick={(e) => handleSubmitPost(e)}>추가하기</button>
+                <button onClick={(e) => handleSubmitPost(e)}>수정하기</button>
             </div>
         </div>
     )

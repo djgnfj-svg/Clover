@@ -139,9 +139,9 @@ function MyNavbar() {
         <p className="NavClub" onClick={(e) => handleClickCategory(e)}>Club</p>
       </div>
 
-      <div className={test ? "selectCategory" : "NavCategoryTest"}>
+      {/* <div className={test ? "selectCategory" : "NavCategoryTest"}>
         <p className='NavTest' onClick={(e) => handleClickCategory(e)}>Clover</p>
-      </div>
+      </div> */}
       {isLogin && (
         <div className="NavNotice">
         <span className="material-symbols-outlined">
@@ -150,7 +150,6 @@ function MyNavbar() {
         </div>
       )
 }
-
       <div className="NavProfile">
         {isLogin ? (
           <div>
