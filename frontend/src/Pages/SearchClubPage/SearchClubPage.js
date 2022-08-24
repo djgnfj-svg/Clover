@@ -5,16 +5,16 @@ import SearchResult from './Section/SearchResult/SearchResult'
 
 function SearchClubPage() {
 
-  const [isOpen , setIsOpen] = useState(false);
+  const [data , setData] = useState();
 
   const test = (boolean) => {
-    setIsOpen(boolean)
+    setData(boolean)
   }
 
   return (
     <div className='Wrapper_Search'>
             <SearchForm test={test} />
-            <SearchResult />
+            <SearchResult data={data} />
     </div>
   )
 }

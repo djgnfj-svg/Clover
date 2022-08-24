@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect , useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import './DetailProfile.css'
 import axios from 'axios'
 
 function DetailProfile({profile }) {
 
-  const dropdownRef = React.createRef();
-  const dropdownUserRef = React.createRef();
+  const dropdownRef = useRef()
+  const dropdownUserRef = useRef()
+  
+
   const navigate = useNavigate();
   const {id } = useParams()
 
@@ -16,12 +18,16 @@ function DetailProfile({profile }) {
 
   useEffect(() => {
     if (showDropdown) document.addEventListener('click', handleClickOutSide)
+    return () => {
       document.removeEventListener('click', handleClickOutSide)
+    }
   })
 
   useEffect(() => {
     if (showDropdownUser) document.addEventListener('click', handleClickOutSideUser)
+    return () => {
       document.removeEventListener('click', handleClickOutSideUser)
+    }
   })
 
   const handleClickOutSide = (e) => {

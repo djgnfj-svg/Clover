@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect , useRef } from 'react'
 import './ClubInfo.css'
 import axios from 'axios'
 import { Editor } from '@toast-ui/react-editor';
@@ -7,13 +7,14 @@ import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { clubDetail } from '../../../../Components/Apiurl';
 
-function ClubInfo({info}) {
+
+function ClubInfo({file}) {
 
     const {id} = useParams();
 
-    const textRef = React.createRef();
+    const textRef = useRef()
     const navigate = useNavigate("")
-
+    
     
     const [description, setDescription] = useState("")
     
@@ -22,7 +23,10 @@ function ClubInfo({info}) {
     }
     
     const handleSubmitPost = () => {
-        axios.put(clubDetail+`${id}/`,description , 
+        alert(description)
+        axios.put(clubDetail+`${id}/`,{
+            description
+        } , 
         {
             headers : {
                  Authorization: `Bearer ${localStorage.getItem('access_token')}`
@@ -31,11 +35,10 @@ function ClubInfo({info}) {
         .then(res => {
             alert("수정 완료 !")
         })
-        
     }
 
     useEffect(() => {
-        setDescription(info.description)
+        setDescription(file.description)
     },[])
 
     useEffect(() => {
@@ -77,7 +80,7 @@ function ClubInfo({info}) {
         <div className='heelow'>
             <Editor
                 ref={textRef}
-                initialValue={description}
+                initialValue={file.description}
                 previewStyle="vertical"
                 height="840px" // mac = 800 //desctop  = 905
                 autofocus={true}

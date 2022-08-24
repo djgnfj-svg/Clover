@@ -1,67 +1,145 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { clubDetail, searchurl } from '../../../../Components/Apiurl';
+import axios from 'axios'
 import './ClubSetting.css'
 
-function ClubSetting() {
+function ClubSetting({info}) {
     const navigate = useNavigate("")
+    const { id } = useParams("")
+    const inputRef = React.createRef()
 
     const [searchParams, setSeratchParams] = useSearchParams();
+    const [clubData, setClubData] = useState();
 
-    const days = searchParams.get('categoryDayid');
-    const time_zone = searchParams.get('categoryTimeId');
-    const range_age = searchParams.get('categoryAgeId');
-    const gender = searchParams.get('categoryGenderId');
+    const [fuck , setFuck] = useState(false);
 
-    const [query, setQuery] = useState("");
+    const query = searchParams.get('query')
+    const days = searchParams.getAll('days');
+    const time_zone = searchParams.get('time_zone');
+    const range_age = searchParams.get('range_age');
+    const gender = searchParams.get('gender');
+
+    const [userInput, setUserInput] = useState({
+        title: "",
+        topic: "",
+        brief_introduction: "",
+        thumbnail:""
+    })
+
+    const [userSearch, setUserSearch] = useState("");
     const [categoryDayid, setCategoryDayId] = useState([]);
     const [categoryTimeId, setCategoryTimeId] = useState([]);
     const [categoryAgeId, setCategoryAgeId] = useState([]);
     const [categoryGenderId, setCategoryGenderId] = useState([]);
-
     const [one, setOne] = useState(false);
 
-    const onChangeInput = (e) => {
-        setQuery(e.target.value);
-      }
-   
-    const handleClickSearch = () => {
-        alert("클릭입니다.")
-    }
+    const { title, topic, brief_introduction, thumbnail } = userInput
 
     useEffect(() => {
         setSeratchParams({
+            query: userSearch,
             days: categoryDayid,
             time_zone: categoryTimeId,
             range_age: categoryAgeId,
             categoryGender: categoryGenderId
         })
-    }, [one])
+    }, [one || userSearch])
 
+    useEffect(() => {
+        getClubData();
+    }, [])
+    useEffect(() => {
+        preview()
+  
+        return () => preview()
+      },[fuck])
+
+    const getClubData = () => {
+        axios.get(clubDetail + `${id}/`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`
+            }
+        })
+            .then(res => {
+                setClubData(res.data)
+                setUserInput({
+                    ...userInput,
+                    title : res.data.title,
+                    topic : res.data.topic,
+                    brief_introduction : res.data.brief_introduction
+                })
+            })
+    }
+
+    const onChangeInput = (e) => {
+        const {name, value} = e.target
+        setUserInput({
+            ...userInput,
+            [name] : value
+        })
+    }
+
+    const onUploadImage = useCallback((e) => {
+        if (!e.target.files[0]) {
+          return;
+        }
+        setUserInput({
+          ...userInput,
+          thumbnail : e.target.files[0]
+        })
+        if(!fuck){
+          setFuck(true)
+        }else if(!!fuck){
+          setFuck(false)
+        }
+      }, []);
+
+      const preview = () => {
+        if (!thumbnail) return false;
+  
+        const imgEl = document.querySelector('.img_boxs')
+  
+        const reader = new FileReader();
+  
+        reader.onload = () =>{
+          (imgEl.style.backgroundImage = `url(${reader.result}) !important`)
+        }
+          reader.readAsDataURL(thumbnail)
+      }
 
     const CategoryDays = {
         CategoryTitle: '날짜',
         CategoryId: 0,
         categoryMenu: [
             {
-                menuName: "월요일"
+                menuName: "월요일",
+                subName: "월요일"
+
             },
             {
-                menuName: "화요일"
+                menuName: "화요일",
+                subName: "화요일"
             },
             {
-                menuName: "수요일"
+                menuName: "수요일",
+                subName: "수요일"
             },
             {
-                menuName: "목요일"
+                menuName: "목요일",
+                subName: "목요일"
             },
             {
-                menuName: "금요일"
+                menuName: "금요일",
+                subName: "금요일"
             },
             {
-                menuName: "토요일"
+                menuName: "토요일",
+                subName: "토요일"
             },
             {
-                menuName: "일요일"
+                menuName: "일요일",
+                subName: "일요일"
             },
             {
                 menuName: "All"
@@ -69,24 +147,25 @@ function ClubSetting() {
         ]
     }
     const CategoryTime = {
-        CategoryTitle: '시간',
+        CategoryTitle: '활동 시간',
         CategoryId: 1,
         categoryMenu: [
             {
-                menuName: "오직 "
+                menuName: "00 ~ 06시",
+                subName: "1"
             },
             {
-                menuName: "한가지"
+                menuName: "06 ~ 12시",
+                subName: "2"
             },
             {
-                menuName: "너를 위한"
+                menuName: "12 ~ 18시",
+                subName: "3"
             },
             {
-                menuName: "나를 위한"
+                menuName: "16 ~ 24시",
+                subName: "4"
             },
-            {
-                menuName: "우릴 위한"
-            }
         ]
     }
     const CategoryAge = {
@@ -94,19 +173,24 @@ function ClubSetting() {
         CategoryId: 2,
         categoryMenu: [
             {
-                menuName: "10세 이상 "
+                menuName: "10세 이상",
+                subName: "Over10"
             },
             {
-                menuName: "20세 이상"
+                menuName: "20세 이상",
+                subName: "Over20"
             },
             {
-                menuName: "30세 이상"
+                menuName: "30세 이상",
+                subName: "Over30"
             },
             {
-                menuName: "40세 이상"
+                menuName: "40세 이상",
+                subName: "Over40"
             },
             {
-                menuName: "50세 이상"
+                menuName: "50세 이상",
+                subName: "Over50"
             }
         ]
     }
@@ -115,13 +199,16 @@ function ClubSetting() {
         CategoryId: 3,
         categoryMenu: [
             {
-                menuName: "남성"
+                menuName: "남성",
+                subName: "M"
             },
             {
-                menuName: "여성"
+                menuName: "여성",
+                subName: "W"
             },
             {
-                menuName: "성별 무관"
+                menuName: "성별 무관",
+                subName: "A"
             }
         ]
     }
@@ -132,9 +219,10 @@ function ClubSetting() {
         CategoryAge,
         CategoryGender,
     ]
-    const handleClickCategory = (item, Menuitem) => {
+    const handleClickCategory = (item, Menuitem , Number) => {
         const Categoryid = item.CategoryId
         const List = Menuitem.menuName
+        const Num = Number;
         if (!!one) {
             setOne(false)
         } else {
@@ -142,69 +230,90 @@ function ClubSetting() {
         }
 
         if (Categoryid === 0) {
-            setCategoryDayId(categoryDayid.concat(List))
+            setCategoryDayId(categoryDayid.concat(Num))
         } else if (Categoryid === 1) {
-            setCategoryTimeId(List)
+            setCategoryTimeId(Num)
         } else if (Categoryid === 2) {
-            setCategoryAgeId(List)
+            setCategoryAgeId(Num)
         } else if (Categoryid === 3) {
-            setCategoryGenderId(List)
+            setCategoryGenderId(Num)
         }
-        handleRemoveCategory(List);
+        handleRemoveCategory(Num);
     }
 
-    const handleRemoveCategory = (List) => {
-        let arr = categoryDayid.filter(categoryDayid => categoryDayid.indexOf(List))
+    const handleRemoveCategory = (Num) => {
+        let arr = categoryDayid.filter(categoryDayid => categoryDayid.indexOf(Num))
 
-        if (categoryDayid.includes(List)) {
+        if (categoryDayid.includes(Num)) {
             setCategoryDayId(arr)
-        } else if (List === categoryTimeId) {
+        } else if (Num === categoryTimeId) {
             setCategoryTimeId("")
-        } else if (List === categoryAgeId) {
+        } else if (Num === categoryAgeId) {
             setCategoryAgeId("")
-        } else if (List === categoryGenderId) {
+        } else if (Num === categoryGenderId) {
             setCategoryGenderId("")
         }
     }
+    const handleFinishBtn = () => {
+        axios.put(`${clubDetail}${id}/`,userInput, {
+            headers : {
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`
+            }
+        })
+        .then(res => {
+            console.log(res)
+            alert("변경 성공")
+        }).catch(error => {
+            console.log(error)
+        })
+    }
 
     return (
-        <div style={{ display: "flex", flexDirection: "column" }}>
-            <div className='Setting_Profile'>
-                <div className='Profile_imgbox'>
-                    <input type='file' name='fileLabel' />
-                    <label htmlFor='fileLabel' />
-                </div>
-                <hr />
-                <div className='Setting_Userinfo'>
-                    <div style={{ fontSize: "30px" }}>유저이름</div>
-                    <div style={{ fontSize: "26px", color: "gray" }}>모임 주제를 입력해쥬세요</div>
-                    <div style={{ fontSize: "23px", marginTop: "30px" }}>유저의 소개를 20글자 내로 간단하게 설명해주세요</div>
-                </div>
-            </div>
-            <div className='Cate_form'>
-                {Category.map((item, index) => (
-                    <div className='Search_category'>
-                        <div className='Search_categoryname'>{item.CategoryTitle}</div>
-                        <div className='Search_catrgorylist'>
-                            {item.categoryMenu.map((Menuitem) => (
-                                <div className=
-                                    {
-                                        categoryDayid.includes(Menuitem.menuName) ? 'select_category' : ""
-                                            ||
-                                            Menuitem.menuName === categoryTimeId ? 'select_category' : ""
-                                                ||
-                                                Menuitem.menuName === categoryAgeId ? 'select_category' : ""
-                                                    ||
-                                                    Menuitem.menuName === categoryGenderId ? 'select_category' : ""
-
-                                    }
-                                    onClick={(e) => handleClickCategory(item, Menuitem)}>{Menuitem.menuName}</div>
-                            ))}
+        <>
+            {clubData && (
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div className='Setting_Profile'>
+                        <div className='Profile_imgboxs'>
+                            <img className='img_boxs'  name='thumbnail' src={clubData.thumbnail} />
+                            <input type="file" id="upload" accept="image/*" ref={inputRef} onChange={onUploadImage} />
+                            <label htmlFor='fileLabel' />
+                        </div>
+                        <hr />
+                        <div className='Setting_Userinfo'>
+                            <input style={{ fontSize: "30px", marginBottom:"10px" }} onChange={onChangeInput} value={title} name="title" placeholder='clubName'></input>
+                            <input style={{ fontSize: "26px", color: "gray" }} onChange={onChangeInput} value={topic} name="topic" placeholder='clubtopic'></input>
+                            <textarea style={{ fontSize: "23px", marginTop: "30px",height:"100px" }} onChange={onChangeInput} value={brief_introduction} name="brief_introduction" placeholder='brief_introduction'></textarea>
                         </div>
                     </div>
-                ))}
-            </div>
-        </div>
+                    <div className='Cate_form'>
+                        {Category.map((item, index) => (
+                            <div className='Search_category'>
+                                <div className='Search_categoryname'>{item.CategoryTitle}</div>
+                                <div className='Search_catrgorylist'>
+                                    {item.categoryMenu.map((Menuitem) => (
+                                        <div className=
+                                            {
+                                                categoryDayid.includes(Menuitem.subName) ? 'select_category' : ""
+                                                    ||
+                                                    Menuitem.subName === categoryTimeId ? 'select_category' : ""
+                                                        ||
+                                                        Menuitem.subName === categoryAgeId ? 'select_category' : ""
+                                                            ||
+                                                            Menuitem.subName === categoryGenderId ? 'select_category' : ""
+
+                                            }
+                                            onClick={(e) => handleClickCategory(item, Menuitem , Menuitem.subName)}>{Menuitem.menuName}</div>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <div className='setting_infobtn'>
+                        <button onClick={() => handleFinishBtn()}>완료</button>
+                    </div>
+                </div>
+            )}
+        </>
     )
 }
 
