@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { searchurl } from '../../../../Components/Apiurl';
 import './SearchForm.css'
 
@@ -10,12 +10,13 @@ function SearchForm() {
 
     const [searchParams, setSeratchParams] = useSearchParams();
 
-    const days = searchParams.get('categoryDayid');
-    const time_zone = searchParams.get('categoryTimeId');
-    const range_age = searchParams.get('categoryAgeId');
-    const gender = searchParams.get('categoryGenderId');
+    const query = searchParams.get('query')
+    const days = searchParams.get('days');
+    const time_zone = searchParams.get('time_zone');
+    const range_age = searchParams.get('range_age');
+    const gender = searchParams.get('gender');
 
-    const [query, setQuery] = useState("");
+    const [userSearch, setUserSearch] = useState("");
     const [categoryDayid, setCategoryDayId] = useState([]);
     const [categoryTimeId, setCategoryTimeId] = useState([]);
     const [categoryAgeId, setCategoryAgeId] = useState([]);
@@ -24,31 +25,40 @@ function SearchForm() {
     const [one, setOne] = useState(false);
 
     const onChangeInput = (e) => {
-        setQuery(e.target.value);
+        setUserSearch(e.target.value);
       }
    
     const handleClickSearch = () => {
-        axios.post(searchurl , {
+        axios.get(searchurl ,{
+          params :
+           {
+            query,
+            days,
+            time_zone,
+            range_age,
+            gender
+          }},
+          {
           headers : {
             Authorization: `Bearer ${localStorage.getItem('access_token')}`
           }
-        },
-        {
-          days : categoryDayid , 
-          time_zone : categoryTimeId ,
-          range_age : CategoryAge ,
-          gender : categoryGenderId
+        })
+        .then(res => {
+          console.log(res)
+        }).catch(error => {
+          console.log(error)
         })
     }
 
     useEffect(() => {
         setSeratchParams({
+            query : userSearch,
             days: categoryDayid,
             time_zone: categoryTimeId,
             range_age: categoryAgeId,
             categoryGender: categoryGenderId
         })
-    }, [one])
+    }, [one || userSearch])
 
     const CategoryDays = {
         CategoryTitle: '날짜',
@@ -183,7 +193,7 @@ function SearchForm() {
     <div className='Search_bar'>
       <headers className="Search_title">Search</headers>
       <div className='Search_inputForm'>
-        <input value={query} onChange={onChangeInput} placeholder='요즘 흥미있는 것에대해 검색해보세요 !' />
+        <input value={userSearch} onChange={onChangeInput} placeholder='요즘 흥미있는 것에대해 검색해보세요 !' />
         <span className="material-symbols-outlined" onClick={(e) => handleClickSearch(e)}>search</span> {/* 구글 아이콘  */}
       </div>
       <div className='Category_form'>
