@@ -19,10 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
 
-from dj_rest_auth.registration.views import VerifyEmailView
-
 from api.urls import router
-from api.Views.UserView import ConfirmEmailView
 
 urlpatterns = [
     path('admin/', admin.site.urls),

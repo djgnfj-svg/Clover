@@ -1,4 +1,4 @@
-from rest_framework import permissions
+from rest_framework import permissions, exceptions
 
 from club.models import Club
 
@@ -20,10 +20,16 @@ class IsMaster(permissions.BasePermission):
 	def has_object_permission(self, request, view, obj):
 		if request.method in permissions.SAFE_METHODS:
 			return True
-		return obj.user == request.user
+		return obj.master == request.user
 
-	def has_permission(self, request, view):
-		club_id = int(view.kwargs['club_id'])
+	def has_permission(self, request, view,):
+		try :
+			club_id = view.kwargs['pk']
+		except KeyError:
+			try :
+				club_id = int(view.kwargs['club_id'])
+			except:
+				raise exceptions.PermissionDenied("권한이 없습니다.")
 		obj = Club.objects.get(id = club_id)
 		if request.user == obj.master:
 			return True

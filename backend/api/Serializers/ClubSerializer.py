@@ -18,6 +18,11 @@ class ClubDetailSerializer(serializers.ModelSerializer):
 		'thumbnail', 'description', 'range_age',
 		'days', 'time_zone', 'gender']
 
+	def update(self, instance, validated_data):
+		# list형태로 데이터를 받아서 +로 붙일계획
+		print(validated_data["days"])
+		return super().update(instance, validated_data)
+
 class ClubSerializer(serializers.ModelSerializer):
 	user_number = serializers.IntegerField(default = 0, read_only=True)
 	class Meta:

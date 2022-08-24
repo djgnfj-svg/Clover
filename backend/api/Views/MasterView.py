@@ -19,9 +19,9 @@ class ClubMasterView(viewsets.ModelViewSet):
 
 	def list(self, request, club_id):
 		return Response()
-	
+
 	# 매니져 임명 post
-	@action(detail=False, methods=['post'],	name="appointmanager",permission_classes=IsMaster)
+	@action(detail=False, methods=['post'],	name="appointmanager",permission_classes=[IsMaster])
 	def appointManager(self, request, club_id):
 		# 그 유저가 이미 매니저인가
 		# 매니저의 수를 넘지 않았는가

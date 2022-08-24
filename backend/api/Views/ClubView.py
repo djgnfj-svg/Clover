@@ -10,6 +10,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from api.Utils.Error_msg import error_msg, success_msg
 from api.Serializers.ClubSerializer import ClubDetailSerializer, ClubSerializer, HashtagSerializer, JoinClubSerializer
+from api.Utils.Permission import IsManager, IsMaster
 
 from club.models import Club, Hashtag
 
@@ -29,11 +30,15 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin,
 	authentication_classes = [SessionAuthentication, JWTAuthentication]
 	permission_classes = [IsAuthenticated]
 
-
 	def get_serializer_class(self):
 		if self.action in ('retrieve', 'update'):
 			return ClubDetailSerializer
 		return ClubSerializer
+
+	def get_permissions(self):
+		if self.request.method == 'PUT':
+			self.permission_classes = [IsMaster,]
+		return super().get_permissions()
 
 	def create(self, request, *args, **kwargs):
 		serializer = ClubSerializer(data=request.data, context={'request' : request})
@@ -43,12 +48,17 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin,
 				return Response(ClubSerializer(rtn).data, status=status.HTTP_200_OK)
 		else:
 			return Response(error_msg(serializer=serializer),status=status.HTTP_400_BAD_REQUEST)
+	
+	def update(self, request, *args, **kwargs):
+		print(self.get_object())
+		serializer = ClubDetailSerializer(data=request.data)
+		if serializer.is_valid():
+			rtn = serializer.update(self.get_object(), serializer.data)
+			if rtn :
+				return Response(ClubDetailSerializer(rtn).data, status=status.HTTP_200_OK)
+		return Response(error_msg(serializer=serializer),status=status.HTTP_400_BAD_REQUEST)
 
-	def retrieve(self, request, *args, **kwargs):
-		return super().retrieve(request, *args, **kwargs)
-
-	@action(detail=False, methods=['post'], serializer_class=JoinClubSerializer,
-	name="joinclub")
+	@action(detail=False, methods=['post'], serializer_class=JoinClubSerializer, name="joinclub")
 	def joinclub(self, request):
 		club = get_object_or_404(Club, id=request.data['clubid'])
 		if request.user in club.user_list.all():

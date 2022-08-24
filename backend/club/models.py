@@ -7,7 +7,7 @@ class Hashtag(models.Model):
 
 class Club(models.Model):
 	#러프 입력
-	title = models.CharField(max_length=20)
+	title = models.CharField(max_length=20, null=True)
 	topic = models.CharField(max_length=20, null=True)
 	brief_introduction = models.CharField(max_length=20, null=True)
 	thumbnail = models.ImageField(upload_to="images", null=True, blank=True)
@@ -21,10 +21,30 @@ class Club(models.Model):
 
 	appli_list = models.ManyToManyField(User,related_name="appli_list", null=True)
 
-	range_age = models.CharField(max_length=30, null=True)
 	days = models.CharField(max_length=30, null=True)
-	time_zone = models.CharField(max_length=30, null=True)
-	gender = models.CharField(max_length=30, null=True)
+
+	AGE_CHOICES  = (
+		('Over10','10세 이상'),
+		('Over20','20세 이상'),
+		('Over30','30세 이상'),
+		('Over40','40세 이상'),
+		('Over50','50세 이상'),
+	)
+	range_age = models.CharField(choices=AGE_CHOICES, max_length=30, null=True)
+
+	TIME_CHOICES = (
+		('1','00~06시'),
+		('2','06~12시'),
+		('3','12~18시'),
+		('4','18~24시'),
+	) 
+	time_zone = models.CharField(choices=TIME_CHOICES, max_length=30, null=True)
+	GENDER_CHOICES = (
+		('M','남자'),
+		('W','여자'),
+		('A','전부'),
+	)	
+	gender = models.CharField(choices=GENDER_CHOICES, max_length=30, null=True)
 
 	updated_at = models.DateTimeField(auto_now=True)
 	created_at = models.DateTimeField(auto_now_add=True)
