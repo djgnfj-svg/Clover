@@ -11,7 +11,7 @@ function SearchForm() {
     const [searchParams, setSeratchParams] = useSearchParams();
 
     const query = searchParams.get('query')
-    const days = searchParams.get('days');
+    const days = searchParams.getAll('days');
     const time_zone = searchParams.get('time_zone');
     const range_age = searchParams.get('range_age');
     const gender = searchParams.get('gender');
@@ -29,6 +29,7 @@ function SearchForm() {
       }
    
     const handleClickSearch = () => {
+      alert(days)
         axios.get(searchurl ,{
           params :
            {
@@ -58,8 +59,10 @@ function SearchForm() {
             range_age: categoryAgeId,
             categoryGender: categoryGenderId
         })
-        handleClickSearch() 
     }, [one || userSearch])
+    useEffect(() => {
+        handleClickSearch() 
+    },[searchParams])
 
     const CategoryDays = {
         CategoryTitle: '날짜',
