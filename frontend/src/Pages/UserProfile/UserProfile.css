@@ -6,7 +6,7 @@
     top: 50%;
     width: 100%;
 }
-.row{
+.profile_tab{
     position: relative;
     animation-name: slide;
     animation-duration: 1s;

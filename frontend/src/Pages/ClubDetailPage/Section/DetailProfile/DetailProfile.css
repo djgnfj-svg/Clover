@@ -59,14 +59,14 @@
     font-size: 18px;
     width: 150px;
     right: 20px;
-    animation-name: slide;
+    animation-name: slide2;
     animation-duration: 1s;
     animation-iteration-count: 1;
     height: max-content;
 }
-@keyframes slide {
+@keyframes slide2 {
     from{
-        right: 100px;
+        right: 150px;
         opacity: 0.3;
     }
     to{

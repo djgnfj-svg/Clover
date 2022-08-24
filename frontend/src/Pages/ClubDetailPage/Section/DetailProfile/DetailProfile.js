@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './DetailProfile.css'
 import axios from 'axios'
 
-function DetailProfile() {
+function DetailProfile({profile }) {
 
   const dropdownRef = React.createRef();
   const dropdownUserRef = React.createRef();
   const navigate = useNavigate();
+  const {id } = useParams()
 
   const [showDropdown, setShowDropdown] = useState(false)
   const [showDropdownUser , setShowDropdownUser] = useState(false)
@@ -67,21 +68,18 @@ function DetailProfile() {
     }
   }
 
-  const getClubInfomation = () => {
-    axios.get()
-  }
-
   return (
     <div className='Detail_profile'>
-      <div className='profile_img'>
-        <img />
+        <div className='profile_img'>
+        <img src={profile.thumbnail} />
       </div>
       <div className='profile_clubinfo'>
-        <div className='clubinfo_name'>클럽 명</div>
-        <div className='clubinfo_description'>20자 이로 설명을 적어주세요 </div>
+        <div className='clubinfo_name'>{profile.title}</div>
+        <div>{profile.topic}</div>
+        <div className='clubinfo_description'>{profile.brief_introduction} </div>
         {auth ? (
           <div className='clubinfo_edit'>
-            <button onClick={() => navigate("/club/clubedit")}>Edit Club</button>
+            <button onClick={() => navigate(`/club/${id}/edit`)}>Edit Club</button>
             <button ref={dropdownRef} onClick={() => handleClickDropdown()}>•••</button>
           </div>
         ) :

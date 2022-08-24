@@ -43,7 +43,7 @@ function UserProfile() {
     const handleClickPrev = () => {
         const yes = window.confirm("이전 페이지로 이동하시겟습니까?")
         if (!!yes) {
-            navigate("/club/clubdetail")
+            navigate(-1)
         } else {
 
         }
@@ -62,6 +62,7 @@ function UserProfile() {
                     </div>
                 ) :
                 (
+                    <div className='profile_tab'>
                     <Tab.Container className="userEditTab" id="left-tabs-example" defaultActiveKey="profile">
                         <Row>
                             <Col sm={3}>
@@ -95,6 +96,7 @@ function UserProfile() {
                             </Col>
                         </Row>
                     </Tab.Container>
+                    </div>
                 )
             }
         </div >
