@@ -20,7 +20,7 @@ class Club(models.Model):
 	creator = models.ForeignKey(User, on_delete=models.CASCADE,null=False, related_name="creator")
 
 	appli_list = models.ManyToManyField(User,related_name="appli_list", null=True)
-
+	# +를 통해서 요일을 받을 것이다
 	days = models.CharField(max_length=30, null=True)
 
 	AGE_CHOICES  = (
@@ -39,6 +39,7 @@ class Club(models.Model):
 		('4','18~24시'),
 	) 
 	time_zone = models.CharField(choices=TIME_CHOICES, max_length=30, null=True)
+
 	GENDER_CHOICES = (
 		('M','남자'),
 		('W','여자'),
