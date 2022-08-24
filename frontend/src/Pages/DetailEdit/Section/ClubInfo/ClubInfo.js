@@ -35,7 +35,6 @@ function ClubInfo({file}) {
         .then(res => {
             alert("수정 완료 !")
         })
-        
     }
 
     useEffect(() => {

@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './UserList.css'
 import { CgCloseR } from "@react-icons/all-files/cg/CgCloseR";
+import axios from 'axios';
 
 function UserList() {
+
+    const [userList , setUserList] = useState("")
+
+    const getUserList = () => {
+        axios.get()
+    }
+
+
     return (
         <div>
             <headers className="Edit_title">Clover</headers>
