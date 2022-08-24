@@ -74,7 +74,7 @@ function DetailEdit() {
                 <ClubSetting info={profile} />
               </Tab.Pane>
               <Tab.Pane eventKey="info">
-                <ClubInfo info={profile} />
+                <ClubInfo file={profile} />
               </Tab.Pane>
               <Tab.Pane eventKey="users">
                 <UserList />

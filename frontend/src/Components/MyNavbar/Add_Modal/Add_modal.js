@@ -9,15 +9,13 @@ function Add_modal({ show }) {
 
     const [fuck , setFuck] = useState(false)
 
-    const [fileUrl , setFileUrl] = useState()
     const [clubData , setClubData] = useState({
       title : "",
       topic : "",
       brief_introduction : "",
       thumbnail  : "",
     })
-    const inputRef = React.createRef()
-    const imageRef = useRef(null);
+    const inputRef = React.createRef();
 
     const { title , brief_introduction , thumbnail , topic} = clubData
 
@@ -37,7 +35,6 @@ function Add_modal({ show }) {
     },[fuck])
     
     const handleSubmit = () =>{
-      alert(clubData)
         if(title.length  < 2 ){
           alert("제목을 2글자 이상 입력해주세요 !");
         }else if(topic < 2){

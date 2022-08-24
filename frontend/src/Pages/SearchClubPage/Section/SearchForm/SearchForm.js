@@ -9,6 +9,7 @@ function SearchForm({test}) {
     const navigate = useNavigate("")
 
     const [searchParams, setSeratchParams] = useSearchParams();
+    const [searchList , setSearchList] = useState();
 
     const query = searchParams.get('query')
     const days = searchParams.getAll('days');
@@ -44,19 +45,17 @@ function SearchForm({test}) {
           }
         })
         .then(res => {
-          console.log(res)
+          setSearchList(res.data)
         }).catch(error => {
           console.log(error)
         })
     }
 
-    // useEffect(() => {
-    //   test(false)
-    //   if(userSearch !== null){
-    //     test(true)
-    //     alert("해제")
-    //   }
-    // },[searchParams])
+    useEffect(() => {
+      test(searchList)
+      console.log(searchList)
+     
+    },[searchParams])
 
     useEffect(() => {
         setSeratchParams({
@@ -242,7 +241,7 @@ function SearchForm({test}) {
                   Menuitem.subName === categoryGenderId ? 'select_category' : ""
 
                 }
-                 onClick={(e) =>handleClickCategory(item , Menuitem , Menuitem.subName )}>{Menuitem.menuName}</div>
+                 onClick={() =>handleClickCategory(item , Menuitem , Menuitem.subName )}>{Menuitem.menuName}</div>
               ))}
             </div>
           </div>

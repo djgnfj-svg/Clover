@@ -4,27 +4,27 @@ import axios from 'axios'
 import { applyClub, clubDetail, clubList, getNewList } from '../../../../Components/Apiurl'
 import { useNavigate } from 'react-router-dom'
 
-function SearchResult() {
+function SearchResult({data}) {
 
   const navigate = useNavigate("")
 
   const [clubData,setClubData] = useState("")
 
   useEffect(() => {
-    getSearchClubData();
-  },[])
+    setClubData(data)
+  },[data])
 
-  const getSearchClubData = () => {
-    axios.get(getNewList ,
-      {
-        headers : {
-        Authorization: `Bearer ${localStorage.getItem('access_token')}`
-        }
-      })
-      .then(res => {
-        setClubData(res.data.results)
-      })
-  }
+  // const getSearchClubData = () => {
+  //   axios.get(getNewList ,
+  //     {
+  //       headers : {
+  //       Authorization: `Bearer ${localStorage.getItem('access_token')}`
+  //       }
+  //     })
+  //     .then(res => {
+  //       setClubData(res.data.results)
+  //     })
+  // }
 
   const handleApply = (id) => {
     navigate(`/club/${id}`)

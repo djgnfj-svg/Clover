@@ -1,9 +1,37 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { applyUrl } from '../../../../Components/Apiurl';
 import './ApplyUser.css'
 
 function ApplyUser() {
-  return (
-       <div>
+
+    const { id } = useParams();
+    
+
+    const [applyList, setApplyList] = useState("")
+
+
+    useEffect(() => {
+        getApplyList()
+    }, [])
+
+    const getApplyList = () => {
+        axios.get(applyUrl(id), {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`
+            }
+        })
+            .then(res => {
+                console.log(res.data)
+                setApplyList(res.data);
+            }).catch(error => {
+                console.log(error)
+            })
+    }
+
+    return (
+        <div>
             <headers className="Edit_title">Apply</headers>
             <div>
                 <table>
@@ -18,7 +46,7 @@ function ApplyUser() {
                         <tr>
                             <td>박형석</td>
                             <td>저는 뭐시기뭐시</td>
-                            <td style={{display:"flex" , textAlign:"right"}}>
+                            <td style={{ display: "flex", textAlign: "right" }}>
                                 <button>가입</button>
                                 <button>거절</button>
                             </td>
@@ -34,8 +62,8 @@ function ApplyUser() {
                     </tbody>
                 </table>
             </div>
-    </div>
-  )
+        </div>
+    )
 }
 
 export default ApplyUser
