@@ -6,170 +6,166 @@ function SearchForm() {
 
   const navigate = useNavigate("")
 
-  const [searchParams, setSeratchParams] = useSearchParams();
+    const [searchParams, setSeratchParams] = useSearchParams();
 
-  const categoryDay = searchParams.get('categoryDayid');
-  const categoryTime = searchParams.get('categoryTimeId');
-  const categoryAge = searchParams.get('categoryAgeId');
-  const categoryGender = searchParams.get('categoryGenderId');
+    const days = searchParams.get('categoryDayid');
+    const time_zone = searchParams.get('categoryTimeId');
+    const range_age = searchParams.get('categoryAgeId');
+    const gender = searchParams.get('categoryGenderId');
 
-  const [query , setQuery] = useState("");
+    const [query, setQuery] = useState("");
+    const [categoryDayid, setCategoryDayId] = useState([]);
+    const [categoryTimeId, setCategoryTimeId] = useState([]);
+    const [categoryAgeId, setCategoryAgeId] = useState([]);
+    const [categoryGenderId, setCategoryGenderId] = useState([]);
 
-  const [categoryDayid , setCategoryDayId] = useState([]);
-  const [categoryTimeId , setCategoryTimeId] = useState([]);
-  const [categoryAgeId , setCategoryAgeId] = useState([]);
-  const [categoryGenderId , setCategoryGenderId] = useState([]);
+    const [one, setOne] = useState(false);
 
-  const [one , setOne] = useState(false);
-
-  const onChangeInput = (e) => {
-    setQuery(e.target.value);
-  }
-  const handleClickSearch = () => {
-    alert("클릭입니다.")
-  }
-
-  useEffect(() => {
-      setSeratchParams({
-      categoryDay : categoryDayid,
-      categoryTime : categoryTimeId ,
-      categoryAge :categoryAgeId ,
-      categoryGender : categoryGenderId
-    })
-  },[one ])
-
-
-  const categoryDays = {
-      CategoryTitle : '날짜',
-      CategoryId : 0,
-      categoryMenu : [
-        {
-          menuName : "월요일"
-        },
-        {
-          menuName : "화요일"
-        },
-        {
-          menuName : "수요일"
-        },
-        {
-          menuName : "목요일"
-        },
-        {
-          menuName : "금요일"
-        },
-        {
-          menuName : "토요일"
-        },
-        {
-          menuName : "일요일"
-        },
-        {
-          menuName : "All"
-        },
-      ]
-    }
-  const CategoryTime = {
-    CategoryTitle : '시간',
-    CategoryId : 1,
-    categoryMenu : [
-      {
-        menuName : "오직 "
-      },
-      {
-        menuName : "한가지"
-      },
-      {
-        menuName : "너를 위한"
-      },
-      {
-        menuName : "나를 위한"
-      },
-      {
-        menuName : "우릴 위한"
+    const onChangeInput = (e) => {
+        setQuery(e.target.value);
       }
-    ]
-  }
-  const CategoryAge = {
-    CategoryTitle : '평균 나이',
-    CategoryId : 2,
-    categoryMenu : [
-      {
-        menuName : "10세 이상 "
-      },
-      {
-        menuName : "20세 이상"
-      },
-      {
-        menuName : "30세 이상"
-      },
-      {
-        menuName : "40세 이상"
-      },
-      {
-        menuName : "50세 이상"
-      }
-    ]
-  }
-  const CategoryGender = {
-    CategoryTitle : '성별',
-    CategoryId : 3,
-    categoryMenu : [
-      {
-        menuName : "남성"
-      },
-      {
-        menuName : "여성"
-      },
-      {
-        menuName : "성별 무관"
-      }
-    ]
-  }
-
-  const Category = [
-    categoryDays,
-    CategoryTime,
-    CategoryAge,
-    CategoryGender,
-  ]
-
-  const handleClickCategory = (item , Menuitem) => {
-    const Categoryid = item.CategoryId
-    const List = Menuitem.menuName
-    if(!!one){
-      setOne(false)
-    }else{
-      setOne(true)
+   
+    const handleClickSearch = () => {
+        alert("클릭입니다.")
     }
 
-    if(Categoryid === 0){
-      setCategoryDayId(categoryDayid.concat(List))
-    }else if(Categoryid === 1){
-      setCategoryTimeId(List)
-    }else if(Categoryid === 2){
-      setCategoryAgeId(List)
-    }else if(Categoryid === 3){
-      setCategoryGenderId(List)
+    useEffect(() => {
+        setSeratchParams({
+            days: categoryDayid,
+            time_zone: categoryTimeId,
+            range_age: categoryAgeId,
+            categoryGender: categoryGenderId
+        })
+    }, [one])
+
+    const CategoryDays = {
+        CategoryTitle: '날짜',
+        CategoryId: 0,
+        categoryMenu: [
+            {
+                menuName: "월요일"
+            },
+            {
+                menuName: "화요일"
+            },
+            {
+                menuName: "수요일"
+            },
+            {
+                menuName: "목요일"
+            },
+            {
+                menuName: "금요일"
+            },
+            {
+                menuName: "토요일"
+            },
+            {
+                menuName: "일요일"
+            },
+            {
+                menuName: "All"
+            },
+        ]
     }
-    handleRemoveCategory(List);
-  }
-
-  
-
-  const handleRemoveCategory = (List) =>{
-    let arr = categoryDayid.filter(categoryDayid => categoryDayid.indexOf(List))
-
-    if(categoryDayid.includes(List)){
-      setCategoryDayId(arr)
-    }else if(List === categoryTimeId){
-      setCategoryTimeId("")
-    }else if(List === categoryAgeId){
-      setCategoryAgeId("")
-    }else if(List === categoryGenderId){
-      setCategoryGenderId("")
+    const CategoryTime = {
+        CategoryTitle: '시간',
+        CategoryId: 1,
+        categoryMenu: [
+            {
+                menuName: "오직 "
+            },
+            {
+                menuName: "한가지"
+            },
+            {
+                menuName: "너를 위한"
+            },
+            {
+                menuName: "나를 위한"
+            },
+            {
+                menuName: "우릴 위한"
+            }
+        ]
     }
-  }
+    const CategoryAge = {
+        CategoryTitle: '평균 나이',
+        CategoryId: 2,
+        categoryMenu: [
+            {
+                menuName: "10세 이상 "
+            },
+            {
+                menuName: "20세 이상"
+            },
+            {
+                menuName: "30세 이상"
+            },
+            {
+                menuName: "40세 이상"
+            },
+            {
+                menuName: "50세 이상"
+            }
+        ]
+    }
+    const CategoryGender = {
+        CategoryTitle: '성별',
+        CategoryId: 3,
+        categoryMenu: [
+            {
+                menuName: "남성"
+            },
+            {
+                menuName: "여성"
+            },
+            {
+                menuName: "성별 무관"
+            }
+        ]
+    }
+
+    const Category = [
+        CategoryDays,
+        CategoryTime,
+        CategoryAge,
+        CategoryGender,
+    ]
+    const handleClickCategory = (item, Menuitem) => {
+        const Categoryid = item.CategoryId
+        const List = Menuitem.menuName
+        if (!!one) {
+            setOne(false)
+        } else {
+            setOne(true)
+        }
+
+        if (Categoryid === 0) {
+            setCategoryDayId(categoryDayid.concat(List))
+        } else if (Categoryid === 1) {
+            setCategoryTimeId(List)
+        } else if (Categoryid === 2) {
+            setCategoryAgeId(List)
+        } else if (Categoryid === 3) {
+            setCategoryGenderId(List)
+        }
+        handleRemoveCategory(List);
+    }
+
+    const handleRemoveCategory = (List) => {
+        let arr = categoryDayid.filter(categoryDayid => categoryDayid.indexOf(List))
+
+        if (categoryDayid.includes(List)) {
+            setCategoryDayId(arr)
+        } else if (List === categoryTimeId) {
+            setCategoryTimeId("")
+        } else if (List === categoryAgeId) {
+            setCategoryAgeId("")
+        } else if (List === categoryGenderId) {
+            setCategoryGenderId("")
+        }
+    }
 
   return (
     <div className='Search_bar'>
@@ -200,7 +196,6 @@ function SearchForm() {
             </div>
           </div>
         ))}
-
       </div>
     </div>
   )
