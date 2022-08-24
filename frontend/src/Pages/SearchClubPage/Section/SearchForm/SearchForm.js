@@ -29,7 +29,6 @@ function SearchForm() {
       }
    
     const handleClickSearch = () => {
-      alert(days)
         axios.get(searchurl ,{
           params :
            {
