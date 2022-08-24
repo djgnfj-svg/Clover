@@ -7,20 +7,14 @@ class Hashtag(models.Model):
 
 class Club(models.Model):
 	#러프 입력
-	title = models.CharField(max_length=20, null=True)
+	title = models.CharField(max_length=20, null=False, unique=True)
 	topic = models.CharField(max_length=20, null=True)
-	brief_introduction = models.CharField(max_length=20, null=True)
-	thumbnail = models.ImageField(upload_to="images", null=True)
+	brief_introduction = models.CharField(max_length=20, null=True, default="간단한 소개를 입력해주세요")
+	thumbnail = models.ImageField(upload_to="images", null=False, default='midea/defaultimg.jpg')
+	description = models.TextField(null=True, default="자세한 정보를 입력해주세요", blank=True)
 
 	# 상세정보
-	description = models.TextField(blank=True)
-	master = models.ForeignKey(User, on_delete=models.CASCADE, related_name="club_master")
-	managerlist = models.ManyToManyField(User, related_name="club_managerlist", null=True)
-	user_list = models.ManyToManyField(User, related_name="user_list", null=False)
-	usernum = models.IntegerField(default=1,null=False)
-	creator = models.ForeignKey(User, on_delete=models.CASCADE,null=False, related_name="creator")
 
-	appli_list = models.ManyToManyField(User,related_name="appli_list", null=True)
 	# +를 통해서 요일을 받을 것이다
 	days = models.CharField(max_length=30, null=True)
 
@@ -48,6 +42,13 @@ class Club(models.Model):
 	)	
 	gender = models.CharField(choices=GENDER_CHOICES, max_length=30, null=True)
 
+	master = models.ForeignKey(User, on_delete=models.CASCADE, related_name="club_master")
+	managerlist = models.ManyToManyField(User, related_name="club_managerlist", null=True)
+	user_list = models.ManyToManyField(User, related_name="user_list", null=False)
+	appli_list = models.ManyToManyField(User,related_name="appli_list", null=True)
+
+	usernum = models.IntegerField(default=1,null=False)
+	creator = models.ForeignKey(User, on_delete=models.CASCADE,null=False, related_name="creator")
 	updated_at = models.DateTimeField(auto_now=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 

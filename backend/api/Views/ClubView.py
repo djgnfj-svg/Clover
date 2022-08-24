@@ -25,15 +25,14 @@ class HashtagViewSet(viewsets.ModelViewSet):
 		
 		return Response()
 
-class ClubViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin,
-				 mixins.CreateModelMixin, mixins.UpdateModelMixin):
+class ClubViewSet(viewsets.ModelViewSet):
 	serializer_class = ClubSerializer
 	queryset = Club.objects.all()
 	authentication_classes = [SessionAuthentication, JWTAuthentication]
 	permission_classes = [IsAuthenticated]
 
 	def get_serializer_class(self):
-		if self.action in ('retrieve', 'update'):
+		if self.action in ('partial_update','retrieve', 'update'):
 			return ClubDetailSerializer
 		return super().get_serializer_class()
 
@@ -50,29 +49,26 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin,
 				return Response(ClubSerializer(rtn).data, status=status.HTTP_200_OK)
 		else:
 			return Response(error_msg(serializer=serializer),status=status.HTTP_400_BAD_REQUEST)
-	
+
 	def update(self, request, *args, **kwargs):
 		serializer = ClubDetailSerializer(data=request.data, context={'request' : request})
 		if serializer.is_valid():
 			rtn = serializer.update(self.get_object(), serializer.data)
 			if rtn :
 				return Response(ClubDetailSerializer(rtn).data, status=status.HTTP_200_OK)
-		return Response(error_msg(serializer=serializer),status=status.HTTP_400_BAD_REQUEST)
+		return Response(error_msg(serializer=serializer), status=status.HTTP_400_BAD_REQUEST)
 
-	def retrieve(self, request, pk,*args, **kwargs):
+	def partial_update(self, request, *args, **kwargs):
+		return super().partial_update(request, *args, **kwargs)
+
+	def retrieve(self, request, *args, **kwargs):
+		print("test")
 		instance = self.get_object()
-		serializer = self.get_serializer(instance)
-		club = Club.objects.get(id=pk)
-		# api = serializer.data
-		api = {}
-		api['right'] = get_right(request.user, club)
-		rtn = {}
-		rtn.update(api)
-		rtn.update(serializer.data)
+		serializer = self.get_serializer(instance,context={'request' : request}, partial=True)
+		return Response(serializer.data)
 
-		return Response(rtn, status=status.HTTP_200_OK)
-		
-	@action(detail=False, methods=['post'], serializer_class=JoinClubSerializer, name="joinclub")
+	@action(detail=False, methods=['post'], \
+	serializer_class=JoinClubSerializer, name="joinclub")
 	def joinclub(self, request):
 		club = get_object_or_404(Club, id=request.data['clubid'])
 		if request.user in club.user_list.all():
@@ -81,7 +77,8 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin,
 		club.appli_list.add(request.user.id)
 		return Response(success_msg(1001), status=status.HTTP_200_OK)
 
-	@action(detail=False, methods=['post'], serializer_class=JoinClubSerializer,name="outclub")
+	@action(detail=False, methods=['post'], \
+	serializer_class=JoinClubSerializer,name="outclub")
 	def outclub(self, request):
 		# 유저인가 마스터인가 매니저인가 전부아니라면 에러 permission으로 가능한가?
 		club = get_object_or_404(Club, id=request.data['clubid'])
