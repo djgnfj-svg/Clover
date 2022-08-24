@@ -9,6 +9,7 @@ import { clubDetail } from '../../Components/Apiurl';
 import ApplyUser from './Section/ApplyUser/ApplyUser';
 import ClubInfo from './Section/ClubInfo/ClubInfo';
 import UserList from './Section/UserList/UserList';
+import ClubSetting from './Section/ClubSetting/ClubSetting';
 
 function DetailEdit() {
 
@@ -42,10 +43,13 @@ function DetailEdit() {
     }
   }
   return (
-    <Tab.Container id="left-tabs-example" defaultActiveKey="info">
+    <Tab.Container id="left-tabs-example" defaultActiveKey="setting">
       <Row>
         <Col sm={3}>
           <Nav variant="pills" className="flex-column">
+            <Nav.Item>
+              <Nav.Link eventKey="setting">클럽 관리</Nav.Link>
+            </Nav.Item>
             <Nav.Item>
               <Nav.Link eventKey="info">클럽 소개</Nav.Link>
             </Nav.Item>
@@ -66,6 +70,9 @@ function DetailEdit() {
         <Col sm={9}>
           {profile && (
             <Tab.Content>
+              <Tab.Pane eventKey="setting">
+                <ClubSetting info={profile} />
+              </Tab.Pane>
               <Tab.Pane eventKey="info">
                 <ClubInfo info={profile} />
               </Tab.Pane>
