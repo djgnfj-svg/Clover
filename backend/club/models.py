@@ -10,13 +10,14 @@ class Club(models.Model):
 	title = models.CharField(max_length=20, null=True)
 	topic = models.CharField(max_length=20, null=True)
 	brief_introduction = models.CharField(max_length=20, null=True)
-	thumbnail = models.ImageField(upload_to="images", null=True, blank=True)
+	thumbnail = models.ImageField(upload_to="images", null=True)
 
 	# 상세정보
 	description = models.TextField(blank=True)
 	master = models.ForeignKey(User, on_delete=models.CASCADE, related_name="club_master")
 	managerlist = models.ManyToManyField(User, related_name="club_managerlist", null=True)
 	user_list = models.ManyToManyField(User, related_name="user_list", null=False)
+	usernum = models.IntegerField(default=1,null=False)
 	creator = models.ForeignKey(User, on_delete=models.CASCADE,null=False, related_name="creator")
 
 	appli_list = models.ManyToManyField(User,related_name="appli_list", null=True)
@@ -43,7 +44,7 @@ class Club(models.Model):
 	GENDER_CHOICES = (
 		('M','남자'),
 		('W','여자'),
-		('A','전부'),
+		('A','성별무관'),
 	)	
 	gender = models.CharField(choices=GENDER_CHOICES, max_length=30, null=True)
 
@@ -52,3 +53,5 @@ class Club(models.Model):
 
 	def Joinclub(self, user:User):
 		self.user_list.add(user)
+	def PlusUsernum(self):
+		self.usernum += 1

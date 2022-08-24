@@ -14,7 +14,7 @@ class SearchViewSet(viewsets.ViewSet):
 		time_zone = request.GET.get('time_zone',None)
 		gender = request.GET.get('gender',None)
 		query = request.GET.get('query', None)
-
+		print((request.query_params))
 		q = Q()
 		if days:
 			day_list = days.split('+')

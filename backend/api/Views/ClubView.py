@@ -25,7 +25,7 @@ class HashtagViewSet(viewsets.ModelViewSet):
 
 class ClubViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin,
 				 mixins.CreateModelMixin, mixins.UpdateModelMixin):
-	serializer_class = ClubDetailSerializer
+	serializer_class = ClubSerializer
 	queryset = Club.objects.all()
 	authentication_classes = [SessionAuthentication, JWTAuthentication]
 	permission_classes = [IsAuthenticated]
@@ -50,7 +50,7 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin,
 			return Response(error_msg(serializer=serializer),status=status.HTTP_400_BAD_REQUEST)
 	
 	def update(self, request, *args, **kwargs):
-		serializer = ClubDetailSerializer(data=request.data)
+		serializer = ClubDetailSerializer(data=request.data, context={'request' : request})
 		if serializer.is_valid():
 			rtn = serializer.update(self.get_object(), serializer.data)
 			if rtn :

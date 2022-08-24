@@ -19,15 +19,16 @@ class ClubDetailSerializer(serializers.ModelSerializer):
 		'days', 'time_zone', 'gender']
 
 	def update(self, instance, validated_data):
-		# list형태로 데이터를 받아서 +로 붙일계획
-		print(validated_data["days"])
+		# 이미지가 없으면 이미지 빼고 update
+		if not validated_data['thumbnail']:
+			del validated_data['thumbnail']
 		return super().update(instance, validated_data)
 
 class ClubSerializer(serializers.ModelSerializer):
-	user_number = serializers.IntegerField(default = 0, read_only=True)
+	usernum = serializers.IntegerField(read_only=True)
 	class Meta:
 		model = Club
-		fields = ['id','title','topic', 'brief_introduction', 'user_number', 'thumbnail',]
+		fields = ['id','title','topic', 'brief_introduction', 'usernum', 'thumbnail',]
 
 	def save(self, **kwargs):
 		return super().save(**kwargs)
