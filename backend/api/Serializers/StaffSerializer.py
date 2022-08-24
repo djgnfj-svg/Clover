@@ -12,3 +12,6 @@ class StaffSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = User
 		fields = ['id','username']
+
+class AddUserSerializer(serializers.Serializer):
+	userid = serializers.IntegerField(default=0)

@@ -33,7 +33,7 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin,
 	def get_serializer_class(self):
 		if self.action in ('retrieve', 'update'):
 			return ClubDetailSerializer
-		return ClubSerializer
+		return super().get_serializer_class()
 
 	def get_permissions(self):
 		if self.request.method == 'PUT':
@@ -50,7 +50,6 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin,
 			return Response(error_msg(serializer=serializer),status=status.HTTP_400_BAD_REQUEST)
 	
 	def update(self, request, *args, **kwargs):
-		print(self.get_object())
 		serializer = ClubDetailSerializer(data=request.data)
 		if serializer.is_valid():
 			rtn = serializer.update(self.get_object(), serializer.data)
@@ -65,11 +64,9 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin,
 			return Response(error_msg(2001), status=status.HTTP_403_FORBIDDEN)
 
 		club.appli_list.add(request.user.id)
-		club.save()
 		return Response(success_msg(1001), status=status.HTTP_200_OK)
 
-	@action(detail=False, methods=['post'], serializer_class=JoinClubSerializer,
-	name="outclub")
+	@action(detail=False, methods=['post'], serializer_class=JoinClubSerializer,name="outclub")
 	def outclub(self, request):
 		# 유저인가 마스터인가 매니저인가 전부아니라면 에러 permission으로 가능한가?
 		club = get_object_or_404(Club, id=request.data['clubid'])

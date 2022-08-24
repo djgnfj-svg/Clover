@@ -30,7 +30,6 @@ class ClubSerializer(serializers.ModelSerializer):
 		fields = ['id','title','topic', 'brief_introduction', 'user_number', 'thumbnail',]
 
 	def save(self, **kwargs):
-		print('seri. save')
 		return super().save(**kwargs)
 	
 	def create(self, request, validated_data):
