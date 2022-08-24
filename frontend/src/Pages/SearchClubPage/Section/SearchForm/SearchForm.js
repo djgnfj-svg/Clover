@@ -4,9 +4,9 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { searchurl } from '../../../../Components/Apiurl';
 import './SearchForm.css'
 
-function SearchForm() {
+function SearchForm({test}) {
 
-  const navigate = useNavigate("")
+    const navigate = useNavigate("")
 
     const [searchParams, setSeratchParams] = useSearchParams();
 
@@ -29,7 +29,6 @@ function SearchForm() {
       }
    
     const handleClickSearch = () => {
-      alert(days)
         axios.get(searchurl ,{
           params :
            {
@@ -51,6 +50,14 @@ function SearchForm() {
         })
     }
 
+    // useEffect(() => {
+    //   test(false)
+    //   if(userSearch !== null){
+    //     test(true)
+    //     alert("해제")
+    //   }
+    // },[searchParams])
+
     useEffect(() => {
         setSeratchParams({
             query : userSearch,
@@ -69,25 +76,33 @@ function SearchForm() {
         CategoryId: 0,
         categoryMenu: [
             {
-                menuName: "월요일"
+                menuName: "월요일",
+                subName : "월요일"
+
             },
             {
-                menuName: "화요일"
+                menuName: "화요일",
+                subName : "화요일"
             },
             {
-                menuName: "수요일"
+                menuName: "수요일",
+                subName : "수요일"
             },
             {
-                menuName: "목요일"
+                menuName: "목요일",
+                subName : "목요일"
             },
             {
-                menuName: "금요일"
+                menuName: "금요일",
+                subName : "금요일"
             },
             {
-                menuName: "토요일"
+                menuName: "토요일",
+                subName : "토요일"
             },
             {
-                menuName: "일요일"
+                menuName: "일요일",
+                subName : "일요일"
             },
             {
                 menuName: "All"
@@ -95,24 +110,25 @@ function SearchForm() {
         ]
     }
     const CategoryTime = {
-        CategoryTitle: '시간',
+        CategoryTitle: '활동 시간',
         CategoryId: 1,
         categoryMenu: [
             {
-                menuName: "오직 "
+                menuName: "00 ~ 06시",
+                subName : "1"
             },
             {
-                menuName: "한가지"
+                menuName: "06 ~ 12시",
+                subName : "2"
             },
             {
-                menuName: "너를 위한"
+                menuName: "12 ~ 18시",
+                subName : "3"
             },
             {
-                menuName: "나를 위한"
+                menuName: "16 ~ 24시",
+                subName : "4"
             },
-            {
-                menuName: "우릴 위한"
-            }
         ]
     }
     const CategoryAge = {
@@ -120,19 +136,24 @@ function SearchForm() {
         CategoryId: 2,
         categoryMenu: [
             {
-                menuName: "10세 이상 "
+                menuName: "10세 이상",
+                subName : "Over10"
             },
             {
-                menuName: "20세 이상"
+                menuName: "20세 이상",
+                subName : "Over20"
             },
             {
-                menuName: "30세 이상"
+                menuName: "30세 이상",
+                subName : "Over30"
             },
             {
-                menuName: "40세 이상"
+                menuName: "40세 이상",
+                subName : "Over40"
             },
             {
-                menuName: "50세 이상"
+                menuName: "50세 이상",
+                subName : "Over50"
             }
         ]
     }
@@ -141,13 +162,16 @@ function SearchForm() {
         CategoryId: 3,
         categoryMenu: [
             {
-                menuName: "남성"
+                menuName: "남성",
+                subName : "M"
             },
             {
-                menuName: "여성"
+                menuName: "여성",
+                subName : "W"
             },
             {
-                menuName: "성별 무관"
+                menuName: "성별 무관",
+                subName : "A"
             }
         ]
     }
@@ -158,9 +182,10 @@ function SearchForm() {
         CategoryAge,
         CategoryGender,
     ]
-    const handleClickCategory = (item, Menuitem) => {
+    const handleClickCategory = (item, Menuitem , Number) => {
         const Categoryid = item.CategoryId
         const List = Menuitem.menuName
+        const Num = Number;
         if (!!one) {
             setOne(false)
         } else {
@@ -168,27 +193,27 @@ function SearchForm() {
         }
 
         if (Categoryid === 0) {
-            setCategoryDayId(categoryDayid.concat(List))
+            setCategoryDayId(categoryDayid.concat(Num))
         } else if (Categoryid === 1) {
-            setCategoryTimeId(List)
+            setCategoryTimeId(Num)
         } else if (Categoryid === 2) {
-            setCategoryAgeId(List)
+            setCategoryAgeId(Num)
         } else if (Categoryid === 3) {
-            setCategoryGenderId(List)
+            setCategoryGenderId(Num)
         }
-        handleRemoveCategory(List);
+        handleRemoveCategory(Num);
     }
 
-    const handleRemoveCategory = (List) => {
-        let arr = categoryDayid.filter(categoryDayid => categoryDayid.indexOf(List))
+    const handleRemoveCategory = (Num) => {
+        let arr = categoryDayid.filter(categoryDayid => categoryDayid.indexOf(Num))
 
-        if (categoryDayid.includes(List)) {
+        if (categoryDayid.includes(Num)) {
             setCategoryDayId(arr)
-        } else if (List === categoryTimeId) {
+        } else if (Num === categoryTimeId) {
             setCategoryTimeId("")
-        } else if (List === categoryAgeId) {
+        } else if (Num === categoryAgeId) {
             setCategoryAgeId("")
-        } else if (List === categoryGenderId) {
+        } else if (Num === categoryGenderId) {
             setCategoryGenderId("")
         }
     }
@@ -208,16 +233,16 @@ function SearchForm() {
               {item.categoryMenu.map((Menuitem) => (
                 <div className=
                 {
-                  categoryDayid.includes(Menuitem.menuName) ? 'select_category' : ""
+                  categoryDayid.includes(Menuitem.subName) ? 'select_category' : ""
                   ||
-                  Menuitem.menuName === categoryTimeId ? 'select_category' : ""
+                  Menuitem.subName === categoryTimeId ? 'select_category' : ""
                   ||
-                  Menuitem.menuName === categoryAgeId ? 'select_category' : ""
+                  Menuitem.subName === categoryAgeId ? 'select_category' : ""
                   ||
-                  Menuitem.menuName === categoryGenderId ? 'select_category' : ""
+                  Menuitem.subName === categoryGenderId ? 'select_category' : ""
 
                 }
-                 onClick={(e) =>handleClickCategory(item , Menuitem )}>{Menuitem.menuName}</div>
+                 onClick={(e) =>handleClickCategory(item , Menuitem , Menuitem.subName )}>{Menuitem.menuName}</div>
               ))}
             </div>
           </div>
@@ -228,7 +253,3 @@ function SearchForm() {
 }
 
 export default SearchForm
-
-{/* <span class="material-symbols-outlined">
-  cancel
-  </span> */}
