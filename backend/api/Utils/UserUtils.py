@@ -14,7 +14,7 @@ def get_right(user, club):
 	
 	if club.master.id == user.id:
 		return "master"
-	elif user in club.manager_list.all():
+	elif user in club.managerlist.all():
 		return "manager"
 	elif user in club.user_list.all():
 		return "subscriber"
