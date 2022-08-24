@@ -58,6 +58,7 @@ function SearchForm() {
             range_age: categoryAgeId,
             categoryGender: categoryGenderId
         })
+        handleClickSearch() 
     }, [one || userSearch])
 
     const CategoryDays = {
