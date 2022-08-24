@@ -1,5 +1,7 @@
+import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { searchurl } from '../../../../Components/Apiurl';
 import './SearchForm.css'
 
 function SearchForm() {
@@ -26,7 +28,17 @@ function SearchForm() {
       }
    
     const handleClickSearch = () => {
-        alert("클릭입니다.")
+        axios.post(searchurl , {
+          headers : {
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`
+          }
+        },
+        {
+          days : categoryDayid , 
+          time_zone : categoryTimeId ,
+          range_age : CategoryAge ,
+          gender : categoryGenderId
+        })
     }
 
     useEffect(() => {
