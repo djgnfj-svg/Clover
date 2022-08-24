@@ -1,3 +1,4 @@
+from turtle import right
 from django.shortcuts import get_object_or_404
 
 from rest_framework import viewsets, status, mixins
@@ -8,9 +9,10 @@ from rest_framework.decorators import action
 
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from api.Utils.Error_msg import error_msg, success_msg
 from api.Serializers.ClubSerializer import ClubDetailSerializer, ClubSerializer, HashtagSerializer, JoinClubSerializer
+from api.Utils.Error_msg import error_msg, success_msg
 from api.Utils.Permission import IsManager, IsMaster
+from api.Utils.UserUtils import get_right
 
 from club.models import Club, Hashtag
 
@@ -57,11 +59,19 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin,
 				return Response(ClubDetailSerializer(rtn).data, status=status.HTTP_200_OK)
 		return Response(error_msg(serializer=serializer),status=status.HTTP_400_BAD_REQUEST)
 
-	def retrieve(self, request, *args, **kwargs):
-		# rtn = super().retrieve(request, *args, **kwargs)
-		# rtn['right'] = get_right(request.user, club)
-		return super().retrieve(request, *args, **kwargs)
+	def retrieve(self, request, pk,*args, **kwargs):
+		instance = self.get_object()
+		serializer = self.get_serializer(instance)
+		club = Club.objects.get(id=pk)
+		# api = serializer.data
+		api = {}
+		api['right'] = get_right(request.user, club)
+		rtn = {}
+		rtn.update(api)
+		rtn.update(serializer.data)
 
+		return Response(rtn, status=status.HTTP_200_OK)
+		
 	@action(detail=False, methods=['post'], serializer_class=JoinClubSerializer, name="joinclub")
 	def joinclub(self, request):
 		club = get_object_or_404(Club, id=request.data['clubid'])

@@ -10,10 +10,12 @@ def create_email_key(user_id):
 	return random_key[::2] + hash_key[::2]
 
 
-# def get_right(user, club):
+def get_right(user, club):
 	
-# 	if club.master == user.id
-# 	return "master"
-# 	return "manager"
-# 	return "subscriber"
-# 	return "User"
+	if club.master.id == user.id:
+		return "master"
+	elif user in club.manager_list.all():
+		return "manager"
+	elif user in club.user_list.all():
+		return "subscriber"
+	return "User"

@@ -12,7 +12,6 @@ class HashtagSerializer(serializers.ModelSerializer):
 		field = ['name']
 
 class ClubDetailSerializer(serializers.ModelSerializer):
-	thumbnail = serializers.ImageField(use_url=True)
 	class Meta:
 		model = Club
 		fields = ['title','topic', 'brief_introduction',
@@ -27,10 +26,9 @@ class ClubDetailSerializer(serializers.ModelSerializer):
 
 class ClubSerializer(serializers.ModelSerializer):
 	usernum = serializers.IntegerField(read_only=True)
-	thumbnail = serializers.ImageField(max_length=None, use_url=True)
 	class Meta:
 		model = Club
-		fields = ['id','title','topic', 'brief_introduction', 'usernum', 'thumbnail',]
+		fields = ['id', 'title','topic', 'brief_introduction', 'usernum', 'thumbnail',]
 
 	def save(self, **kwargs):
 		return super().save(**kwargs)
