@@ -18,3 +18,6 @@ class HomeViewSet(viewsets.ReadOnlyModelViewSet):
 	serializer_class = ClubSerializer
 	pagination_class = HomePagination
 	permission_classes = [AllowAny]
+
+	def list(self, request, *args, **kwargs):
+		return super().list(request, *args, **kwargs)

@@ -57,6 +57,11 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin,
 				return Response(ClubDetailSerializer(rtn).data, status=status.HTTP_200_OK)
 		return Response(error_msg(serializer=serializer),status=status.HTTP_400_BAD_REQUEST)
 
+	def retrieve(self, request, *args, **kwargs):
+		# rtn = super().retrieve(request, *args, **kwargs)
+		# rtn['right'] = get_right(request.user, club)
+		return super().retrieve(request, *args, **kwargs)
+
 	@action(detail=False, methods=['post'], serializer_class=JoinClubSerializer, name="joinclub")
 	def joinclub(self, request):
 		club = get_object_or_404(Club, id=request.data['clubid'])

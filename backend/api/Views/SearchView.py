@@ -6,8 +6,18 @@ from rest_framework.response import Response
 from api.Serializers.ClubSerializer import ClubSerializer
 
 from club.models import Club
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import AllowAny
 
-class SearchViewSet(viewsets.ViewSet):
+class HomePagination(PageNumberPagination):
+	page_size = 12
+
+class SearchViewSet(viewsets.ReadOnlyModelViewSet):
+	queryset = Club.objects.all().order_by("-created_at")
+	serializer_class = ClubSerializer
+	pagination_class = HomePagination
+	permission_classes = [AllowAny]
+
 	def list(self, request):
 		range_age = request.GET.get('range_age',None)
 		days = request.GET.get('days',None)
@@ -30,5 +40,4 @@ class SearchViewSet(viewsets.ViewSet):
 		if query:
 			q &= Q(title__contains=query)
 		rtn = Club.objects.filter(q)
-
-		return Response(ClubSerializer(rtn,many=True).data,status=status.HTTP_200_OK)
+		return Response(ClubSerializer(rtn,many=True,context = {'request' : request}).data,status=status.HTTP_200_OK)
