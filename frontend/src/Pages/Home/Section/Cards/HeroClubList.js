@@ -16,10 +16,9 @@ function HeroClubList() {
   }, [])
 
   const getNewClub = () => {
-    axios.get(getNewList, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('access_token')}`
-      }
+    axios.get(getNewList,
+    {
+
     })
       .then(res => {
         setNewClubData(res.data.results)

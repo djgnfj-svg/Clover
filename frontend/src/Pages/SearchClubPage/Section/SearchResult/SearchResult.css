@@ -36,7 +36,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     position: relative;
-    margin: 0 auto;
+    margin-left: 33px;
     margin-top: 30px;
 }
 .Result_box .material-symbols-outlined{

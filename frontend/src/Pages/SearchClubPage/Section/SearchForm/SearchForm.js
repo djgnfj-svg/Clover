@@ -8,22 +8,22 @@ function SearchForm() {
 
   const [searchParams, setSeratchParams] = useSearchParams();
 
-  const categoryDate = searchParams.get('categoryDateId');
+  const categoryDay = searchParams.get('categoryDayid');
   const categoryTime = searchParams.get('categoryTimeId');
-  const categoryAge = searchParams.get('categoryTimeId');
-  const categoryGender = searchParams.get('categoryTimeId');
+  const categoryAge = searchParams.get('categoryAgeId');
+  const categoryGender = searchParams.get('categoryGenderId');
 
-  const [userSearch , setUserSearch] = useState("");
+  const [query , setQuery] = useState("");
 
-  const [categoryDateId , setCategoryDateId] = useState([]);
+  const [categoryDayid , setCategoryDayId] = useState([]);
   const [categoryTimeId , setCategoryTimeId] = useState([]);
   const [categoryAgeId , setCategoryAgeId] = useState([]);
   const [categoryGenderId , setCategoryGenderId] = useState([]);
 
-  const [one , setOne] = useState([]);
+  const [one , setOne] = useState(false);
 
   const onChangeInput = (e) => {
-    setUserSearch(e.target.value);
+    setQuery(e.target.value);
   }
   const handleClickSearch = () => {
     alert("클릭입니다.")
@@ -31,14 +31,15 @@ function SearchForm() {
 
   useEffect(() => {
       setSeratchParams({
-      categoryDate : categoryDateId,
+      categoryDay : categoryDayid,
       categoryTime : categoryTimeId ,
       categoryAge :categoryAgeId ,
       categoryGender : categoryGenderId
     })
-  },[one])
+  },[one ])
 
-  const CategoryDate = {
+
+  const categoryDays = {
       CategoryTitle : '날짜',
       CategoryId : 0,
       categoryMenu : [
@@ -127,7 +128,7 @@ function SearchForm() {
   }
 
   const Category = [
-    CategoryDate,
+    categoryDays,
     CategoryTime,
     CategoryAge,
     CategoryGender,
@@ -136,10 +137,14 @@ function SearchForm() {
   const handleClickCategory = (item , Menuitem) => {
     const Categoryid = item.CategoryId
     const List = Menuitem.menuName
-    setOne(Categoryid)
+    if(!!one){
+      setOne(false)
+    }else{
+      setOne(true)
+    }
 
     if(Categoryid === 0){
-      setCategoryDateId(categoryDateId.concat(List))
+      setCategoryDayId(categoryDayid.concat(List))
     }else if(Categoryid === 1){
       setCategoryTimeId(List)
     }else if(Categoryid === 2){
@@ -153,10 +158,10 @@ function SearchForm() {
   
 
   const handleRemoveCategory = (List) =>{
-    let arr = categoryDateId.filter(categoryDateId => categoryDateId.indexOf(List))
+    let arr = categoryDayid.filter(categoryDayid => categoryDayid.indexOf(List))
 
-    if(categoryDateId.includes(List)){
-      setCategoryDateId(arr)
+    if(categoryDayid.includes(List)){
+      setCategoryDayId(arr)
     }else if(List === categoryTimeId){
       setCategoryTimeId("")
     }else if(List === categoryAgeId){
@@ -170,7 +175,7 @@ function SearchForm() {
     <div className='Search_bar'>
       <headers className="Search_title">Search</headers>
       <div className='Search_inputForm'>
-        <input value={userSearch} onChange={onChangeInput} placeholder='요즘 흥미있는 것에대해 검색해보세요 !' />
+        <input value={query} onChange={onChangeInput} placeholder='요즘 흥미있는 것에대해 검색해보세요 !' />
         <span className="material-symbols-outlined" onClick={(e) => handleClickSearch(e)}>search</span> {/* 구글 아이콘  */}
       </div>
       <div className='Category_form'>
@@ -181,7 +186,7 @@ function SearchForm() {
               {item.categoryMenu.map((Menuitem) => (
                 <div className=
                 {
-                  categoryDateId.includes(Menuitem.menuName) ? 'select_category' : ""
+                  categoryDayid.includes(Menuitem.menuName) ? 'select_category' : ""
                   ||
                   Menuitem.menuName === categoryTimeId ? 'select_category' : ""
                   ||
