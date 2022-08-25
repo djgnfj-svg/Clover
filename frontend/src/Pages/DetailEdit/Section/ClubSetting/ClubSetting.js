@@ -23,7 +23,6 @@ function ClubSetting({info}) {
         title: "",
         topic: "",
         brief_introduction: "",
-        thumbnail:""
     })
 
     const [categoryDayid, setCategoryDayId] = useState([]);
