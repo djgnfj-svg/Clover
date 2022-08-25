@@ -28,7 +28,6 @@ class ClubManagerView(viewsets.GenericViewSet, mixins.DestroyModelMixin):
 	@action(detail=False, methods=['get'],name="appli_list", serializer_class=AddUserSerializer)
 	def appli_list(self, request, club_id):
 		temp = Club.objects.get(id=club_id).appli_list.all()
-		print(temp)
 		return Response(AppliSerializer(temp, many=True).data)
 
 	@appli_list.mapping.post

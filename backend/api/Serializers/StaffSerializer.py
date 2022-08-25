@@ -1,12 +1,16 @@
 from rest_framework import serializers
 
-from accounts.models import User
+from accounts.models import User, UserProfile
 from club.models import Club
 
 class AppliSerializer(serializers.ModelSerializer):
+	user_instroduction = serializers.SerializerMethodField('get_user_instroduction')
 	class Meta:
 		model = User
-		fields = ('id','username')
+		fields = ('id','username', 'user_instroduction')
+	def get_user_instroduction(self, obj):
+		user_instroduction = UserProfile.objects.get(user_id = obj.id)
+		return user_instroduction.description
 
 class StaffSerializer(serializers.ModelSerializer):
 	class Meta:

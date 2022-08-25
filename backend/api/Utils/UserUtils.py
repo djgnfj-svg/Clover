@@ -8,14 +8,3 @@ def create_email_key(user_id):
 	hash_key = sha_data.hexdigest()
 	
 	return random_key[::2] + hash_key[::2]
-
-
-def get_right(user, club):
-	
-	if club.master.id == user.id:
-		return "master"
-	elif user in club.managerlist.all():
-		return "manager"
-	elif user in club.user_list.all():
-		return "subscriber"
-	return "User"
