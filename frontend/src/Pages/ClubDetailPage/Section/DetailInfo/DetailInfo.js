@@ -26,6 +26,18 @@ function DetailInfo({info}) {
         )
       }</div>
       </Tab>
+      {/* <Tab eventKey="gongzi" title="공지사항">
+        <div>
+            <img />
+            <div>
+              <div>
+                <div>이름</div>
+                <div>언제 올렸는가</div>
+              </div>
+              <div> 공지사항 내용</div>
+            </div>
+        </div>       
+      </Tab> */}
     </Tabs>
     </div>
   )

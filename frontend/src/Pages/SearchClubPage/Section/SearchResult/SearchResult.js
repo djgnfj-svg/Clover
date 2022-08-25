@@ -14,18 +14,6 @@ function SearchResult({data}) {
     setClubData(data)
   },[data])
 
-  // const getSearchClubData = () => {
-  //   axios.get(getNewList ,
-  //     {
-  //       headers : {
-  //       Authorization: `Bearer ${localStorage.getItem('access_token')}`
-  //       }
-  //     })
-  //     .then(res => {
-  //       setClubData(res.data.results)
-  //     })
-  // }
-
   const handleApply = (id) => {
     navigate(`/club/${id}`)
   } 

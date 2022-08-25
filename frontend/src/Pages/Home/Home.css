@@ -9,12 +9,11 @@
 
 .hero-image{
     position: relative;
-    width: 1100px;
+    width: 1200px;
     height: 400px;
     top: 50px;
     margin: 0 auto;
-    border: 1px solid gray;
-    background-color: antiquewhite;
+    margin-bottom: 100px;
 }
 .hero-ClubList{
     position: relative;

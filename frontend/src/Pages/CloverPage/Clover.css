@@ -1,0 +1,15 @@
+
+.Wrapper_club{
+    width: 1500px;
+    height: max-content;    
+    min-height: 321px;
+    border: 1px solid rgb(235, 235, 235);
+    box-shadow: 2px 3px 5px 0px rgb(222, 222, 222);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-bottom: 2rem;
+    margin-bottom: 50px !important;
+    margin-top: 50px !important;
+    margin: 0 auto;
+}

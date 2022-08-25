@@ -16,7 +16,6 @@ function HeroImage() {
     <div className="hero_Main">
       <Slider {...settings}>
         <div className="rank">
-          <h3>대충 큰 이미지</h3>
           <img src={`${process.env.PUBLIC_URL}/image/hhh.png`} />
         </div>
         <div>
