@@ -31,6 +31,7 @@ class ClubDetailSerializer(serializers.ModelSerializer):
 
 class ClubSerializer(serializers.ModelSerializer):
 	usernum = serializers.IntegerField(read_only=True)
+	thumbnail = serializers.ImageField(max_length=None, use_url=True)
 	class Meta:
 		model = Club
 		fields = ['id', 'title','topic', 'brief_introduction', 'usernum', 'thumbnail',]
@@ -50,6 +51,7 @@ class ClubSerializer(serializers.ModelSerializer):
 		)
 		if img_data.getlist('thumbnail'):
 			thumbnail = img_data.getlist('thumbnail')[0]
+			print(thumbnail)
 			instance.thumbnail = thumbnail
 		instance.user_list.add(user)
 		instance.save()

@@ -32,11 +32,11 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 
 	#클럽생성
 	def create(self, request, *args, **kwargs):
-		serializer = ClubSerializer(data=request.data, context={'request' : request})
+		serializer = self.get_serializer(data=request.data, context={'request' : request})
 		if serializer.is_valid():
 			rtn = serializer.create(request, serializer.data)
 			if rtn :
-				return Response(ClubSerializer(rtn).data)
+				return Response(self.get_serializer(rtn).data)
 		else:
 			return Response(error_msg(serializer=serializer), status=status.HTTP_400_BAD_REQUEST)
 	
