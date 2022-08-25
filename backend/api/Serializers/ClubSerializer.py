@@ -20,8 +20,7 @@ class ClubDetailSerializer(serializers.ModelSerializer):
 	def update(self, instance, validated_data):
 		img_data = self.context['request'].FILES
 		instance.topic = validated_data['topic']
-		instance.topic = validated_data['topic'],
-		instance.brief_introduction= validated_data['brief_introduction'],
+		instance.brief_introduction = validated_data['brief_introduction'],
 		if img_data.getlist('thumbnail'):
 			thumbnail = img_data.getlist('thumbnail')[0]
 			instance.thumbnail = thumbnail

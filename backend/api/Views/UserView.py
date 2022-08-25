@@ -43,10 +43,10 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         queryset = UserProfile.objects.filter(user = request.user.id)
         if not queryset:
-            return Response(error_msg(404), status=status.HTTP_200_OK)
+            return Response(error_msg(404))
         serializer = self.get_serializer_class()
         rtn = serializer(queryset, many=True)
-        return Response(rtn.data, status=status.HTTP_200_OK)
+        return Response(rtn.data)
     
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)

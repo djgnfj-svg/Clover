@@ -23,13 +23,13 @@ class ClubManagerView(viewsets.GenericViewSet, mixins.DestroyModelMixin):
 	# 유저 관리?
 	def list(self, request, club_id):
 		temp = Club.objects.get(id=club_id).user_list.all()
-		return Response(StaffSerializer(temp,many=True).data, status=status.HTTP_200_OK)
+		return Response(StaffSerializer(temp,many=True).data)
 
 	@action(detail=False, methods=['get'],name="appli_list", serializer_class=AddUserSerializer)
 	def appli_list(self, request, club_id):
 		temp = Club.objects.get(id=club_id).appli_list.all()
 		print(temp)
-		return Response(AppliSerializer(temp, many=True).data, status=status.HTTP_200_OK)
+		return Response(AppliSerializer(temp, many=True).data)
 
 	@appli_list.mapping.post
 	def appli_list_post(self, requset, club_id):
@@ -41,7 +41,7 @@ class ClubManagerView(viewsets.GenericViewSet, mixins.DestroyModelMixin):
 		if user not in club.appli_list.all():
 			return Response(error_msg(2002), status=status.HTTP_403_FORBIDDEN)
 		club.user_list.add(user)
-		return Response(success_msg(1001), status=status.HTTP_200_OK)
+		return Response(success_msg(1001))
 
 	@appli_list.mapping.delete
 	def appli_list_delete(self, request, club_id, pk=None):
@@ -50,4 +50,4 @@ class ClubManagerView(viewsets.GenericViewSet, mixins.DestroyModelMixin):
 		club.appli_list.remove(userid)
 
 		temp = Club.objects.get(id=club_id).appli_list.all()
-		return Response(StaffSerializer(temp,many=True).data, status=status.HTTP_200_OK)
+		return Response(StaffSerializer(temp,many=True).data)

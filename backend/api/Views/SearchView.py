@@ -40,4 +40,4 @@ class SearchViewSet(viewsets.ReadOnlyModelViewSet):
 		if query:
 			q &= Q(title__contains=query)
 		rtn = Club.objects.filter(q)
-		return Response(ClubSerializer(rtn,many=True,context = {'request' : request}).data,status=status.HTTP_200_OK)
+		return Response(ClubSerializer(rtn,many=True,context = {'request' : request}).data)
