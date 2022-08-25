@@ -11,6 +11,7 @@ class HashtagSerializer(serializers.ModelSerializer):
 
 class ClubDetailSerializer(serializers.ModelSerializer):
 	title = serializers.CharField(max_length = 20, read_only=True)
+	thumbnail = serializers.ImageField(max_length=None, use_url=True)
 	class Meta:
 		model = Club
 		fields = ['title','topic', 'brief_introduction',
@@ -20,20 +21,20 @@ class ClubDetailSerializer(serializers.ModelSerializer):
 	def update(self, instance, validated_data):
 		img_data = self.context['request'].FILES
 		instance.topic = validated_data['topic']
-		instance.brief_introduction = validated_data['brief_introduction'],
+		instance.brief_introduction = validated_data['brief_introduction']
 		if img_data.getlist('thumbnail'):
 			thumbnail = img_data.getlist('thumbnail')[0]
 			instance.thumbnail = thumbnail
-		instance.save()
+		instance.save(update_fields=['topic', 'brief_introduction',])
 		return instance
 
 
 class ClubSerializer(serializers.ModelSerializer):
 	usernum = serializers.IntegerField(read_only=True)
+	thumbnail = serializers.ImageField(max_length=None, use_url=True)
 	class Meta:
 		model = Club
 		fields = ['id', 'title','topic', 'brief_introduction', 'usernum', 'thumbnail',]
-
 	
 	def create(self, request, validated_data):
 		try :
@@ -50,6 +51,7 @@ class ClubSerializer(serializers.ModelSerializer):
 		)
 		if img_data.getlist('thumbnail'):
 			thumbnail = img_data.getlist('thumbnail')[0]
+			print(thumbnail)
 			instance.thumbnail = thumbnail
 		instance.user_list.add(user)
 		instance.save()

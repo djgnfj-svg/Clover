@@ -15,7 +15,7 @@ from api.Utils.Permission import IsMaster
 from club.models import Club
 
 class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
-	mixins.RetrieveModelMixin):
+	mixins.RetrieveModelMixin, mixins.UpdateModelMixin):
 	serializer_class = ClubSerializer
 	queryset = Club.objects.all()
 	authentication_classes = [SessionAuthentication, JWTAuthentication]
@@ -32,11 +32,11 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 
 	#클럽생성
 	def create(self, request, *args, **kwargs):
-		serializer = ClubSerializer(data=request.data, context={'request' : request})
+		serializer = self.get_serializer(data=request.data, context={'request' : request})
 		if serializer.is_valid():
 			rtn = serializer.create(request, serializer.data)
 			if rtn :
-				return Response(ClubSerializer(rtn).data)
+				return Response(self.get_serializer(rtn).data)
 		else:
 			return Response(error_msg(serializer=serializer), status=status.HTTP_400_BAD_REQUEST)
 	
@@ -58,17 +58,15 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 
 	#클럽수정
 	def update(self, request,*args, **kwargs):
-		serializer = ClubDetailSerializer(data=request.data, context={'request' : request})
-		if serializer.is_valid():
-			rtn = serializer.update(self.get_object(), serializer.data)
+		instance = self.get_object()
+		serializer = self.get_serializer(instance,data=request.data, context={'request' : request})
+		if serializer.is_valid(raise_exception=True):
+			rtn = serializer.save()
 			if rtn :
-				return Response(ClubDetailSerializer(rtn).data)
+				return Response(serializer.data)
 		return Response(error_msg(serializer=serializer), status=status.HTTP_400_BAD_REQUEST)
 
 		
-
-	
-
 	#클럽해체
 	@action(detail=True, methods=['delete'],permission_classes=[IsMaster,], \
 		serializer_class=JoinClubSerializer, name="dissolution_club")
@@ -78,7 +76,7 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 		return Response(success_msg(2002))
 
 
-	#신청 | 탈퇴
+	#신청
 	@action(detail=False, methods=['post'],	serializer_class=JoinClubSerializer, name="joinclub")
 	def joinclub(self, request):
 		club = get_object_or_404(Club, id=request.data['clubid'])
@@ -87,6 +85,7 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 		club.appli_list.add(request.user.id)
 		return Response(success_msg(1001))
 
+	#탈퇴
 	@action(detail=False, methods=['post'],	serializer_class=JoinClubSerializer,name="outclub")
 	def outclub(self, request):
 		club = get_object_or_404(Club, id=request.data['clubid'])
