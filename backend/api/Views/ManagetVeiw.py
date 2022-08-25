@@ -34,12 +34,13 @@ class ClubManagerView(viewsets.GenericViewSet, mixins.DestroyModelMixin):
 	def appli_list_post(self, requset, club_id):
 		user=User.objects.get(id = requset.data['userid'])
 		club = Club.objects.get(id=club_id)
-		# appli list에 있어야만 가입가능
 		if user in club.user_list.all():
 			return Response(error_msg(2001), status=status.HTTP_403_FORBIDDEN)
 		if user not in club.appli_list.all():
 			return Response(error_msg(2002), status=status.HTTP_403_FORBIDDEN)
 		club.user_list.add(user)
+		club.appli_list.remove(user)
+		club.PlusUsernum()
 		return Response(success_msg(1001))
 
 	@appli_list.mapping.delete
