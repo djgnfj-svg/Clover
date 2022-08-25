@@ -1,10 +1,22 @@
-img{
-    width: 40%;
-    height: 30%;
-    object-fit: cover;
-    margin:0 auto;
+.hero_Main{
+    width: 100%;
+    height: 100%;
+    padding-top: 1rem;
+    text-align:center;
+    border:1px solid #cecece;
+  
 }
 .rank{
     width: 100%;
     height: 30%;
+    display:table-cell;
+    vertical-align:middle;
+}
+.rank img{
+    width: 80%;
+    height: 50%;
+    margin: 0 auto;
+    object-fit: contain;
+    max-height: 50%;
+    position: relative;
 }

@@ -13,7 +13,7 @@ function HeroImage() {
     slidesToScroll: 1,
   };
   return (
-    <div style={{height:"100%" ,paddingTop:"1rem"}}>
+    <div className="hero_Main">
       <Slider {...settings}>
         <div className="rank">
           <h3>대충 큰 이미지</h3>

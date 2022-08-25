@@ -7,12 +7,13 @@ import './ClubSetting.css'
 function ClubSetting({info}) {
     const navigate = useNavigate("")
     const { id } = useParams("")
-    const inputRef = React.createRef()
+    const inputRef = useRef();
 
     const [searchParams, setSeratchParams] = useSearchParams();
     const [clubData, setClubData] = useState();
 
     const [fuck , setFuck] = useState(false);
+    const [kitty , setKitty] = useState(false);
 
     const days = searchParams.getAll('days');
     const time_zone = searchParams.get('time_zone');
@@ -20,10 +21,11 @@ function ClubSetting({info}) {
     const gender = searchParams.get('gender');
 
     const [userInput, setUserInput] = useState({
-        title: "",
         topic: "",
         brief_introduction: "",
+        thumbnail : "",
     })
+    const [thumbnailUrl , setThumbnailUrl] = useState();
 
     const [categoryDayid, setCategoryDayId] = useState([]);
     const [categoryTimeId, setCategoryTimeId] = useState([]);
@@ -31,7 +33,7 @@ function ClubSetting({info}) {
     const [categoryGenderId, setCategoryGenderId] = useState([]);
     const [one, setOne] = useState(false);
 
-    const { title, topic, brief_introduction, thumbnail } = userInput
+    const {topic, brief_introduction, thumbnail } = userInput
 
     useEffect(() => {
         setSeratchParams({
@@ -45,12 +47,11 @@ function ClubSetting({info}) {
     useEffect(() => {
         getClubData();
     }, [])
-    useEffect(() => {
-        preview()
-  
-        return () => preview()
-      },[fuck])
 
+    // useEffect(() => {
+    //     preview()
+    //     return () => preview()
+    //   },[fuck])
     const getClubData = () => {
         axios.get(clubDetail + `${id}/`, {
             headers: {
@@ -63,8 +64,11 @@ function ClubSetting({info}) {
                     ...userInput,
                     title : res.data.title,
                     topic : res.data.topic,
-                    brief_introduction : res.data.brief_introduction
+                    brief_introduction : res.data.brief_introduction,
+                    thumbnail : res.data.thumbnail,
                 })
+                setThumbnailUrl(res.data.thumbnail)
+                alert("heelow"+res.data.thumbnail)
             })
     }
 
@@ -78,31 +82,45 @@ function ClubSetting({info}) {
 
     const onUploadImage = useCallback((e) => {
         if (!e.target.files[0]) {
+            alert("불러온 데이터 없음")
           return;
         }
-        setUserInput({
-          ...userInput,
-          thumbnail : e.target.files[0]
+        axios.put(`${clubDetail}${id}/`,{
+            thumbnail : e.target.files[0]
+        }, {
+            headers : {
+              "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`
+            }
         })
-        if(!fuck){
-          setFuck(true)
-        }else if(!!fuck){
-          setFuck(false)
-        }
+        .then(res => {
+            setThumbnailUrl(res.data.thumbnail)
+            alert(res.data.thumbnail)
+        }).catch(error => {
+            console.log(error)
+        })
+
       }, []);
 
-      const preview = () => {
-        if (!thumbnail) return false;
+    //   const preview = () => {
+    //     if (!thumbnail){
+    //         return false;
+    //     } 
+    //     const imgEl = document.querySelector('.img_boxs')
   
-        const imgEl = document.querySelector('.img_boxs')
-  
-        const reader = new FileReader();
-  
-        reader.onload = () =>{
-          (imgEl.style.backgroundImage = `url(${reader.result}) !important`)
-        }
-          reader.readAsDataURL(thumbnail)
-      }
+    //     const reader = new FileReader();
+
+    //     reader.onload = () =>{
+    //       setThumbnailUrl(reader.result)
+    //     }
+    //     reader.readAsDataURL(thumbnail)
+
+    //     // if(kitty){
+    //     //     setKitty(false)
+    //     //   }else if(!kitty){
+    //     //     setFuck(true)
+    //     //   }
+    //   }
 
     const CategoryDays = {
         CategoryTitle: '날짜',
@@ -253,6 +271,7 @@ function ClubSetting({info}) {
     const handleFinishBtn = () => {
         axios.put(`${clubDetail}${id}/`,userInput, {
             headers : {
+              "Content-Type": "multipart/form-data",
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`
             }
         })
@@ -270,15 +289,16 @@ function ClubSetting({info}) {
                 <div style={{ display: "flex", flexDirection: "column" }}>
                     <div className='Setting_Profile'>
                         <div className='Profile_imgboxs'>
-                            <img className='img_boxs'  name='thumbnail' src={clubData.thumbnail} />
+                            <img className='img_boxs'  name='thumbnail' style={{backgroundImage:`url(${thumbnailUrl})`}} />
                             <input type="file" id="upload" accept="image/*" ref={inputRef} onChange={onUploadImage} />
-                            <label htmlFor='fileLabel' />
                         </div>
                         <hr />
                         <div className='Setting_Userinfo'>
-                            <input style={{ fontSize: "30px", marginBottom:"10px" }} onChange={onChangeInput} value={title} name="title" placeholder='clubName'></input>
-                            <input style={{ fontSize: "26px", color: "gray" }} onChange={onChangeInput} value={topic} name="topic" placeholder='clubtopic'></input>
-                            <textarea style={{ fontSize: "23px", marginTop: "30px",height:"100px" }} onChange={onChangeInput} value={brief_introduction} name="brief_introduction" placeholder='brief_introduction'></textarea>
+                            <input type='readOnly' style={{ fontSize: "30px",border:"none" ,  color: "black" , marginBottom:"10px" }}value={clubData.title} placeholder='이름'></input>
+                            <div>클럽 주제</div>
+                            <input style={{ fontSize: "20px", color: "gray" , marginBottom:"10px" }} onChange={onChangeInput} value={topic} name="topic" placeholder='clubtopic'></input>
+                            <div>클럽 소개</div>
+                            <textarea style={{ fontSize: "20px", marginTop: "30px",height:"100px" }} onChange={onChangeInput} value={brief_introduction} name="brief_introduction" placeholder='brief_introduction'></textarea>
                         </div>
                     </div>
                     <div className='Cate_form'>
