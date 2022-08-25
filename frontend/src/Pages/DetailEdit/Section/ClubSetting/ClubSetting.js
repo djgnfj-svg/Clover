@@ -14,7 +14,6 @@ function ClubSetting({info}) {
 
     const [fuck , setFuck] = useState(false);
 
-    const query = searchParams.get('query')
     const days = searchParams.getAll('days');
     const time_zone = searchParams.get('time_zone');
     const range_age = searchParams.get('range_age');
@@ -27,7 +26,6 @@ function ClubSetting({info}) {
         thumbnail:""
     })
 
-    const [userSearch, setUserSearch] = useState("");
     const [categoryDayid, setCategoryDayId] = useState([]);
     const [categoryTimeId, setCategoryTimeId] = useState([]);
     const [categoryAgeId, setCategoryAgeId] = useState([]);
@@ -38,13 +36,12 @@ function ClubSetting({info}) {
 
     useEffect(() => {
         setSeratchParams({
-            query: userSearch,
             days: categoryDayid,
             time_zone: categoryTimeId,
             range_age: categoryAgeId,
             categoryGender: categoryGenderId
         })
-    }, [one || userSearch])
+    }, [one ])
 
     useEffect(() => {
         getClubData();

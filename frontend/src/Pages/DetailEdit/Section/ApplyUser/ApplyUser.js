@@ -7,17 +7,9 @@ import './ApplyUser.css'
 function ApplyUser() {
 
     const { id } = useParams();
-    const [searchParams, setSeratchParams] = useSearchParams();
-    const userid = searchParams.get('userid')
 
     const [applyList, setApplyList] = useState("")
 
-    useEffect(() => {
-        console.log(applyList.id)
-        setSeratchParams({
-            userid : applyList.id
-        })
-    }, [])
 
     useEffect(() => {
         getApplyList()

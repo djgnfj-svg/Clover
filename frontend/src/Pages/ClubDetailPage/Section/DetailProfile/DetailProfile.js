@@ -2,6 +2,7 @@ import React, { useState, useEffect , useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import './DetailProfile.css'
 import axios from 'axios'
+import { applyClub, ExitCluburl } from '../../../../Components/Apiurl';
 
 function DetailProfile({profile }) {
 
@@ -58,19 +59,49 @@ function DetailProfile({profile }) {
   }
 
   const handleCheckApply = () => {
-    // axios.get('가입신청 url' ,
-    // {
-    //   headers : {
-    //     Authorization: `Bearer ${localStorage.getItem('access_token')}`
-    //   }
-    // })
-    // .then(res => {
-    //   console.log(res.data)
-    // })
     let checkApply = window.confirm("가입 신청하시겠습니까?")
+
     if(checkApply){
-      alert(" 가입 신청 완료 !!")
+      axios.post(applyClub,{
+        clubid : id
+      },
+      {
+        headers : {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`
+        }
+      })
+      .then(res => {
+        console.log(res.data)
+        alert(" 가입 신청 완료 !!")
+      }).catch(error => {
+        console.log(error)
+      })
     }else if(!checkApply){
+
+    }
+  }
+
+  const handleExitClub = () => {
+    let checkApply = window.confirm("정말 탈퇴하시겟습니까?")
+
+    if(checkApply){
+      axios.post(ExitCluburl,{
+        clubid : id
+      },
+      {
+        headers : {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`
+        }
+      })
+      .then(res => {
+        console.log(res.data)
+        alert("길드를 탈퇴했습니다")
+        navigate("/")
+      }).catch(error => {
+        console.log(error)
+      })
+    }else if(!checkApply){
+
     }
   }
 
@@ -89,9 +120,15 @@ function DetailProfile({profile }) {
             <button ref={dropdownRef} onClick={() => handleClickDropdown()}>•••</button>
           </div>
         ) :
+        // (
+        //   <div className='clubinfo_edit'>
+        //       <button onClick={() => handleCheckApply()}>가입 신청</button>
+        //       <button ref={dropdownUserRef} onClick={() => handleClickDropdownUser()}>•••</button>
+        //     </div>
+        // )}
         (
           <div className='clubinfo_edit'>
-              <button onClick={() => handleCheckApply()}>가입 신청</button>
+              <button onClick={() => handleExitClub()}>탈톼하기</button>
               <button ref={dropdownUserRef} onClick={() => handleClickDropdownUser()}>•••</button>
             </div>
         )}
