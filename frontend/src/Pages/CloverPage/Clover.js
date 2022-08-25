@@ -11,10 +11,9 @@ function Clover() {
     <div className='club_list'>
 
       <div className='my_clubList'>
-        <h3>내 클럽</h3>
+        <h4>내 클럽</h4>
           <div className='Wrapper_club'>
             <div className='Result_num'>
-              <span>24 results</span>
             </div>
               <div className='Result_box'>
                 <button onClick={(id) => handleApply()}>상세보기</button>
@@ -34,10 +33,9 @@ function Clover() {
           </div>
       </div>
       <div className='in_clubList'>
-        <h3>가입한 클럽</h3>
+        <h4>가입한 클럽</h4>
         <div className='Wrapper_club'>
             <div className='Result_num'>
-              <span>24 results</span>
             </div>
               <div className='Result_box'>
                 <button onClick={(id) => handleApply()}>상세보기</button>

@@ -123,25 +123,20 @@ function MyNavbar() {
 
   return (
     <div className="MyNavbar">
-      <div className="Nav_title"><img src={`${process.env.PUBLIC_URL}/image/`} />Clover</div>
+      <div className="Nav_title" onClick={() => navigate("/")}>Clover</div>
 
       <div className={home ? "selectCategory" : "NavCategoryHome"} >
-        <span className="material-symbols-outlined">
-          home
-        </span>
         <p className='NavHome' onClick={(e) => handleClickCategory(e)}>Home</p>
       </div>
 
-      <div className={club ? "selectCategory" : "NavCategoryClub"} >
-        <span className="material-symbols-outlined" >
-          diversity_3
-        </span>
-        <p className="NavClub" onClick={(e) => handleClickCategory(e)}>Club</p>
+      <div className={test ? "selectCategory" : "NavCategoryTest"}>
+        <p className='NavTest' onClick={(e) => handleClickCategory(e)}>Club</p>
       </div>
 
-      <div className={test ? "selectCategory" : "NavCategoryTest"}>
-        <p className='NavTest' onClick={(e) => handleClickCategory(e)}>Clover</p>
+      <div className={club ? "selectCategory" : "NavCategoryClub"} >
+        <p className="NavClub" onClick={(e) => handleClickCategory(e)}>Search</p>
       </div>
+
       {isLogin && (
         <div className="NavNotice">
         <span className="material-symbols-outlined">
@@ -177,12 +172,6 @@ function MyNavbar() {
                   diversity_3
                 </span>
                   <span>모임 만들기</span>
-                </div>
-                <div>
-                <span class="material-symbols-outlined">
-                    thumb_up_off
-                  </span>
-                  <span>코드 리팩토링</span>
                 </div>
                 <div onClick={(e) => handleEditProfile(e)}>
                 <span class="material-symbols-outlined">
