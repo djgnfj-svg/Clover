@@ -54,5 +54,11 @@ class Club(models.Model):
 
 	def Joinclub(self, user:User):
 		self.user_list.add(user)
+
 	def PlusUsernum(self):
 		self.usernum += 1
+		self.save()
+
+	def MinusUsernum(self):
+		self.usernum -= 1
+		self.save()

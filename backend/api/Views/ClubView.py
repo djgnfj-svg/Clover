@@ -24,6 +24,7 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 		if self.action == "update":
 			self.permission_classes = [IsMaster,]
 		return super().get_permissions()
+
 	def get_serializer(self, *args, **kwargs):
 		if self.action == "update":
 			self.serializer_class = ClubDetailSerializer
@@ -39,15 +40,6 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 		else:
 			return Response(error_msg(serializer=serializer), status=status.HTTP_400_BAD_REQUEST)
 	
-	#클럽수정
-	def update(self, request,*args, **kwargs):
-		serializer = ClubDetailSerializer(data=request.data, context={'request' : request})
-		if serializer.is_valid():
-			rtn = serializer.update(self.get_object(), serializer.data)
-			if rtn :
-				return Response(ClubDetailSerializer(rtn).data)
-		return Response(error_msg(serializer=serializer), status=status.HTTP_400_BAD_REQUEST)
-
 	#클럽 권한
 	@action(detail=True, methods=['get'])
 	def get_right(self, requset, pk):
@@ -62,12 +54,28 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 			return Response({"right" : "subscriber"})
 		else :
 			return Response({"right" : "user"})
+	
+
+	#클럽수정
+	def update(self, request,*args, **kwargs):
+		serializer = ClubDetailSerializer(data=request.data, context={'request' : request})
+		if serializer.is_valid():
+			rtn = serializer.update(self.get_object(), serializer.data)
+			if rtn :
+				return Response(ClubDetailSerializer(rtn).data)
+		return Response(error_msg(serializer=serializer), status=status.HTTP_400_BAD_REQUEST)
+
 		
 
-			
+	
 
 	#클럽해체
-
+	@action(detail=True, methods=['delete'],permission_classes=[IsMaster,], \
+		serializer_class=JoinClubSerializer, name="dissolution_club")
+	def dissolution_club(self,request, pk):
+		instance = self.get_object()
+		instance.delete()
+		return Response(success_msg(2002))
 
 
 	#신청 | 탈퇴
@@ -87,5 +95,6 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 		except :
 			return Response(error_msg(404),status=status.HTTP_404_NOT_FOUND)
 		club.user_list.remove(temp.id)
+		club.MinusUsernum()
 		return Response(success_msg(1002))
 	# todo 신청취소
