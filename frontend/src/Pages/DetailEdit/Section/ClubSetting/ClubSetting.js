@@ -12,9 +12,6 @@ function ClubSetting({info}) {
     const [searchParams, setSeratchParams] = useSearchParams();
     const [clubData, setClubData] = useState();
 
-    const [fuck , setFuck] = useState(false);
-    const [kitty , setKitty] = useState(false);
-
     const days = searchParams.getAll('days');
     const time_zone = searchParams.get('time_zone');
     const range_age = searchParams.get('range_age');
@@ -47,10 +44,6 @@ function ClubSetting({info}) {
         getClubData();
     }, [])
 
-    // useEffect(() => {
-    //     preview()
-    //     return () => preview()
-    //   },[fuck])
     const getClubData = () => {
         axios.get(clubDetail + `${id}/`, {
             headers: {

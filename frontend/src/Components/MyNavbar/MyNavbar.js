@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import Add_modal from './Add_Modal/Add_modal'
 import IsLogin from '../IsLogin'
 import './MyNavbar.css'
+import axios from 'axios'
+import { userInfoUrl } from '../Apiurl'
 
 function MyNavbar() {
 
@@ -97,6 +99,18 @@ function MyNavbar() {
   }
 
   const handleClickProfile = () => {
+    axios.get(userInfoUrl , {
+      headers : {
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`
+      }
+    })
+    .then(res => {
+      console.log(res.data)
+    }).catch(error => {
+      console.log(error)
+    })
+    
+
     if(!isOpen){
       setIsOpen(true)
     }else{

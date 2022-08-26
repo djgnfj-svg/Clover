@@ -1,3 +1,8 @@
+.userProfile_edit{
+    position: absolute;
+    top: 100%;
+}
+
 .Profile_imgbox input {
     border: 1px solid;
     width: 250px;
@@ -6,20 +11,13 @@
     color: black;
 }
 
-.EditProfile {
-    display: flex;
-    width: 30%;
-    margin: 0 auto;
-    top: 100%;
-    position: absolute;
-    left: 30%;
-}
-
-.Edit_userinfo{
-    margin: 0 auto;
-    padding-top: 8%;
-    margin-left: 8%;
-}
-.Edit_userinfo div{
+.Setting_Userinfo > p{
     width: 300px;
+    border: 1px solid rgb(222,222,222);
+    border-radius: 10px;
+    margin-top: 20px;
+}
+.Setting_Userinfo > div{
+    font-size: 20px;
+    font-weight: 400;
 }
