@@ -18,6 +18,12 @@ function MyNavbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [showModal , setShowModal] = useState(false)
 
+  const [userInfo , setUserInfo] = useState({
+    username : "",
+    brief_introduction : "",
+    thumbnail:"",
+  })
+
   const pageurls = {
     home: "",
     club: "club",
@@ -31,6 +37,7 @@ function MyNavbar() {
 
   })
   const { home, club, test } = selectPages;
+  const { username , brief_introduction , thumbnail} = userInfo
 
   useEffect(() => {
     if (!!IsLogin()) {
@@ -105,12 +112,14 @@ function MyNavbar() {
       }
     })
     .then(res => {
-      console.log(res.data)
+      setUserInfo({
+        ...userInfo,
+        username : res.data.username
+      })
     }).catch(error => {
       console.log(error)
     })
     
-
     if(!isOpen){
       setIsOpen(true)
     }else{
@@ -160,7 +169,7 @@ function MyNavbar() {
       )
 }
       <div className="NavProfile">
-        {isLogin ? (
+        {isLogin && userInfo ? (
           <div>
             <button ref={ref} className="ProfileBtn" onClick={() => handleClickProfile()}>
             <span className="material-symbols-outlined" style={{position:"relative" ,marginRight:"20px" , fontSize:"30px"}}>
@@ -177,17 +186,17 @@ function MyNavbar() {
                     account_circle
                   </span>
                   <div className='Profile_name'>
-                    <span style={{fontWeight :"bold" , color:"black" , fontSize:"18px"}}>김밥님</span>
+                    <span style={{fontWeight :"bold" , color:"black" , fontSize:"18px"}}>{userInfo.username}</span>
                     <span className='Profile_category'>안녕하세요 반가워요 !</span>
                   </div>
                 </div>
-                <div onClick={modalClose}>
+                <div className='Dropdown_AddClub' onClick={modalClose}>
                 <span class="material-symbols-outlined">
                   diversity_3
                 </span>
                   <span>모임 만들기</span>
                 </div>
-                <div onClick={(e) => handleEditProfile(e)}>
+                <div className='Dropdown_settingProfile' onClick={(e) => handleEditProfile(e)}>
                 <span class="material-symbols-outlined">
                     settings
                   </span>

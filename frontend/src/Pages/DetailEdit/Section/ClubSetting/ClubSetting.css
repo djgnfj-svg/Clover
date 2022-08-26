@@ -18,6 +18,26 @@
     position: relative;
 }
 
+.Profile_imgBtn{
+    text-align: center;
+    margin-top: 20px;
+}
+.Profile_imgBtn .imgBtn_reset , .imgBtn_submit{
+    width: 75px;
+    height: 35px;
+    border: none;
+    border-radius: 10px;
+}
+.imgBtn_reset{
+    margin-right: 20px;
+    background-color: rgb(255, 101, 101);
+    color: white;
+}
+.imgBtn_submit{
+    background-color: rgb(134, 160, 212);
+    color: rgb(255, 255, 255);
+}
+
 .Setting_Userinfo{
     margin: 0 auto;
     margin-left: 8%;
@@ -35,6 +55,7 @@
     font-size: 20px;
     margin-bottom: 10px;
     font-weight: 700;
+    color: rgb(90,90,90);
 }
 .Setting_Userinfo textarea{
     width: 400px;

@@ -234,10 +234,7 @@
     font-weight: 400;
     color:rgb(108 ,111 , 120)
 }
-.Profile_Dropdown div:hover{
-    background-color: rgb(246,246,246);
-    z-index: 1;
-}
+
 
 
 .line {
@@ -265,5 +262,8 @@
 .Dropdown_Logout{
     margin-top: 20px;
     margin-bottom: 5px;
+}
+.Dropdown_AddClub:hover ,  .Dropdown_Logout:hover ,  .Dropdown_settingProfile:hover{
+    background-color: rgb(244, 244, 244);
 }
 

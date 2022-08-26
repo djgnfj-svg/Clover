@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { clubDetail, searchurl } from '../../../../Components/Apiurl';
+import { clubDetail, clubthumbnail, searchurl } from '../../../../Components/Apiurl';
 import axios from 'axios'
 import './ClubSetting.css'
 
@@ -21,6 +21,7 @@ function ClubSetting({info}) {
         topic: "",
         brief_introduction: "",
     })
+    const [thumbnail , setThumbnail] = useState()
     const [thumbnailUrl , setThumbnailUrl] = useState();
 
     const [categoryDayid, setCategoryDayId] = useState([]);
@@ -29,7 +30,7 @@ function ClubSetting({info}) {
     const [categoryGenderId, setCategoryGenderId] = useState([]);
     const [one, setOne] = useState(false);
 
-    const {topic, brief_introduction, thumbnail } = userInput
+    const {topic, brief_introduction } = userInput
 
     useEffect(() => {
         setSeratchParams({
@@ -57,10 +58,9 @@ function ClubSetting({info}) {
                     title : res.data.title,
                     topic : res.data.topic,
                     brief_introduction : res.data.brief_introduction,
-                    thumbnail : res.data.thumbnail,
                 })
+                setThumbnail(res.data.thumbnail)
                 setThumbnailUrl(res.data.thumbnail)
-                alert("heelow"+res.data.thumbnail)
             })
     }
 
@@ -87,32 +87,38 @@ function ClubSetting({info}) {
         })
         .then(res => {
             setThumbnailUrl(res.data.thumbnail)
-            alert(res.data.thumbnail)
         }).catch(error => {
             console.log(error)
         })
 
       }, []);
 
-    //   const preview = () => {
-    //     if (!thumbnail){
-    //         return false;
-    //     } 
-    //     const imgEl = document.querySelector('.img_boxs')
-  
-    //     const reader = new FileReader();
+    const handleChangeThumbnail = () => {
+        axios.post(clubthumbnail(id) , {
+            thumbnail :thumbnail
+        },
+        {
+            headers : {
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`
+            }
+        }).then(res => {
+            console.log(res.data)
+        })
+    }
+    const handleResetThumbnail = () => {
 
-    //     reader.onload = () =>{
-    //       setThumbnailUrl(reader.result)
-    //     }
-    //     reader.readAsDataURL(thumbnail)
-
-    //     // if(kitty){
-    //     //     setKitty(false)
-    //     //   }else if(!kitty){
-    //     //     setFuck(true)
-    //     //   }
-    //   }
+        axios.post(clubthumbnail(id) , {
+            thumbnail : thumbnail
+        },
+        {
+            headers : {
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`
+            }
+        }).then(res => {
+            console.log(res.data)
+        })
+        setThumbnailUrl(clubData.thumbnail)
+    }
 
     const CategoryDays = {
         CategoryTitle: '날짜',
@@ -282,11 +288,14 @@ function ClubSetting({info}) {
                     <div className='Setting_Profile'>
                         <div className='Profile_imgboxs'>
                             <img className='img_boxs'  name='thumbnail' style={{backgroundImage:`url(${thumbnailUrl})`}} />
-                            <input type="file" id="upload" accept="image/*" ref={inputRef} onChange={onUploadImage} />
+                            <div className='Profile_imgBtn'>
+                                <button className='imgBtn_reset' onClick={() => handleResetThumbnail()} >초기화</button>
+                                <button className='imgBtn_submit' onClick={() => handleChangeThumbnail()}>적용하기</button>
+                            </div>
                         </div>
                         <hr />
                         <div className='Setting_Userinfo'>
-                            <input type='readOnly' style={{ fontSize: "30px",border:"none" ,  color: "black" , marginBottom:"10px" }}value={clubData.title} placeholder='이름'></input>
+                            <input readOnly style={{ padding:"0rem !important", backgroundColor:"rgb(249,249,249)" , fontSize: "30px",border:"none" ,  color: "rgb(91,91,91)" , marginBottom:"10px" }}value={clubData.title} placeholder='이름'></input>
                             <div>클럽 주제</div>
                             <input style={{ fontSize: "20px", color: "gray" , marginBottom:"10px" }} onChange={onChangeInput} value={topic} name="topic" placeholder='clubtopic'></input>
                             <div>클럽 소개</div>
