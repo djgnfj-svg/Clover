@@ -60,7 +60,7 @@ class UserVerification(models.Model):
 
 class UserProfile(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
-	image = models.ImageField(blank=True, upload_to='images', null=True,)
+	image = models.ImageField(blank=True, upload_to='images/profile_img', null=True,)
 	description = models.TextField(null=False, default="본인어필하세요")
 	club_list = models.JSONField(null=True)
 
