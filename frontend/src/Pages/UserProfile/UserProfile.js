@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 import { useNavigate } from 'react-router-dom';
 import EditProfile from './Section/EditProfile/EditProfile';
-import EditPassword from './Section/Profile/EditPassword';
+import EditPassword from './Section/EditPassword/EditPassword';
 import SecedeUser from './Section/SecedeUser/SecedeUser';
 
 function UserProfile() {
@@ -54,7 +54,7 @@ function UserProfile() {
             {!isChecked ?
                 (
                     <div className='CheckedPassword'>
-                        <div>비밀번호를 입력해주세요</div>
+                        <div className='check_password'>비밀번호를 입력해주세요</div>
                         <input type='password' value={password} onChange={(e) => handleChangeInput(e)} onKeyUp={handlePressEnter} />
                         <div onClick={() => handleClickEnter()}>
                             <button>확인</button>

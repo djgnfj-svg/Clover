@@ -21,7 +21,6 @@ function SearchResult({data}) {
   return (
     <div className='Wrapper_result'>
       <div className='Result_num'>
-        <span>24 results</span>
       </div>
       {clubData && clubData.map((item) => (
         <div className='Result_box'>
