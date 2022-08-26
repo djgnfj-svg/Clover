@@ -16,6 +16,7 @@ from club.models import Club
 
 class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 	mixins.RetrieveModelMixin, mixins.UpdateModelMixin):
+
 	serializer_class = ClubSerializer
 	queryset = Club.objects.all()
 	authentication_classes = [SessionAuthentication, JWTAuthentication]
