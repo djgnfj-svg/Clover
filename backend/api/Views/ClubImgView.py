@@ -1,3 +1,5 @@
+from django.shortcuts import get_object_or_404
+
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from api.Utils.Error_msg import error_msg, success_msg
@@ -15,7 +17,7 @@ class ClubThumbnailView(viewsets.ModelViewSet):
 
     def list(self, request, club_id, *args, **kwargs):
         club = Club.objects.get(id=club_id)
-        queryset = self.queryset.get(club=club)
+        queryset = get_object_or_404(ClubThumbnail, club = club)
         return Response(self.get_serializer(queryset).data)
     
     def create(self, request, club_id, *args, **kwargs):

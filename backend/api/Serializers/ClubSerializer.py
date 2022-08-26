@@ -1,10 +1,8 @@
-from rest_framework import serializers, exceptions
+from rest_framework import serializers
 
 from accounts.models import User
-from api.Serializers.ClubImgSerializer import ClubthumbnailSerializer
-from api.Serializers.ClubImgSerializer import ClubDetailImgSerializer
 
-from club.models import Club, ClubThumbnail
+from club.models import Club
 
 
 class ClubDetailSerializer(serializers.ModelSerializer):
@@ -16,7 +14,7 @@ class ClubDetailSerializer(serializers.ModelSerializer):
 		'days', 'time_zone', 'gender']
 	
 class ClubSerializer(serializers.ModelSerializer):
-	thumbnail = ClubthumbnailSerializer(write_only=True)
+	thumbnail = serializers.ImageField(write_only=True)
 	class Meta:
 		model = Club
 		fields = ['id', 'title','topic', 'brief_introduction', 'thumbnail']
@@ -25,6 +23,7 @@ class ClubSerializer(serializers.ModelSerializer):
 		#클럽을 만들고
 		# 클럽의 썸네일을 만든다
 		user =  User.objects.get(id = request.user.id)
+		img_data = self.context['request'].FILES
 		instance = Club.objects.create(
 			title = validated_data['title'],
 			topic = validated_data['topic'],
@@ -32,16 +31,11 @@ class ClubSerializer(serializers.ModelSerializer):
 			master = user,
 			creator = user,
 		)
+		if img_data.getlist('thumbnail'):
+			thumbnail = img_data.getlist('thumbnail')[0]
+			instance.thumbnail = thumbnail
 		instance.user_list.add(user)
 		instance.save()
-		
-		img_data = self.context['request'].FILES
-		if img_data.getlist('thumbnail.thumbnail'):
-			thumbnail = ClubThumbnail.objects.create(
-				thumbnail = img_data.getlist('thumbnail.thumbnail')[0],
-				club = instance
-			)
-			thumbnail.save()
 		return instance
 
 class JoinClubSerializer(serializers.Serializer):

@@ -1,9 +1,11 @@
 from django.db import models
 from accounts.models import User
 
-# Create your models here.
-class Hashtag(models.Model):
-	name = models.CharField(max_length=15)
+class ClubDetailImg(models.Model):
+	image = models.ImageField(upload_to="images/detail_image", null=False)
+
+	updated_at = models.DateTimeField(auto_now=True)
+	created_at = models.DateTimeField(auto_now_add=True)
 
 class Club(models.Model):
 	#러프 입력
@@ -11,7 +13,7 @@ class Club(models.Model):
 	topic = models.CharField(max_length=20, null=True)
 	brief_introduction = models.CharField(max_length=20, null=True, default="간단한 소개를 입력해주세요")
 	description = models.TextField(null=True, default="자세한 정보를 입력해주세요", blank=True)
-
+	thumbnail = models.ImageField(upload_to="images", null=False, default='midea/defaultimg.jpg')
 	# 상세정보
 
 	# +를 통해서 요일을 받을 것이다
@@ -61,17 +63,3 @@ class Club(models.Model):
 	def MinusUsernum(self):
 		self.usernum -= 1
 		self.save()
-
-class ClubThumbnail(models.Model):
-	thumbnail = models.ImageField(upload_to="images/club_thumbnail", null=False)
-
-	club = models.ForeignKey(Club, on_delete=models.CASCADE, null=False)
-	updated_at = models.DateTimeField(auto_now=True)
-	created_at = models.DateTimeField(auto_now_add=True)
-
-class ClubDetailImg(models.Model):
-	image = models.ImageField(upload_to="images/detail_image", null=False)
-
-	club = models.ForeignKey(Club, on_delete=models.CASCADE, null=False)
-	updated_at = models.DateTimeField(auto_now=True)
-	created_at = models.DateTimeField(auto_now_add=True)
