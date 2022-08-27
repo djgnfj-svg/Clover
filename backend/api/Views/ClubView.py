@@ -11,6 +11,7 @@ from api.Serializers.ClubSerializer import ClubRoughSerializder, JoinClubRoughSe
 from api.Serializers.ClubSerializer import ClubDetailSerializer
 from api.Utils.Error_msg import error_msg, success_msg
 from api.Utils.Permission import IsMaster
+from api.Serializers.ClubSerializer import ClubThumbnailSerializer
 
 from club.models import Club
 
@@ -67,7 +68,7 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 				return Response(serializer.data)
 		return Response(error_msg(serializer=serializer), status=status.HTTP_400_BAD_REQUEST)
 
-		
+	
 	#클럽해체
 	@action(detail=True, methods=['delete'],permission_classes=[IsMaster,], \
 		serializer_class=JoinClubRoughSerializder, name="dissolution_club")
@@ -76,6 +77,18 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 		instance.delete()
 		return Response(success_msg(2002))
 
+	@action(detail=True, methods=['put'], name="thumbnail",\
+		serializer_class=ClubThumbnailSerializer)
+	def change_thumbnail(self, request, pk):
+		instance = self.get_object()
+		serialzier = self.get_serializer(data = request.data, context={'request' : request})
+		if serialzier.is_valid():
+			serialzier.update(instance, request.data)
+			return Response(success_msg(2002))
+		# instance.thumbnail = request.data["thumbnail"]
+		# print(type(request.data["thumbnail"]))
+		# instance.update(thumbnail)
+		return Response(error_msg(403))
 
 	#신청
 	@action(detail=False, methods=['post'],	serializer_class=JoinClubRoughSerializder, name="joinclub")

@@ -14,9 +14,9 @@ class ClubDetailImgSerializer(serializers.ModelSerializer):
     def create(self, club_id, validated_data):
         img_data = self.context['request'].FILES
         club = get_object_or_404(Club, id = club_id)
-        print(img_data)
         for img in img_data.getlist('image'):
             instance= ClubDetailImg.objects.create(
                 image=img,
                 club = club)
         return instance
+    

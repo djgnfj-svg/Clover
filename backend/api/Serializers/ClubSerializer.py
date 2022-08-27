@@ -7,7 +7,7 @@ from club.models import Club
 class ClubThumbnailSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Club
-		foelds = ['thumbnail']
+		fields = ['thumbnail']
 
 class ClubViewSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -28,8 +28,6 @@ class ClubRoughSerializder(serializers.ModelSerializer):
 		fields = ['id', 'title','topic', 'brief_introduction']
 	
 	def create(self, request, validated_data):
-		#클럽을 만들고
-		# 클럽의 썸네일을 만든다
 		try :
 			user = User.objects.get(id = request.user.id)
 		except Exception  as e:
