@@ -3,8 +3,8 @@ from django.db.models import Q
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from api.Serializers.ClubSerializer import ClubSerializer
-from api.Serializers.SearchSerializer import SearchSerializer
+from api.Serializers.ClubSerializer import ClubRoughSerializder
+from api.Serializers.ClubSerializer import ClubViewSerializer
 
 from club.models import Club
 from rest_framework.pagination import PageNumberPagination
@@ -15,7 +15,7 @@ class HomePagination(PageNumberPagination):
 
 class SearchViewSet(viewsets.ReadOnlyModelViewSet):
 	queryset = Club.objects.all().order_by("-created_at")
-	serializer_class = ClubSerializer
+	serializer_class = ClubViewSerializer
 	pagination_class = HomePagination
 	permission_classes = [AllowAny]
 
@@ -40,5 +40,5 @@ class SearchViewSet(viewsets.ReadOnlyModelViewSet):
 		if query:
 			q &= Q(title__contains=query)
 		rtn = Club.objects.filter(q)
-		return Response(ClubSerializer(rtn,many=True,context = {'request' : request}).data)
+		return Response(ClubViewSerializer(rtn,many=True,context = {'request' : request}).data)
 		# return Response(SearchSerializer(rtn,many=True,context = {'request' : request}).data)

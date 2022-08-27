@@ -10,12 +10,12 @@ from api.Utils.Error_msg import error_msg, success_msg
 
 from api.Utils.Permission import IsManager
 from api.Serializers.StaffSerializer import AddUserSerializer, StaffSerializer, AppliSerializer
-from api.Serializers.ClubSerializer import ClubSerializer, JoinClubSerializer
+from api.Serializers.ClubSerializer import ClubRoughSerializder, JoinClubRoughSerializder
 
 from club.models import Club
 
 class ClubManagerView(viewsets.GenericViewSet, mixins.DestroyModelMixin):
-	serializer_class = JoinClubSerializer
+	serializer_class = JoinClubRoughSerializder
 	queryset = Club.objects.all()
 	authentication_classes = [SessionAuthentication, JWTAuthentication]
 	permission_classes = [IsManager]

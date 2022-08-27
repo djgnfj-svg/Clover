@@ -7,7 +7,7 @@ from rest_framework.decorators import action
 
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from api.Serializers.ClubSerializer import ClubSerializer, JoinClubSerializer
+from api.Serializers.ClubSerializer import ClubRoughSerializder, JoinClubRoughSerializder
 from api.Serializers.ClubSerializer import ClubDetailSerializer
 from api.Utils.Error_msg import error_msg, success_msg
 from api.Utils.Permission import IsMaster
@@ -17,7 +17,7 @@ from club.models import Club
 class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 	mixins.RetrieveModelMixin, mixins.UpdateModelMixin):
 
-	serializer_class = ClubSerializer
+	serializer_class = ClubRoughSerializder
 	queryset = Club.objects.all()
 	authentication_classes = [SessionAuthentication, JWTAuthentication]
 
@@ -70,7 +70,7 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 		
 	#클럽해체
 	@action(detail=True, methods=['delete'],permission_classes=[IsMaster,], \
-		serializer_class=JoinClubSerializer, name="dissolution_club")
+		serializer_class=JoinClubRoughSerializder, name="dissolution_club")
 	def dissolution_club(self,request, pk):
 		instance = self.get_object()
 		instance.delete()
@@ -78,7 +78,7 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 
 
 	#신청
-	@action(detail=False, methods=['post'],	serializer_class=JoinClubSerializer, name="joinclub")
+	@action(detail=False, methods=['post'],	serializer_class=JoinClubRoughSerializder, name="joinclub")
 	def joinclub(self, request):
 		club = get_object_or_404(Club, id=request.data['clubid'])
 		if request.user in club.user_list.all():
@@ -87,7 +87,7 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 		return Response(success_msg(1001))
 
 	#탈퇴
-	@action(detail=False, methods=['post'],	serializer_class=JoinClubSerializer,name="outclub")
+	@action(detail=False, methods=['post'],	serializer_class=JoinClubRoughSerializder,name="outclub")
 	def outclub(self, request):
 		club = get_object_or_404(Club, id=request.data['clubid'])
 		try :
