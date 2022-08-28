@@ -28,13 +28,15 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 		return super().get_permissions()
 
 	def get_serializer(self, *args, **kwargs):
-		if self.action == "update" or "retrive":
+		print(self.action)
+		if self.action == "update":
 			self.serializer_class = ClubDetailSerializer
 		return super().get_serializer(*args, **kwargs)
 
 	#클럽생성
 	def create(self, request, *args, **kwargs):
 		serializer = self.get_serializer(data=request.data, context={'request' : request})
+		print(serializer)
 		if serializer.is_valid():
 			rtn = serializer.create(request, serializer.data)
 			if rtn :
