@@ -288,6 +288,8 @@ function ClubSetting({info}) {
                     <div className='Setting_Profile'>
                         <div className='Profile_imgboxs'>
                             <img className='img_boxs'  name='thumbnail' style={{backgroundImage:`url(${thumbnailUrl})`}} />
+                            <input type="file" id="upload" accept="image/*" ref={inputRef} onChange={onUploadImage} />
+                            <label htmlFor='fileLabel' />
                             <div className='Profile_imgBtn'>
                                 <button className='imgBtn_reset' onClick={() => handleResetThumbnail()} >초기화</button>
                                 <button className='imgBtn_submit' onClick={() => handleChangeThumbnail()}>적용하기</button>

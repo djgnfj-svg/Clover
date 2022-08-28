@@ -3,15 +3,17 @@ import DetailInfo from './Section/DetailInfo/DetailInfo'
 import DetailProfile from './Section/DetailProfile/DetailProfile'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
-import { clubDetail } from '../../Components/Apiurl'
+import { clubAuth, clubDetail } from '../../Components/Apiurl'
 
 function ClubDetailPage() {
 
   const { id } = useParams();
   const [profile, setProfile] = useState();
+  const [auth , setAuth] = useState();
 
   useEffect(() => {
     getClubData()
+    getAuth()
   }, [])
 
   const getClubData = () => {
@@ -27,12 +29,26 @@ function ClubDetailPage() {
       })
   }
 
+  const getAuth = () => {
+    axios.get(clubAuth(id) , {
+      headers : {
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`
+      }
+    })
+    .then(res => {
+      setAuth(res.data)
+      console.log(res.data)
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+
   return (
     <>
-      {profile && (
+      {profile && auth && (
         <div>
-          <DetailProfile profile={profile} />
-          <DetailInfo info={profile} />
+          <DetailProfile profile={profile} auth={auth} />
+          <DetailInfo info={profile} auth={auth} />
         </div>
       )}
     </>

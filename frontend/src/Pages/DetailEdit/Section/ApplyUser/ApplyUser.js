@@ -22,16 +22,15 @@ function ApplyUser() {
             }
         })
             .then(res => {
-                console.log(res.data)
                 setApplyList(res.data);
             }).catch(error => {
                 console.log(error)
             })
     }
 
-    const handleSucessApply = () => {
+    const handleSucessApply = (userid) => {
         axios.post(applyUrl(id), {
-            useid : applyList.id
+            userid : userid
         },
         {
             headers : {
@@ -78,7 +77,7 @@ function ApplyUser() {
                                     <td>{item.username}</td>
                                     <td>저는 뭐시기뭐시</td>
                                     <td style={{ display: "flex", textAlign: "right" }}>
-                                        <button onClick={() => handleSucessApply()}>가입</button>
+                                        <button onClick={() => handleSucessApply(item.id)}>가입</button>
                                         <button onClick={() => handleOutApply(item.id)}>거절</button>
                                     </td>
                                 </tr>

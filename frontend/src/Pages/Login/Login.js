@@ -30,6 +30,7 @@ function Login() {
       navigate("/")
     })
     .catch(error => {
+      alert("이메일 또는 비밀번호가 잘못됐습니다.")
       console.log(error)
     })
   }

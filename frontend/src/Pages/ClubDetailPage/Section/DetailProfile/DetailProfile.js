@@ -4,7 +4,7 @@ import './DetailProfile.css'
 import axios from 'axios'
 import { applyClub, ExitCluburl } from '../../../../Components/Apiurl';
 
-function DetailProfile({profile }) {
+function DetailProfile({profile , auth}) {
 
   const dropdownRef = useRef()
   const dropdownUserRef = useRef()
@@ -15,7 +15,6 @@ function DetailProfile({profile }) {
 
   const [showDropdown, setShowDropdown] = useState(false)
   const [showDropdownUser , setShowDropdownUser] = useState(false)
-  const [auth, setAuth] = useState(true)
 
   useEffect(() => {
     if (showDropdown) document.addEventListener('click', handleClickOutSide)
@@ -114,19 +113,19 @@ function DetailProfile({profile }) {
         <div className='clubinfo_name'>{profile.title}</div>
         <div>{profile.topic}</div>
         <div className='clubinfo_description'>{profile.brief_introduction} </div>
-        {auth ? (
+        {(auth.right === "master" || auth.right === 'manager') &&  (
           <div className='clubinfo_edit'>
             <button onClick={() => navigate(`/club/${id}/edit`)}>Edit Club</button>
             <button ref={dropdownRef} onClick={() => handleClickDropdown()}>•••</button>
           </div>
-        ) :
-        // (
-        //   <div className='clubinfo_edit'>
-        //       <button onClick={() => handleCheckApply()}>가입 신청</button>
-        //       <button ref={dropdownUserRef} onClick={() => handleClickDropdownUser()}>•••</button>
-        //     </div>
-        // )}
-        (
+        )}
+        {auth.right === 'user' && (
+          <div className='clubinfo_edit'>
+              <button onClick={() => handleCheckApply()}>가입 신청</button>
+              <button ref={dropdownUserRef} onClick={() => handleClickDropdownUser()}>•••</button>
+            </div>
+        )}
+        {auth.right === 'subscriber' && (
           <div className='clubinfo_edit'>
               <button onClick={() => handleExitClub()}>탈톼하기</button>
               <button ref={dropdownUserRef} onClick={() => handleClickDropdownUser()}>•••</button>
