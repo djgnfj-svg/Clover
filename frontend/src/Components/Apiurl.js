@@ -13,6 +13,7 @@ export const applyUrl = (id) =>  `http://127.0.0.1:8000/api/club/${id}/manager/a
 export const applyOutUrl = (id)=> `http://127.0.0.1:8000/api/club/${id}/manager/appli_list/` // +?userid=3  가입 거절 + 쿼리로 userid 보내주기
 export const userListurl = (id) => `http://127.0.0.1:8000/api/club/${id}/manager/` // 클럽 유저리스트
 export const clubthumbnail = (id) => `http://127.0.0.1:8000/api/club/${id}/thumbnail/`
+export const clubinfoImgUrl = (id) => `http://127.0.0.1:8000/api/club/${id}/img/`
 
 //유저 
 export const userInfoUrl = 'http://127.0.0.1:8000/api/accounts/user/'

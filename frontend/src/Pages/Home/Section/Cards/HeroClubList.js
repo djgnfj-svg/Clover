@@ -22,7 +22,6 @@ function HeroClubList() {
     })
       .then(res => {
         setNewClubData(res.data.results)
-        console.log(res.data)
       })
       .catch(error => {
         console.log(error)

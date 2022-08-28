@@ -21,7 +21,7 @@ function DetailInfo({info}) {
           </>
         ) : (
           <>
-          <Viewer initialValue={info.description} />
+          <Viewer className="testing" initialValue={info.description} />
           </>
         )
       }</div>

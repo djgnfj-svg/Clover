@@ -127,7 +127,7 @@ function DetailProfile({profile , auth}) {
         )}
         {auth.right === 'subscriber' && (
           <div className='clubinfo_edit'>
-              <button onClick={() => handleExitClub()}>탈톼하기</button>
+              <button onClick={() => handleExitClub()}>탈퇴하기</button>
               <button ref={dropdownUserRef} onClick={() => handleClickDropdownUser()}>•••</button>
             </div>
         )}

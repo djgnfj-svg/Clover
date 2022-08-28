@@ -28,12 +28,6 @@ function Add_modal({ show }) {
       })
     }
 
-    useEffect(() => {
-      preview()
-
-      return () => preview()
-    },[fuck])
-    
     const handleSubmit = () =>{
         if(title.length  < 2 ){
           alert("제목을 2글자 이상 입력해주세요 !");
@@ -56,40 +50,40 @@ function Add_modal({ show }) {
         }
         
   
-    const onUploadImage = useCallback((e) => {
-      if (!e.target.files[0]) {
-        return;
-      }
-      setClubData({
-        ...clubData,
-        thumbnail : e.target.files[0]
-      })
-      if(!fuck){
-        setFuck(true)
-      }else if(!!fuck){
-        setFuck(false)
-      }
-    }, []);
+    // const onUploadImage = useCallback((e) => {
+    //   if (!e.target.files[0]) {
+    //     return;
+    //   }
+    //   setClubData({
+    //     ...clubData,
+    //     thumbnail : e.target.files[0]
+    //   })
+    //   if(!fuck){
+    //     setFuck(true)
+    //   }else if(!!fuck){
+    //     setFuck(false)
+    //   }
+    // }, []);
 
-    const onUploadImageButtonClick = useCallback(() => {
-      if (!inputRef.current) {
-        return;
-      }
-      inputRef.current.click();
-    }, [inputRef]);
+    // const onUploadImageButtonClick = useCallback(() => {
+    //   if (!inputRef.current) {
+    //     return;
+    //   }
+    //   inputRef.current.click();
+    // }, [inputRef]);
     
-    const preview = () => {
-      if (!thumbnail) return false;
+    // const preview = () => {
+    //   if (!thumbnail) return false;
 
-      const imgEl = document.querySelector('.img_box')
+    //   const imgEl = document.querySelector('.img_box')
 
-      const reader = new FileReader();
+    //   const reader = new FileReader();
 
-      reader.onload = () =>{
-        (imgEl.style.backgroundImage = `url(${reader.result})`)
-      }
-        reader.readAsDataURL(thumbnail)
-    }
+    //   reader.onload = () =>{
+    //     (imgEl.style.backgroundImage = `url(${reader.result})`)
+    //   }
+    //     reader.readAsDataURL(thumbnail)
+    // }
     
       return (
       <>
@@ -98,10 +92,6 @@ function Add_modal({ show }) {
             <Modal.Title style={{color:"#FEFEFE" , fontSize:"19px" , fontWeight:"400"}}>추가하기</Modal.Title>
           </Modal.Header>
           <Modal.Body style={{backgroundColor:"#31313c" , color:"#eaf7f9"}}>
-            <div className='add_profile'>
-              <img className='img_box'/>
-            </div>
-              <input type="file" id="upload" accept="image/*" ref={inputRef} onChange={onUploadImage} />
               <div className='add_title'>
                   <div className='title'>제목</div>
                   <input placeholder='제목을 입력해주세요' maxLength={10} value={title} name="title" onChange={handleChangeInput} />
