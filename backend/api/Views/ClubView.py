@@ -28,7 +28,7 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 		return super().get_permissions()
 
 	def get_serializer(self, *args, **kwargs):
-		if self.action == "update":
+		if self.action == "update" or "retrive":
 			self.serializer_class = ClubDetailSerializer
 		return super().get_serializer(*args, **kwargs)
 
