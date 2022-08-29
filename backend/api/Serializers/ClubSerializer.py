@@ -43,7 +43,6 @@ class ClubRoughSerializder(serializers.ModelSerializer):
 		if img_data.getlist('thumbnail'):
 			thumbnail = img_data.getlist('thumbnail')[0]
 			instance.thumbnail = thumbnail
-		instance.user_list.add(user)
 		instance.save()
 		return instance
 

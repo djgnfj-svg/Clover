@@ -32,6 +32,7 @@ class ClubMasterView(viewsets.GenericViewSet, mixins.ListModelMixin):
 		user_id = request.GET.get("manager_id", None)
 		club = Club.objects.get(club_id = club_id)
 		club.managerlist.get(user_id)
+		club.user_lsit.remove(user_id)
 		return Response()
 	# 매니져 삭제 delete
 	@appointManager.mapping.delete
