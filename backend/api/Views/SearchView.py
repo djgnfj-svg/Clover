@@ -6,6 +6,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny
 
 from api.Serializers.ClubSerializer import ClubViewSerializer
+from api.Utils.Error_msg import success_msg
 
 from club.models import Club
 
@@ -19,16 +20,22 @@ class SearchViewSet(viewsets.ReadOnlyModelViewSet):
 	permission_classes = [AllowAny]
 
 	def list(self, request):
-		range_age = request.GET.get('range_age',None)
-		days = request.GET.get('days',None)
-		time_zone = request.GET.get('time_zone',None)
-		gender = request.GET.get('gender',None)
-		query = request.GET.get('query', None)
+		print(request.query_params)
+		range_age = request.query_params.get('range_age',None)
+		days = request.GET.getlist('days[]',None)
+		time_zone = request.query_params.get('time_zone',None)
+		gender = request.query_params.get('gender',None)
+		query = request.query_params.get('query', None)
+
 		q = Q()
-		if days:
-			day_list = days.split('+')
-			for day in day_list:
-				q &= Q(range_age=day)
+		print(days)
+		# print(range_age)
+		# print(time_zone)
+		# print(gender)
+		# print(query)
+		# if days:
+		# 	for day in days:
+		# 		q &= Q(range_age=day)
 		
 		if range_age:
 			q &= Q(range_age=range_age)
@@ -39,4 +46,5 @@ class SearchViewSet(viewsets.ReadOnlyModelViewSet):
 		if query:
 			q &= Q(title__contains=query)
 		rtn = Club.objects.filter(q)
+		print(q)
 		return Response(ClubViewSerializer(rtn,many=True,context = {'request' : request}).data)

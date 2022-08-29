@@ -18,11 +18,15 @@ class ClubViewSerializer(serializers.ModelSerializer):
 
 class ClubDetailSerializer(serializers.ModelSerializer):
 	title = serializers.CharField(max_length = 20, read_only=True)
+	days = serializers.ListField()
 	class Meta:
 		model = Club
 		fields = ['title','topic', 'brief_introduction',
 		'description', 'range_age',
 		'days', 'time_zone', 'gender']
+	def update(self, instance, validated_data):
+		print("test")
+		return super().update(instance, validated_data)
 
 class ClubRoughSerializder(serializers.ModelSerializer):
 	class Meta:

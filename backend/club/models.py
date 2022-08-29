@@ -11,7 +11,7 @@ class Club(models.Model):
 	# 상세정보
 
 	# +를 통해서 요일을 받을 것이다
-	days = models.CharField(max_length=30, null=True)
+	days = models.JSONField(null=True)
 
 	AGE_CHOICES  = (
 		('Over10','10세 이상'),
