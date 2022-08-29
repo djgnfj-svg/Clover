@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { applyOutUrl, applyUrl } from '../../../../Components/Apiurl';
 import './ApplyUser.css'
 
@@ -9,6 +9,7 @@ function ApplyUser() {
     const { id } = useParams();
 
     const [applyList, setApplyList] = useState("")
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -44,7 +45,6 @@ function ApplyUser() {
         })
     }
     const handleOutApply = (ids) => {
-        alert(applyOutUrl(id))
         axios.delete(applyOutUrl(id)+`?userid=${ids}` ,
             {
                 headers : {
@@ -53,6 +53,7 @@ function ApplyUser() {
             })
             .then(res => {
                 getApplyList()
+                alert("우리사람이아니에요")
             }).catch(error => {
             })
     }
@@ -74,7 +75,7 @@ function ApplyUser() {
                             {applyList.map((item) => (
                                 <tr>
                                     <td>{item.username}</td>
-                                    <td>저는 뭐시기뭐시</td>
+                                    <td>{item.description}</td>
                                     <td style={{ display: "flex", textAlign: "right" }}>
                                         <button onClick={() => handleSucessApply(item.id)}>가입</button>
                                         <button onClick={() => handleOutApply(item.id)}>거절</button>

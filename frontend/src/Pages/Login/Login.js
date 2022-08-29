@@ -32,9 +32,9 @@ function Login() {
   const handleClickLogin = () => {
     axios.post(loginUrl,loginForm)
     .then(res => {
+      navigate("/")
       localStorage.setItem('access_token' , res.data.access_token)
       localStorage.setItem('refresh_token' , res.data.refresh_token)
-      navigate("/")
     })
     .catch(error => {
       alert("이메일 또는 비밀번호가 잘못됐습니다.")
@@ -64,14 +64,14 @@ function Login() {
             value={password}
             />
         </div>
-          <div className='Login_Status'>
-          <span class="material-symbols-outlined">
+          {/* <div className='Login_Status'>
+          {/* <span class="material-symbols-outlined">
             check_box
           </span>
           <span className='Login_statustext'>
             로그인 상태유지
           </span>
-          </div>
+          </div> */} 
           <div className='Clover_login'>
             <button className='login_btn' onClick={() => handleClickLogin()}>Clover 로그인</button>
             <button className='sign_up' onClick={() => navigate("/signup")}>회원가입</button>

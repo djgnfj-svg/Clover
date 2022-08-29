@@ -63,7 +63,7 @@ function SearchForm({test}) {
             days: categoryDayid,
             time_zone: categoryTimeId,
             range_age: categoryAgeId,
-            categoryGender: categoryGenderId
+            gender: categoryGenderId
         })
     }, [one || userSearch])
     useEffect(() => {

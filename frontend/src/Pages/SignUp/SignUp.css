@@ -24,6 +24,13 @@
     margin-left: 68px;
     margin-inline-end: auto;
 }
+.SignUp_Form span{
+    margin-bottom: 20px;
+    text-align: left;
+    width: 67%;
+    margin-top: 5px;
+    color: red;
+}
 .signup_inputname{
     padding: 6px 10px;
     width: 300px;
@@ -35,7 +42,6 @@
     box-sizing: border-box;
     resize: none;
     font-size: 14px;
-    margin-bottom: 20px;
 }
 .signup_inputemail{
     padding: 6px 10px;
@@ -48,7 +54,6 @@
     box-sizing: border-box;
     resize: none;
     font-size: 14px;
-    margin-bottom: 20px;
 }
 .signup_inputpassword{
     padding: 6px 10px;
@@ -61,7 +66,6 @@
     box-sizing: border-box;
     resize: none;
     font-size: 14px;
-    margin-bottom: 20px;
 }
 .signup_inputpassword_confirm{
     padding: 6px 10px;
@@ -74,7 +78,6 @@
     box-sizing: border-box;
     resize: none;
     font-size: 14px;
-    margin-bottom: 20px;
 }
 .SignUp_btn{
     width: 300px;

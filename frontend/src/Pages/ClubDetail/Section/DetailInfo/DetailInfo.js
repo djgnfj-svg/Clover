@@ -17,7 +17,7 @@ function DetailInfo({info}) {
       <Tab eventKey="home" title={info.title}>
         <div>{info.description === "" ? (
           <>
-            <h4>클럽 설명을 적어주세요 ! </h4>
+            <h4>클럽 상세정보를 변경해주세요 ! </h4>
           </>
         ) : (
           <>

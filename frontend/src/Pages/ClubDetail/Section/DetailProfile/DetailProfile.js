@@ -72,6 +72,7 @@ function DetailProfile({profile , auth}) {
       .then(res => {
         console.log(res.data)
         alert(" 가입 신청 완료 !!")
+        navigate("/")
       }).catch(error => {
         console.log(error)
       })

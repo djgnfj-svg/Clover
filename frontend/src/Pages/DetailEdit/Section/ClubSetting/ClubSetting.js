@@ -37,7 +37,7 @@ function ClubSetting({info}) {
             days: categoryDayid,
             time_zone: categoryTimeId,
             range_age: categoryAgeId,
-            categoryGender: categoryGenderId
+            gender: categoryGenderId
         })
     }, [one])
 
@@ -241,7 +241,16 @@ function ClubSetting({info}) {
         }
     }
     const handleFinishBtn = () => {
-        axios.put(clubDetail(id),userInput, {
+        axios.put(clubDetail(id),
+            userInput,{
+            params :
+           {
+            query,
+            days,
+            time_zone,
+            range_age,
+            gender
+          }},{
             headers : {
               "Content-Type": "multipart/form-data",
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`

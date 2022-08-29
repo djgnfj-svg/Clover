@@ -22,10 +22,10 @@ function App() {
 				<Route path="/" element={<Home />} />
 				<Route path="/login" element={<Login />} />
 				<Route path='/signup' element={<SignUp />} />
-				{!!IsLogin() && (
+				<Route path="/club" element={<SearchClubPage />} />
+				{!!IsLogin && (
 					<>
 						<Route path='/useredit' element={<UserProfile />} />
-						<Route path="/club" element={<SearchClubPage />} />
 						<Route path="/club/:id/edit" element={<DetailEdit />} />
 						<Route path="/club/:id" element={<ClubDetailPage />} />
 						<Route path="/clover" element={<Clover />} />

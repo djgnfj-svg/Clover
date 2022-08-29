@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './SearchResult.css'
 import axios from 'axios'
-import { applyClub, clubDetail, clubList, getNewList } from '../../../../Components/Apiurl'
+import { applyClub, clubDetail, clubList, getNewList, searchurl } from '../../../../Components/Apiurl'
 import { useNavigate } from 'react-router-dom'
 
 function SearchResult({data}) {
@@ -13,6 +13,16 @@ function SearchResult({data}) {
   useEffect(() => {
     setClubData(data)
   },[data])
+
+  useEffect(() => {
+    axios.get(searchurl,{
+      headers : {
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`
+      }
+    }).then(res => {
+      setClubData(res.data)
+    })
+  })
 
   const handleApply = (id) => {
     navigate(`/club/${id}`)
