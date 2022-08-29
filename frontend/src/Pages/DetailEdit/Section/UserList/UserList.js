@@ -32,7 +32,7 @@ function UserList({ searchBoolean }) {
     }
 
     const handleOutMyClub = (outid) => {
-        axios.delete(userOutUrl(id)+`?userid=${outid}`, 
+        axios.delete(userOutUrl(id)+`?user_id=${outid}`, 
         {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`
