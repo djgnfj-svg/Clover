@@ -249,12 +249,10 @@ function ClubSetting({info}) {
             time_zone,
             range_age,
             gender
-          }},{
-            headers : {
-              "Content-Type": "multipart/form-data",
-                Authorization: `Bearer ${localStorage.getItem('access_token')}`
-            }
-        })
+          },
+          headers : {
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`
+        }},)
         .then(res => {
             console.log(res)
             alert("변경 성공")

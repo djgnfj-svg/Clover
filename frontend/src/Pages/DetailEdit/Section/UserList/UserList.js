@@ -5,7 +5,7 @@ import { CgCloseR } from "@react-icons/all-files/cg/CgCloseR";
 import axios from 'axios';
 import { userListurl } from '../../../../Components/Apiurl';
 
-function UserList() {
+function UserList({searchBoolean}) {
 
     const { id } = useParams();
 
@@ -15,7 +15,7 @@ function UserList() {
 
     useEffect(() => {
         getUserList()
-    }, [])
+    }, [searchBoolean])
 
     const getUserList = () => {
         axios.get(userListurl(id), {

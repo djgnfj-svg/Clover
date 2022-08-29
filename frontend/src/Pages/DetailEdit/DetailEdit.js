@@ -16,7 +16,9 @@ function DetailEdit() {
 
   const { id } = useParams();
   const navigate = useNavigate("")
+
   const [profile, setProfile] = useState();
+  const [searchBoolean , setSearchBoolean] = useState(false)
 
   useEffect(() => {
     getClubData()
@@ -43,6 +45,15 @@ function DetailEdit() {
 
     }
   }
+
+  const handleClick = (bl) => {
+    if(searchBoolean){
+      setSearchBoolean(false)
+    }else if(!searchBoolean){
+      setSearchBoolean(true)
+    }
+  }
+
   return (
     <Tab.Container id="left-tabs-example" defaultActiveKey="setting">
       <Row>
@@ -55,7 +66,7 @@ function DetailEdit() {
               <Nav.Link eventKey="info">클럽 소개</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="users">유저 관리</Nav.Link>
+              <Nav.Link eventKey="users" onClick={() => handleClick()} >유저 관리</Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link eventKey="apply">가입 신청</Nav.Link>
@@ -78,7 +89,7 @@ function DetailEdit() {
                 <ClubInfo file={profile} />
               </Tab.Pane>
               <Tab.Pane eventKey="users">
-                <UserList />
+                <UserList searchBoolean={searchBoolean} />
               </Tab.Pane>
               <Tab.Pane eventKey="apply">
                 <ApplyUser />

@@ -4,13 +4,14 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { applyOutUrl, applyUrl } from '../../../../Components/Apiurl';
 import './ApplyUser.css'
 
-function ApplyUser() {
+function ApplyUser({successApply}) {
 
     const { id } = useParams();
 
     const [applyList, setApplyList] = useState("")
     const navigate = useNavigate();
 
+    
 
     useEffect(() => {
         getApplyList()
