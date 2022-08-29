@@ -1,12 +1,11 @@
 from django.shortcuts import get_object_or_404
 
 from rest_framework import serializers
-from club.models import ClubDetailImg
-
-from club.models import Club
+from club.models import Club, ClubDetailImg
 
 class ClubDetailImgSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(max_length=None, use_url=True)
+
     class Meta:
         model = ClubDetailImg
         fields = ["image"]

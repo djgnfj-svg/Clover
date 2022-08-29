@@ -1,8 +1,7 @@
-import json
-from pyexpat import model
 from rest_framework import serializers
 
 from accounts.models import User, UserProfile
+
 from club.models import Club
 
 class AppliSerializer(serializers.ModelSerializer):
@@ -29,7 +28,6 @@ class UserlistSz(serializers.ModelSerializer):
 	master = AppliSerializer()
 	user_list = AppliSerializer(many=True)
 	managerlist = AppliSerializer(many=True)
-	# right = serializers.SerializerMethodField("get_right", read_only=True)
 	class Meta:
 		model = Club
 		fields = ['id', 'master', 'managerlist', "user_list"]

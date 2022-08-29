@@ -1,17 +1,17 @@
 
 from rest_framework import viewsets, status, mixins
 from rest_framework.response import Response
-from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import action
+from rest_framework.authentication import SessionAuthentication
 
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from accounts.models import User
-from api.Utils.Error_msg import error_msg, success_msg
 
+from api.Utils.Error_msg import error_msg, success_msg
 from api.Utils.Permission import IsManager
-from api.Serializers.StaffSerializer import AddUserSerializer, StaffSerializer, AppliSerializer
-from api.Serializers.ClubSerializer import ClubRoughSerializder, JoinClubRoughSerializder
-from api.Serializers.StaffSerializer import UserlistSz
+from api.Serializers.StaffSerializer import AddUserSerializer, StaffSerializer, AppliSerializer, UserlistSz
+from api.Serializers.ClubSerializer import JoinClubRoughSerializder
+
+from accounts.models import User
 
 from club.models import Club
 
@@ -21,7 +21,6 @@ class ClubManagerView(viewsets.GenericViewSet, mixins.DestroyModelMixin):
 	authentication_classes = [SessionAuthentication, JWTAuthentication]
 	permission_classes = [IsManager]
 
-	# 유저 관리?
 	def list(self, request, club_id):
 		return Response(UserlistSz(Club.objects.get(id=club_id)).data)
 

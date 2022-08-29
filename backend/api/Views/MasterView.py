@@ -2,15 +2,17 @@ from django.shortcuts import get_object_or_404
 
 from rest_framework import viewsets, status, mixins
 from rest_framework.response import Response
-from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import action
 
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
 from api.Utils.Error_msg import error_msg, success_msg
 from api.Utils.Permission import IsMaster
-from api.Serializers.ClubSerializer import ClubDetailSerializer, JoinClubRoughSerializder
+from api.Serializers.ClubSerializer import JoinClubRoughSerializder
 
 from club.models import Club
+
 from accounts.models import User
 
 class ClubMasterView(viewsets.GenericViewSet, mixins.ListModelMixin):
@@ -27,13 +29,12 @@ class ClubMasterView(viewsets.GenericViewSet, mixins.ListModelMixin):
 	# 매니져 임명 post
 	@action(detail=False, methods=['post'],	name="appointmanager")
 	def appointManager(self, request, club_id):
-		# 그 유저가 이미 매니저인가
-		# 매니저의 수를 넘지 않았는가
 		user_id = request.GET.get("manager_id", None)
 		club = Club.objects.get(club_id = club_id)
 		club.managerlist.get(user_id)
 		club.user_lsit.remove(user_id)
 		return Response()
+
 	# 매니져 삭제 delete
 	@appointManager.mapping.delete
 	def expulsionManager(self, request, club_id):

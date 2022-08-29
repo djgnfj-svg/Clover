@@ -1,14 +1,13 @@
-from posixpath import split
 from django.db.models import Q
 
-from rest_framework import viewsets, status
+from rest_framework import viewsets
 from rest_framework.response import Response
-from api.Serializers.ClubSerializer import ClubRoughSerializder
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import AllowAny
+
 from api.Serializers.ClubSerializer import ClubViewSerializer
 
 from club.models import Club
-from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import AllowAny
 
 class HomePagination(PageNumberPagination):
 	page_size = 12

@@ -7,12 +7,13 @@ from rest_framework.decorators import action
 
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from api.Serializers.ClubSerializer import ClubRoughSerializder, JoinClubRoughSerializder
-from api.Serializers.ClubSerializer import ClubDetailSerializer
+from api.Serializers.ClubSerializer import (
+	ClubRoughSerializder, JoinClubRoughSerializder,ClubDetailSerializer,
+	ClubThumbnailSerializer, ClubViewSerializer
+)
+
 from api.Utils.Error_msg import error_msg, success_msg
 from api.Utils.Permission import IsMaster
-from api.Serializers.ClubSerializer import ClubThumbnailSerializer
-from api.Serializers.ClubSerializer import ClubViewSerializer
 
 from club.models import Club
 
