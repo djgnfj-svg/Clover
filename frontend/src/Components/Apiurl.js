@@ -16,7 +16,7 @@ export const clubthumbnail = (id) => `http://127.0.0.1:8000/api/club/${id}/chang
 export const clubinfoImgUrl = (id) => `http://127.0.0.1:8000/api/club/${id}/img/`
 
 //유저 
-export const userInfoUrl = 'http://127.0.0.1:8000/api/accounts/user/'
+export const userInfoUrl = 'http://127.0.0.1:8000/api/profile/'
 
 
 

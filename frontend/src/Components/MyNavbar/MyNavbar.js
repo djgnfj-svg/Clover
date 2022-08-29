@@ -114,8 +114,10 @@ function MyNavbar() {
     .then(res => {
       setUserInfo({
         ...userInfo,
-        username : res.data.username
+        username : res.data[0].username,
+        brief_introduction : res.data[0].description
       })
+      console.log(res.data)
     }).catch(error => {
       console.log(error)
     })
@@ -160,14 +162,14 @@ function MyNavbar() {
         <p className="NavClub" onClick={(e) => handleClickCategory(e)}>Search</p>
       </div>
 
-      {isLogin && (
+      {/* {isLogin && (
         <div className="NavNotice">
         <span className="material-symbols-outlined">
         notifications_active
         </span>
         </div>
       )
-}
+} */}
       <div className="NavProfile">
         {isLogin && userInfo ? (
           <div>
@@ -187,7 +189,7 @@ function MyNavbar() {
                   </span>
                   <div className='Profile_name'>
                     <span style={{fontWeight :"bold" , color:"black" , fontSize:"18px"}}>{userInfo.username}</span>
-                    <span className='Profile_category'>안녕하세요 반가워요 !</span>
+                    <span className='Profile_category'>{brief_introduction}</span>
                   </div>
                 </div>
                 <div className='Dropdown_AddClub' onClick={modalClose}>

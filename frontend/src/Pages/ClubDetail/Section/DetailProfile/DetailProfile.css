@@ -15,7 +15,7 @@
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    border : 1px solid black
+    border : 1px solid rgb(218, 218, 218);
 }
 
 .profile_clubinfo{
@@ -27,6 +27,7 @@
     font-weight: bold;
     font-size: 30px;
     text-align: left;
+    color: rgb(255, 67, 67);
 }
 
 .profile_clubinfo .clubinfo_description{

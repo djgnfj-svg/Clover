@@ -103,7 +103,7 @@ function Add_modal({ show }) {
               </div>
               <div className='add_description'>
                   <div className='brief_introduction'>설명</div>
-                  <textarea placeholder='30자 이내 설명을 입력해주세요.' maxLength={33} style={{textAlign:"left"}} value={brief_introduction} name="brief_introduction" onChange={handleChangeInput} />
+                  <textarea placeholder='20자 이내 설명을 입력해주세요.' maxLength={33} style={{textAlign:"left"}} value={brief_introduction} name="brief_introduction" onChange={handleChangeInput} />
               </div>
           </Modal.Body>
           <Modal.Footer style={{backgroundColor:"#31313c",border:"none"}}>

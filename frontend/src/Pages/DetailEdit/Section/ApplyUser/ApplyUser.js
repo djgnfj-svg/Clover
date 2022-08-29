@@ -37,7 +37,6 @@ function ApplyUser() {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`
             }}  
         ).then(res => {
-            console.log(res)
             alert("새로운 유저를 환영해주세요 ! ")
             getApplyList()
         }).catch(error => {
@@ -53,10 +52,8 @@ function ApplyUser() {
                 }
             })
             .then(res => {
-                console.log(res)
                 getApplyList()
             }).catch(error => {
-                console.log(error)
             })
     }
 

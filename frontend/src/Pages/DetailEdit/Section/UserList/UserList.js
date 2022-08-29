@@ -9,6 +9,8 @@ function UserList() {
 
     const { id } = useParams();
 
+    const [master , setMaster] = useState("")
+    const [manangerList , setManagerList] = useState("")
     const [userList, setUserList] = useState("")
 
     useEffect(() => {
@@ -21,6 +23,8 @@ function UserList() {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`
             }
         }).then(res => {
+            setMaster(res.data.master)
+            setManagerList(res.data.manangerlist)
             setUserList(res.data.user_list)
         }).catch(error => {
             console.log(error)
@@ -48,11 +52,26 @@ function UserList() {
                                 </tr>
                             </thead>
                             <tbody>
+                            {master && (
+                                    <tr>
+                                        <td>{master.username}</td>
+                                        <td>{master.user_instroduction}</td>
+                                        <td>마스터</td>
+                                    </tr>
+                                )}
+                                {manangerList && manangerList.map((item) => (
+                                    <tr>
+                                        <td>{item.username}</td>
+                                        <td>{item.user_instroduction}</td>
+                                        <td>운영진</td>
+                                        <td style={{ textAlign: "center", fontSize: "20px" , paddingLeft:"0vw" }}><CgCloseR /></td>
+                                    </tr>
+                                ))}
                                 {userList && userList.map((item) => (
                                     <tr>
                                         <td>{item.username}</td>
                                         <td>{item.user_instroduction}</td>
-                                        <td>마스터</td>
+                                        <td>유저</td>
                                         <td style={{ textAlign: "center", fontSize: "20px" , paddingLeft:"0vw" }}><CgCloseR /></td>
                                     </tr>
                                 ))}

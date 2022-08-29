@@ -1,11 +1,15 @@
 import React from 'react'
 import './Clover.css'
 
+//affiliated_club 
+//my_club
+
 function Clover() {
 
   const handleApply = () => {
 
   }
+  
 
   return (
     <div className='club_list'>

@@ -87,39 +87,12 @@ function ClubSetting({info}) {
             }
         })
         .then(res => {
-            setThumbnailUrl(res.data.thumbnail)
-            console.log(res)
+            getClubData()
         }).catch(error => {
             console.log(error)
         })
 
       }, []);
-
-    const handleChangeThumbnail = () => {
-        axios.put(clubthumbnail(id) , {
-            thumbnail :thumbnail
-        },
-        {
-            headers : {
-                Authorization: `Bearer ${localStorage.getItem('access_token')}`
-            }
-        }).then(res => {
-            console.log(res.data)
-        })
-    }
-    const handleResetThumbnail = () => {
-        axios.post(clubthumbnail(id) , {
-            thumbnail : thumbnail
-        },
-        {
-            headers : {
-                Authorization: `Bearer ${localStorage.getItem('access_token')}`
-            }
-        }).then(res => {
-            console.log(res.data)
-        })
-        setThumbnailUrl(clubData.thumbnail)
-    }
 
     const CategoryDays = {
         CategoryTitle: '날짜',
@@ -291,10 +264,7 @@ function ClubSetting({info}) {
                             <img className='img_boxs'  name='thumbnail' style={{backgroundImage:`url(${thumbnailUrl})`}} />
                             <input type="file" id="upload" accept="image/*" ref={inputRef} onChange={onUploadImage} />
                             <label htmlFor='fileLabel' />
-                            <div className='Profile_imgBtn'>
-                                <button className='imgBtn_reset' onClick={() => handleResetThumbnail()} >초기화</button>
-                                <button className='imgBtn_submit' onClick={() => handleChangeThumbnail()}>적용하기</button>
-                            </div>
+                           
                         </div>
                         <hr />
                         <div className='Setting_Userinfo'>
