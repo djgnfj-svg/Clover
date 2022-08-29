@@ -245,7 +245,6 @@ function ClubSetting({info}) {
             userInput,{
             params :
            {
-            query,
             days,
             time_zone,
             range_age,
