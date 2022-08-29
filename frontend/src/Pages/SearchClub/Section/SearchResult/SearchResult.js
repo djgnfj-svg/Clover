@@ -22,7 +22,7 @@ function SearchResult({data}) {
     }).then(res => {
       setClubData(res.data)
     })
-  })
+  },[])
 
   const handleApply = (id) => {
     navigate(`/club/${id}`)
