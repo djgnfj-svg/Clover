@@ -176,13 +176,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#etc
+#dj-rest auth
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'api.Serializers.UserSerializer.customUserDetailsSerializer',
 }
 REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'api.Serializers.UserSerializer.customRegistrationSerializer',
 }
+OLD_PASSWORD_FIELD_ENABLED = True 
 
 #rest freamework
 
@@ -203,11 +204,11 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.TokenAuthentication',
     ),
 }
+
 # JWT Options
 REST_USE_JWT = True
 JWT_AUTH_COOKIE  = 'access_token'
 JWT_AUTH_REFRESH_COOKIE = 'refresh_token'
-
 SITE_ID = 1
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'

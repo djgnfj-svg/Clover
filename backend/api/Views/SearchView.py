@@ -28,10 +28,6 @@ class SearchViewSet(viewsets.ReadOnlyModelViewSet):
 		query = request.query_params.get('query', None)
 
 		q = Q()
-		# print(range_age)
-		# print(time_zone)
-		# print(gender)
-		# print(query)
 		if days:
 			for day in days:
 				q |= Q(days__icontains=day)
