@@ -26,6 +26,13 @@ class ClubMasterView(viewsets.GenericViewSet, mixins.ListModelMixin):
 		serializer = self.get_serializer(instance)
 		return Response(serializer.data)
 
+	@action(detail=False, methods=['delete'], name="user_expulsion")
+	def expulsion_user(self, request, club_id):
+		user_id = request.GET.get("user_id", None)
+		club = Club.objects.get(id=club_id)
+		club.user_list.remove(user_id)
+		return Response(success_msg(200))
+
 	# 매니져 임명 post
 	@action(detail=False, methods=['post'],	name="appointmanager")
 	def appointManager(self, request, club_id):

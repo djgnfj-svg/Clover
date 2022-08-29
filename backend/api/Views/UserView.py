@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from rest_framework import viewsets, mixins
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 from allauth.account.models import EmailConfirmation, EmailConfirmationHMAC
 
@@ -43,6 +44,7 @@ class UserProfileViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin,
     serializer_class = UserPofileSerializer
     queryset = UserProfile.objects.all()
     pagination_class = HomePagination
+    permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
         queryset = UserProfile.objects.filter(user = request.user.id)
@@ -50,9 +52,3 @@ class UserProfileViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin,
             return Response(error_msg(404))
         rtn = self.get_serializer(queryset, many=True, context = {'request' : request})
         return Response(rtn.data)
-    
-    def update(self, request, *args, **kwargs):
-        return super().update(request, *args, **kwargs)
-
-    def retrieve(self, request, *args, **kwargs):
-        return super().retrieve(request, *args, **kwargs)
