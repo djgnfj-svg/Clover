@@ -1,16 +1,16 @@
 from django.http import HttpResponseRedirect
 
-from rest_framework import viewsets, status, mixins
+from rest_framework import viewsets, mixins
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from allauth.account.models import EmailConfirmation, EmailConfirmationHMAC
 
-from api.Serializers.UserSerializer import UserPofileSerializer
+from api.Views.HomeView import HomePagination
 from api.Utils.Error_msg import error_msg
+from api.Serializers.UserSerializer import UserPofileSerializer
 
 from accounts.models import UserProfile
-from api.Views.HomeView import HomePagination
 
 class ConfirmEmailView(APIView):
     def get(self, *args, **kwargs):

@@ -2,9 +2,11 @@ from dj_rest_auth.serializers import UserDetailsSerializer
 from dj_rest_auth.registration.serializers import RegisterSerializer
 
 from rest_framework import serializers
-from django.core import serializers as core_sz
+
 from accounts.models import User, UserProfile
+
 from api.Serializers.ClubSerializer import ClubViewSerializer
+
 from club.models import Club
 
 class UserSerializer(serializers.ModelSerializer):
@@ -28,6 +30,7 @@ class UserPofileSerializer(serializers.ModelSerializer):
 	username = serializers.SerializerMethodField('get_username')
 	affiliated_club = serializers.SerializerMethodField('get_affiliated_club')
 	my_club = serializers.SerializerMethodField('get_my_club')
+	#todo 나중에 setting 에 있는 데이터로 바꾸기
 	url = 'http://127.0.0.1:8000'
 	class Meta:
 		model = UserProfile
