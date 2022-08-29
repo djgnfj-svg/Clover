@@ -1,6 +1,6 @@
 from django.http import HttpResponseRedirect
 
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, mixins
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -37,7 +37,8 @@ class ConfirmEmailView(APIView):
         return qs
 
 # todo fix post, add put
-class UserProfileViewSet(viewsets.ModelViewSet):
+class UserProfileViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin,
+            mixins.UpdateModelMixin):
     serializer_class = UserPofileSerializer
     queryset = UserProfile.objects.all()
 
@@ -50,5 +51,8 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 
         return Response(rtn.data)
     
-    def create(self, request, *args, **kwargs):
-        return super().create(request, *args, **kwargs)
+    def update(self, request, *args, **kwargs):
+        return super().update(request, *args, **kwargs)
+
+    def retrieve(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)

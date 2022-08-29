@@ -8,13 +8,13 @@ from rest_framework.decorators import action
 
 from api.Utils.Error_msg import error_msg, success_msg
 from api.Utils.Permission import IsMaster
-from api.Serializers.ClubSerializer import ClubDetailSerializer
+from api.Serializers.ClubSerializer import ClubDetailSerializer, JoinClubRoughSerializder
 
 from club.models import Club
 from accounts.models import User
 
 class ClubMasterView(viewsets.GenericViewSet, mixins.ListModelMixin):
-	serializer_class = ClubDetailSerializer
+	serializer_class = JoinClubRoughSerializder
 	queryset = Club.objects.all()
 	authentication_classes = [JWTAuthentication, SessionAuthentication]
 	permission_classes = [IsMaster]
