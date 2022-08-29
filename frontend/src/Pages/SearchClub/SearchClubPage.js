@@ -11,6 +11,10 @@ function SearchClubPage() {
     setData(boolean)
   }
 
+  useEffect(() => {
+    test()
+  },[test])
+
   return (
     <div className='Wrapper_Search'>
             <SearchForm test={test} />

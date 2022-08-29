@@ -46,16 +46,12 @@ function SearchForm({test}) {
         })
         .then(res => {
           setSearchList(res.data)
+          test(searchList)
+          console.log(res)
         }).catch(error => {
           console.log(error)
         })
     }
-
-    useEffect(() => {
-      test(searchList)
-      console.log(searchList)
-     
-    },[searchParams])
 
     useEffect(() => {
         setSeratchParams({
@@ -66,6 +62,7 @@ function SearchForm({test}) {
             gender: categoryGenderId
         })
     }, [one || userSearch])
+    
     useEffect(() => {
         handleClickSearch() 
     },[searchParams])
