@@ -1,0 +1,12 @@
+.DeleteClub{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+}
+.DeleteClub div{
+    text-align: center;
+}
+.DeleteClub button{
+    width: 70px;
+    margin-right: 10px;
+}

@@ -21,8 +21,7 @@ function UserList() {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`
             }
         }).then(res => {
-            console.log(res.data)
-            setUserList(res.data)
+            setUserList(res.data.user_list)
         }).catch(error => {
             console.log(error)
         })
@@ -43,20 +42,18 @@ function UserList() {
                             <thead>
                                 <tr>
                                     <th>이름</th>
-                                    <th>이메일</th>
-                                    <th>핸드폰 번호</th>
+                                    <th>소개</th>
                                     <th>역할</th>
                                     <th>죽일까요 마스터</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {userList.map((item) => (
+                                {userList && userList.map((item) => (
                                     <tr>
                                         <td>{item.username}</td>
-                                        <td>test@naver.cold</td>
-                                        <td>010-4431-2231</td>
+                                        <td>{item.user_instroduction}</td>
                                         <td>마스터</td>
-                                        <td style={{ textAlign: "center", fontSize: "20px" }}><CgCloseR /></td>
+                                        <td style={{ textAlign: "center", fontSize: "20px" , paddingLeft:"0vw" }}><CgCloseR /></td>
                                     </tr>
                                 ))}
                             </tbody>

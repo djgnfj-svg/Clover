@@ -16,12 +16,19 @@ function Login() {
   const {email , password} = loginForm
 
   const handleChangeInput = (e) => {
+
     const {name , value} = e.target
     setLoginForm({
       ...loginForm,
       [name] : value
     })
   }
+  const handleEnterPress = (e) => {
+    if(e.key === 'Enter'){
+      handleClickLogin()
+    }
+  }
+
   const handleClickLogin = () => {
     axios.post(loginUrl,loginForm)
     .then(res => {
@@ -46,12 +53,14 @@ function Login() {
           <input className='Id'
             name='email'
             onChange={handleChangeInput}
+            onKeyDown={handleEnterPress}
             value={email}
           />
           <input className='Password'
             name='password'
             type='password'
             onChange={handleChangeInput}
+            onKeyDown={handleEnterPress}
             value={password}
             />
         </div>

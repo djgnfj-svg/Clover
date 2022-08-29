@@ -34,13 +34,15 @@ function HeroClubList() {
         <Card style={{ width: '18rem', marginRight:"30px" }}>
           <Card.Img style={{ height: "200px" }} variant="top" src={`${item.thumbnail}`}></Card.Img>
           <Card.Body>
-            <Card.Title>{item.title}</Card.Title>
+            <Card.Title style={{fontWeight:"bold" , color:"rgb(255, 91, 91)"}}>{item.title}</Card.Title>
             <Card.Text>
-              <div>주제 : {item.topic}</div>
-              <div>소개</div>
-              <div>{item.brief_introduction}</div>
+              <div style={{fontSize:"18px"}}><span style={{fontSize:"18px" , fontWeight:"bold"}}>주제 : </span> {item.topic}</div>
+              <div style={{fontWeight:"bold" , fontSize:"18px"}}>소개</div>
+              <div style={{height:"maxContent" , marginTop:"5px"}}>{item.brief_introduction}</div>
             </Card.Text>
-            <Button variant="primary" onClick={() => navigate(`/club/${item.id}`)}>상세보기</Button>
+              <div style={{textAlign:"right"}}>
+                <Button variant="primary" onClick={() => navigate(`/club/${item.id}`)}>상세보기</Button>
+              </div>
           </Card.Body>
         </Card>
       ))}

@@ -17,7 +17,7 @@ function ClubDetailPage() {
   }, [])
 
   const getClubData = () => {
-    axios.get(`${clubDetail}${id}/`,
+    axios.get(clubDetail(id),
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`

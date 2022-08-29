@@ -26,3 +26,6 @@
     border-bottom-left-radius: 4px;
     font-weight: bold;
 }
+.toastui-editor-defaultUI .ProseMirror{
+    padding-bottom: 2rem;
+}

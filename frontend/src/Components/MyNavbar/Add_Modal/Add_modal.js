@@ -3,11 +3,11 @@ import axios from 'axios';
 import {Modal , Button } from 'react-bootstrap'
 import './Add_modal.css'
 import { makeClubUrl } from '../../Apiurl';
+import { useNavigate } from 'react-router-dom';
 
 
 function Add_modal({ show }) {
-
-    const [fuck , setFuck] = useState(false)
+    const navigate = useNavigate();
 
     const [clubData , setClubData] = useState({
       title : "",
@@ -15,9 +15,8 @@ function Add_modal({ show }) {
       brief_introduction : "",
       thumbnail  : "",
     })
-    const inputRef = React.createRef();
 
-    const { title , brief_introduction , thumbnail , topic} = clubData
+    const { title , brief_introduction , topic} = clubData
 
     const handleChangeInput = (e) => {
       const {name , value} = e.target;
@@ -43,6 +42,8 @@ function Add_modal({ show }) {
             }   
           }).then(res => {
               show();
+              alert("클럽 생성")
+              navigate(`/club/${res.data.id}/`)
           }).catch(error => {
             console.log(error)
           })

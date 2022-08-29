@@ -122,7 +122,6 @@ function DetailProfile({profile , auth}) {
         {auth.right === 'user' && (
           <div className='clubinfo_edit'>
               <button onClick={() => handleCheckApply()}>가입 신청</button>
-              <button ref={dropdownUserRef} onClick={() => handleClickDropdownUser()}>•••</button>
             </div>
         )}
         {auth.right === 'subscriber' && (
@@ -131,17 +130,24 @@ function DetailProfile({profile , auth}) {
               <button ref={dropdownUserRef} onClick={() => handleClickDropdownUser()}>•••</button>
             </div>
         )}
-        {showDropdown && (
-          <div className='clubinfo_dropdown'>
-            <div>클럽 좋아요</div>
-            <div>클럽 관리</div>
-            <div>클럽 해체하기</div>
-          </div>
+        {showDropdown &&  (
+          auth.right === `master` && (
+            <div className='clubinfo_dropdown'>
+              <div>클럽 해체하기</div>
+            </div>
+          )
         )}
+        {showDropdown &&  (
+          auth.right === `manager` && (
+            <div className='clubinfo_dropdown'>
+              <div>탈퇴하기</div>
+            </div>
+          )
+        )}
+
         {showDropdownUser && (
           <div className='clubinfo_dropdown'>
             <div>문의 하기</div>
-            <div>해체하기</div>
           </div>
         )}
       </div>

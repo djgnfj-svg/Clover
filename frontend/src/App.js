@@ -4,11 +4,11 @@ import {Routes , Route} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.css';
 import Home from './Pages/Home/Home';
 import MyNavbar from './Components/MyNavbar/MyNavbar';
-import SearchClubPage from './Pages/SearchClubPage/SearchClubPage';
-import Clover from './Pages/CloverPage/Clover';
+import SearchClubPage from './Pages/SearchClub/SearchClubPage';
+import Clover from './Pages/Clover/Clover';
 import Login from './Pages/Login/Login';
 import SignUp from './Pages/SignUp/SignUp';
-import ClubDetailPage from './Pages/ClubDetailPage/ClubDetailPage';
+import ClubDetailPage from './Pages/ClubDetail/ClubDetailPage';
 import DetailEdit from './Pages/DetailEdit/DetailEdit';
 import UserProfile from './Pages/UserProfile/UserProfile';
 

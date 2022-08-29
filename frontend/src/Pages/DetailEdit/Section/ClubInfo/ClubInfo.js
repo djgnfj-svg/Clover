@@ -22,7 +22,7 @@ function ClubInfo({file}) {
     }
     
     const handleSubmitPost = () => {
-        axios.put(clubDetail+`${id}/`,{
+        axios.put(clubDetail(id),{
             description
         } , 
         {
@@ -31,6 +31,7 @@ function ClubInfo({file}) {
             }
         })
         .then(res => {
+            console.log(res.data)
             alert("수정 완료 !")
         })
     }

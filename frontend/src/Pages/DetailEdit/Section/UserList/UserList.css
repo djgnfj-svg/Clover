@@ -36,3 +36,6 @@ th ,td{
     color:rgb(111, 111, 111);
     outline: none;
 }
+.Edit_inputForm span{
+    margin-left: 30px;
+}

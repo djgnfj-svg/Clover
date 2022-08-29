@@ -39,14 +39,14 @@ function ClubSetting({info}) {
             range_age: categoryAgeId,
             categoryGender: categoryGenderId
         })
-    }, [one ])
+    }, [one])
 
     useEffect(() => {
         getClubData();
     }, [])
 
     const getClubData = () => {
-        axios.get(clubDetail + `${id}/`, {
+        axios.get(clubDetail(id), {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`
             }
@@ -63,7 +63,7 @@ function ClubSetting({info}) {
                 setThumbnailUrl(res.data.thumbnail)
             })
     }
-
+    
     const onChangeInput = (e) => {
         const {name, value} = e.target
         setUserInput({
@@ -77,16 +77,18 @@ function ClubSetting({info}) {
             alert("불러온 데이터 없음")
           return;
         }
-        axios.put(`${clubDetail}${id}/`,{
+
+        axios.put(clubthumbnail(id),{
             thumbnail : e.target.files[0]
         }, {
             headers : {
-              "Content-Type": "multipart/form-data",
+                "Content-Type": "multipart/form-data",
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`
             }
         })
         .then(res => {
             setThumbnailUrl(res.data.thumbnail)
+            console.log(res)
         }).catch(error => {
             console.log(error)
         })
@@ -94,7 +96,7 @@ function ClubSetting({info}) {
       }, []);
 
     const handleChangeThumbnail = () => {
-        axios.post(clubthumbnail(id) , {
+        axios.put(clubthumbnail(id) , {
             thumbnail :thumbnail
         },
         {
@@ -106,7 +108,6 @@ function ClubSetting({info}) {
         })
     }
     const handleResetThumbnail = () => {
-
         axios.post(clubthumbnail(id) , {
             thumbnail : thumbnail
         },
@@ -267,7 +268,7 @@ function ClubSetting({info}) {
         }
     }
     const handleFinishBtn = () => {
-        axios.put(`${clubDetail}${id}/`,userInput, {
+        axios.put(clubDetail(id),userInput, {
             headers : {
               "Content-Type": "multipart/form-data",
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`

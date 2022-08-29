@@ -10,6 +10,7 @@ import ApplyUser from './Section/ApplyUser/ApplyUser';
 import ClubInfo from './Section/ClubInfo/ClubInfo';
 import UserList from './Section/UserList/UserList';
 import ClubSetting from './Section/ClubSetting/ClubSetting';
+import DeleteClub from './Section/DeleteClub/DeleteClub';
 
 function DetailEdit() {
 
@@ -22,7 +23,7 @@ function DetailEdit() {
   }, [])
 
   const getClubData = () => {
-    axios.get(`${clubDetail}${id}/`,
+    axios.get(clubDetail(id),
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`
@@ -83,7 +84,7 @@ function DetailEdit() {
                 <ApplyUser />
               </Tab.Pane>
               <Tab.Pane eventKey="close_club">
-                helloasd
+                <DeleteClub />
               </Tab.Pane>
             </Tab.Content>
           )}
