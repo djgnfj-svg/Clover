@@ -29,8 +29,10 @@ class ClubMasterView(viewsets.GenericViewSet, mixins.ListModelMixin):
 	@action(detail=False, methods=['delete'], name="user_expulsion")
 	def expulsion_user(self, request, club_id):
 		user_id = request.GET.get("user_id", None)
-		club = Club.objects.get(id=club_id)
-		club.user_list.remove(user_id)
+		print(request.GET.get)
+		user = get_object_or_404(User,id=user_id)
+		club = get_object_or_404(Club,id=club_id)
+		club.user_list.remove(user.id)
 		return Response(success_msg(200))
 
 	# 매니져 임명 post
@@ -39,7 +41,7 @@ class ClubMasterView(viewsets.GenericViewSet, mixins.ListModelMixin):
 		user_id = request.GET.get("manager_id", None)
 		club = Club.objects.get(club_id = club_id)
 		club.managerlist.get(user_id)
-		club.user_lsit.remove(user_id)
+		club.user_list.remove(user_id)
 		return Response()
 
 	# 매니져 삭제 delete
