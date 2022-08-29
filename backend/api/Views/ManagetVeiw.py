@@ -11,6 +11,7 @@ from api.Utils.Error_msg import error_msg, success_msg
 from api.Utils.Permission import IsManager
 from api.Serializers.StaffSerializer import AddUserSerializer, StaffSerializer, AppliSerializer
 from api.Serializers.ClubSerializer import ClubRoughSerializder, JoinClubRoughSerializder
+from api.Serializers.StaffSerializer import UserlistSz
 
 from club.models import Club
 
@@ -22,8 +23,7 @@ class ClubManagerView(viewsets.GenericViewSet, mixins.DestroyModelMixin):
 
 	# 유저 관리?
 	def list(self, request, club_id):
-		temp = Club.objects.get(id=club_id).user_list.all()
-		return Response(StaffSerializer(temp,many=True).data)
+		return Response(UserlistSz(Club.objects.get(id=club_id)).data)
 
 	@action(detail=False, methods=['get'],name="appli_list", serializer_class=AddUserSerializer)
 	def appli_list(self, request, club_id):
