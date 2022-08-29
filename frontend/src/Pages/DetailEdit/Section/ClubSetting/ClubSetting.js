@@ -4,7 +4,7 @@ import { clubDetail, clubthumbnail, searchurl } from '../../../../Components/Api
 import axios from 'axios'
 import './ClubSetting.css'
 
-function ClubSetting({info}) {
+function ClubSetting({ info }) {
     const navigate = useNavigate("")
     const { id } = useParams("")
     const inputRef = useRef();
@@ -21,8 +21,8 @@ function ClubSetting({info}) {
         topic: "",
         brief_introduction: "",
     })
-    const [thumbnail , setThumbnail] = useState()
-    const [thumbnailUrl , setThumbnailUrl] = useState();
+    const [thumbnail, setThumbnail] = useState()
+    const [thumbnailUrl, setThumbnailUrl] = useState();
 
     const [categoryDayid, setCategoryDayId] = useState([]);
     const [categoryTimeId, setCategoryTimeId] = useState([]);
@@ -30,16 +30,9 @@ function ClubSetting({info}) {
     const [categoryGenderId, setCategoryGenderId] = useState([]);
     const [one, setOne] = useState(false);
 
-    const {topic, brief_introduction } = userInput
+    const { topic, brief_introduction } = userInput
 
-    useEffect(() => {
-        setSeratchParams({
-            days: categoryDayid,
-            time_zone: categoryTimeId,
-            range_age: categoryAgeId,
-            gender: categoryGenderId
-        })
-    }, [one])
+    
 
     useEffect(() => {
         getClubData();
@@ -55,44 +48,44 @@ function ClubSetting({info}) {
                 setClubData(res.data)
                 setUserInput({
                     ...userInput,
-                    title : res.data.title,
-                    topic : res.data.topic,
-                    brief_introduction : res.data.brief_introduction,
+                    title: res.data.title,
+                    topic: res.data.topic,
+                    brief_introduction: res.data.brief_introduction,
                 })
                 setThumbnail(res.data.thumbnail)
                 setThumbnailUrl(res.data.thumbnail)
             })
     }
-    
+
     const onChangeInput = (e) => {
-        const {name, value} = e.target
+        const { name, value } = e.target
         setUserInput({
             ...userInput,
-            [name] : value
+            [name]: value
         })
     }
 
     const onUploadImage = useCallback((e) => {
         if (!e.target.files[0]) {
             alert("불러온 데이터 없음")
-          return;
+            return;
         }
 
-        axios.put(clubthumbnail(id),{
-            thumbnail : e.target.files[0]
+        axios.put(clubthumbnail(id), {
+            thumbnail: e.target.files[0]
         }, {
-            headers : {
+            headers: {
                 "Content-Type": "multipart/form-data",
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`
             }
         })
-        .then(res => {
-            getClubData()
-        }).catch(error => {
-            console.log(error)
-        })
+            .then(res => {
+                getClubData()
+            }).catch(error => {
+                console.log(error)
+            })
 
-      }, []);
+    }, []);
 
     const CategoryDays = {
         CategoryTitle: '날짜',
@@ -100,35 +93,32 @@ function ClubSetting({info}) {
         categoryMenu: [
             {
                 menuName: "월요일",
-                subName: "월요일"
+                subName: "Mon"
 
             },
             {
                 menuName: "화요일",
-                subName: "화요일"
+                subName: "The"
             },
             {
                 menuName: "수요일",
-                subName: "수요일"
+                subName: "Wed"
             },
             {
                 menuName: "목요일",
-                subName: "목요일"
+                subName: "Thu"
             },
             {
                 menuName: "금요일",
-                subName: "금요일"
+                subName: "Fri"
             },
             {
                 menuName: "토요일",
-                subName: "토요일"
+                subName: "Sat"
             },
             {
                 menuName: "일요일",
-                subName: "일요일"
-            },
-            {
-                menuName: "All"
+                subName: "Sun"
             },
         ]
     }
@@ -205,7 +195,7 @@ function ClubSetting({info}) {
         CategoryAge,
         CategoryGender,
     ]
-    const handleClickCategory = (item, Menuitem , Number) => {
+    const handleClickCategory = (item, Menuitem, Number) => {
         const Categoryid = item.CategoryId
         const List = Menuitem.menuName
         const Num = Number;
@@ -241,24 +231,24 @@ function ClubSetting({info}) {
         }
     }
     const handleFinishBtn = () => {
-        axios.put(clubDetail(id),
-            userInput,{
-            params :
-           {
-            days,
-            time_zone,
-            range_age,
-            gender
-          },
-          headers : {
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`
-        }},)
-        .then(res => {
-            console.log(res)
-            alert("변경 성공")
-        }).catch(error => {
-            console.log(error)
-        })
+        axios.put(clubDetail(id),userInput,
+            {
+                days : categoryDayid,
+                time_zone : categoryTimeId,
+                range_age : categoryAgeId,
+                gender : categoryGenderId
+            },
+               {
+               headers : {
+                 Authorization: `Bearer ${localStorage.getItem('access_token')}`
+               }
+             })
+            .then(res => {
+                console.log(res)
+                alert("변경 성공")
+            }).catch(error => {
+                console.log(error)
+            })
     }
 
     return (
@@ -267,18 +257,18 @@ function ClubSetting({info}) {
                 <div style={{ display: "flex", flexDirection: "column" }}>
                     <div className='Setting_Profile'>
                         <div className='Profile_imgboxs'>
-                            <img className='img_boxs'  name='thumbnail' style={{backgroundImage:`url(${thumbnailUrl})`}} />
+                            <img className='img_boxs' name='thumbnail' style={{ backgroundImage: `url(${thumbnailUrl})` }} />
                             <input type="file" id="upload" accept="image/*" ref={inputRef} onChange={onUploadImage} />
                             <label htmlFor='fileLabel' />
-                           
+
                         </div>
                         <hr />
                         <div className='Setting_Userinfo'>
-                            <input readOnly style={{ padding:"0rem !important", backgroundColor:"rgb(249,249,249)" , fontSize: "30px",border:"none" ,  color: "rgb(91,91,91)" , marginBottom:"10px" }}value={clubData.title} placeholder='이름'></input>
+                            <input readOnly style={{ padding: "0rem !important", backgroundColor: "rgb(249,249,249)", fontSize: "30px", border: "none", color: "rgb(91,91,91)", marginBottom: "10px" }} value={clubData.title} placeholder='이름'></input>
                             <div>클럽 주제</div>
-                            <input style={{ fontSize: "20px", color: "gray" , marginBottom:"10px" }} onChange={onChangeInput} value={topic} name="topic" placeholder='clubtopic'></input>
+                            <input style={{ fontSize: "20px", color: "gray", marginBottom: "10px" }} onChange={onChangeInput} value={topic} name="topic" placeholder='clubtopic'></input>
                             <div>클럽 소개</div>
-                            <textarea style={{ fontSize: "20px", marginTop: "30px",height:"100px" }} onChange={onChangeInput} value={brief_introduction} name="brief_introduction" placeholder='brief_introduction'></textarea>
+                            <textarea style={{ fontSize: "20px", marginTop: "30px", height: "100px" }} onChange={onChangeInput} value={brief_introduction} name="brief_introduction" placeholder='brief_introduction'></textarea>
                         </div>
                     </div>
                     <div className='Cate_form'>
@@ -298,7 +288,7 @@ function ClubSetting({info}) {
                                                             Menuitem.subName === categoryGenderId ? 'select_category' : ""
 
                                             }
-                                            onClick={(e) => handleClickCategory(item, Menuitem , Menuitem.subName)}>{Menuitem.menuName}</div>
+                                            onClick={(e) => handleClickCategory(item, Menuitem, Menuitem.subName)}>{Menuitem.menuName}</div>
                                     ))}
                                 </div>
                             </div>

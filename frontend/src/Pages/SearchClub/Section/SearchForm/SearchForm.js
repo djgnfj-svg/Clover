@@ -72,35 +72,32 @@ function SearchForm({test}) {
         categoryMenu: [
             {
                 menuName: "월요일",
-                subName : "월요일"
+                subName: "Mon"
 
             },
             {
                 menuName: "화요일",
-                subName : "화요일"
+                subName: "The"
             },
             {
                 menuName: "수요일",
-                subName : "수요일"
+                subName: "Wed"
             },
             {
                 menuName: "목요일",
-                subName : "목요일"
+                subName: "Thu"
             },
             {
                 menuName: "금요일",
-                subName : "금요일"
+                subName: "Fri"
             },
             {
                 menuName: "토요일",
-                subName : "토요일"
+                subName: "Sat"
             },
             {
                 menuName: "일요일",
-                subName : "일요일"
-            },
-            {
-                menuName: "All"
+                subName: "Sun"
             },
         ]
     }
