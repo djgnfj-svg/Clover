@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react'
 import './Clover.css'
 import axios from 'axios'
 import { userInfoUrl } from '../../Components/Apiurl'
+import { useNavigate } from 'react-router-dom';
 
 //affiliated_club 
 //my_club
 
 function Clover() {
+
+  const navigate = useNavigate();
 
   const [applyList, setApplyList] = useState()
   const [myClub, setMyClub] = useState()
@@ -29,8 +32,8 @@ function Clover() {
       })
   }
 
-  const handleApply = () => {
-
+  const handleApply = (clubid) => {
+    navigate(`/club/${clubid}`)
   }
 
 
@@ -44,7 +47,7 @@ function Clover() {
           </div>
           {myClub && myClub.map((item) => (
             <div className='Result_box'>
-              <button onClick={(id) => handleApply()}>상세보기</button>
+              <button onClick={(id) => handleApply(item.id)}>상세보기</button>
               <div className='club_image'>
                 <img src={`${item.thumbnail}`} />
               </div>
@@ -68,7 +71,7 @@ function Clover() {
           </div>
           {applyList && applyList.map((item) => (
             <div className='Result_box'>
-              <button onClick={(id) => handleApply()}>상세보기</button>
+              <button onClick={(id) => handleApply(item.id)}>상세보기</button>
               <div className='club_image'>
                 <img src={`${item.thumbnail}`} />
               </div>
