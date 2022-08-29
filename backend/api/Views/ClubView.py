@@ -30,7 +30,6 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 		return super().get_permissions()
 
 	def get_serializer(self, *args, **kwargs):
-		print(self.action)
 		if self.action == "update":
 			self.serializer_class = ClubDetailSerializer
 		elif self.action == "retrieve" :
@@ -40,7 +39,6 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 	#클럽생성
 	def create(self, request, *args, **kwargs):
 		serializer = self.get_serializer(data=request.data, context={'request' : request})
-		print(serializer)
 		if serializer.is_valid():
 			rtn = serializer.create(request, serializer.data)
 			if rtn :
@@ -53,7 +51,6 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 	def get_right(self, requset, pk):
 		club = self.get_object()
 		user = requset.user
-
 		if club.master == user:
 			return Response({"right" : "master"})
 		elif user in club.managerlist.all():
