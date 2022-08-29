@@ -12,6 +12,7 @@ from api.Serializers.ClubSerializer import ClubDetailSerializer
 from api.Utils.Error_msg import error_msg, success_msg
 from api.Utils.Permission import IsMaster
 from api.Serializers.ClubSerializer import ClubThumbnailSerializer
+from api.Serializers.ClubSerializer import ClubViewSerializer
 
 from club.models import Club
 
@@ -31,6 +32,8 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 		print(self.action)
 		if self.action == "update":
 			self.serializer_class = ClubDetailSerializer
+		elif self.action == "retrieve" :
+			self.serializer_class = ClubViewSerializer
 		return super().get_serializer(*args, **kwargs)
 
 	#클럽생성

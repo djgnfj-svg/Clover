@@ -36,6 +36,7 @@ class ConfirmEmailView(APIView):
         qs = qs.select_related("email_address__user")
         return qs
 
+# todo fix post, add put
 class UserProfileViewSet(viewsets.ModelViewSet):
     serializer_class = UserPofileSerializer
     queryset = UserProfile.objects.all()
@@ -46,6 +47,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
             return Response(error_msg(404))
         serializer = self.get_serializer_class()
         rtn = serializer(queryset, many=True)
+
         return Response(rtn.data)
     
     def create(self, request, *args, **kwargs):

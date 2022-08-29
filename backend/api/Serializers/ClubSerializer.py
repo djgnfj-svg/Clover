@@ -12,7 +12,9 @@ class ClubThumbnailSerializer(serializers.ModelSerializer):
 class ClubViewSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Club
-		fields = ['id', 'title','topic', 'brief_introduction', 'thumbnail']
+		fields = ['id', 'title','topic', 'brief_introduction',
+		'description', 'range_age',
+		'days', 'time_zone', 'gender', 'thumbnail']
 
 class ClubDetailSerializer(serializers.ModelSerializer):
 	title = serializers.CharField(max_length = 20, read_only=True)
