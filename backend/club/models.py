@@ -7,7 +7,7 @@ class Club(models.Model):
 	topic = models.CharField(max_length=20, null=True)
 	brief_introduction = models.CharField(max_length=20, null=True, default="간단한 소개를 입력해주세요")
 	description = models.TextField(null=True, default="자세한 정보를 입력해주세요", blank=True)
-	thumbnail = models.ImageField(upload_to="images", null=False, default='midea/defaultimg.jpg')
+	thumbnail = models.ImageField(upload_to="images", null=False, default='defaultimg.jpg')
 	# 상세정보
 
 	# +를 통해서 요일을 받을 것이다

@@ -10,6 +10,7 @@ from api.Serializers.UserSerializer import UserPofileSerializer
 from api.Utils.Error_msg import error_msg
 
 from accounts.models import UserProfile
+from api.Views.HomeView import HomePagination
 
 class ConfirmEmailView(APIView):
     def get(self, *args, **kwargs):
@@ -38,17 +39,16 @@ class ConfirmEmailView(APIView):
 
 # todo fix post, add put
 class UserProfileViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin,
-            mixins.UpdateModelMixin):
+            mixins.UpdateModelMixin, mixins.ListModelMixin):
     serializer_class = UserPofileSerializer
     queryset = UserProfile.objects.all()
+    pagination_class = HomePagination
 
     def list(self, request, *args, **kwargs):
         queryset = UserProfile.objects.filter(user = request.user.id)
         if not queryset:
             return Response(error_msg(404))
-        serializer = self.get_serializer_class()
-        rtn = serializer(queryset, many=True)
-
+        rtn = self.get_serializer(queryset, many=True, context = {'request' : request})
         return Response(rtn.data)
     
     def update(self, request, *args, **kwargs):

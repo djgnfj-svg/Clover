@@ -25,22 +25,32 @@ class customRegistrationSerializer(RegisterSerializer):
 		return user
 
 class UserPofileSerializer(serializers.ModelSerializer):
+	username = serializers.SerializerMethodField('get_username')
 	affiliated_club = serializers.SerializerMethodField('get_affiliated_club')
 	my_club = serializers.SerializerMethodField('get_my_club')
+	url = 'http://127.0.0.1:8000'
 	class Meta:
 		model = UserProfile
-		fields = ('id', 'image','description','affiliated_club',
+		fields = ('id','username', 'image','description','affiliated_club',
 					'my_club',)
+
+	def get_username(self, obj):
+		user = User.objects.get(id= obj.user_id)
+		return user.username
 
 	def get_affiliated_club(self, obj):
 		# 지금 유져리스트에 이 유저가 들어가 있는 클럽
 		user_id = User.objects.get(id = obj.user_id)
 		sz = ClubViewSerializer(Club.objects.filter(user_list = user_id.id), many=True)
+		for i in sz.data:
+			i['thumbnail'] = self.url + i['thumbnail']
 		return sz.data		
 	
 	def get_my_club(self, obj):
 		user_id = User.objects.get(id = obj.user_id)
 		sz = ClubViewSerializer(Club.objects.filter(master = user_id), many=True)
+		for i in sz.data:
+			i['thumbnail'] = self.url + i['thumbnail']
 		return sz.data
 
 	def save(self, **kwargs):
