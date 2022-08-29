@@ -10,6 +10,9 @@
     border-radius: 50%;
     color: black;
 }
+.Profile_imgbox img {
+    object-fit: cover;
+}
 
 .Setting_Userinfo > p{
     width: 300px;

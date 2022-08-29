@@ -21,6 +21,7 @@ function ClubSetting({ info }) {
         topic: "",
         brief_introduction: "",
     })
+    
     const [thumbnail, setThumbnail] = useState()
     const [thumbnailUrl, setThumbnailUrl] = useState();
 
@@ -52,6 +53,10 @@ function ClubSetting({ info }) {
                     topic: res.data.topic,
                     brief_introduction: res.data.brief_introduction,
                 })
+                setCategoryDayId(res.data.days)
+                setCategoryTimeId(res.data.time_zone)
+                setCategoryAgeId(res.data.range_age)
+                setCategoryGenderId(res.data.gender)
                 setThumbnail(res.data.thumbnail)
                 setThumbnailUrl(res.data.thumbnail)
             })

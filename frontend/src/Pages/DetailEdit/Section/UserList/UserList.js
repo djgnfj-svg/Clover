@@ -3,14 +3,14 @@ import './UserList.css'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { CgCloseR } from "@react-icons/all-files/cg/CgCloseR";
 import axios from 'axios';
-import { userListurl } from '../../../../Components/Apiurl';
+import { userListurl, userOutUrl } from '../../../../Components/Apiurl';
 
-function UserList({searchBoolean}) {
+function UserList({ searchBoolean }) {
 
     const { id } = useParams();
 
-    const [master , setMaster] = useState("")
-    const [manangerList , setManagerList] = useState("")
+    const [master, setMaster] = useState("")
+    const [manangerList, setManagerList] = useState("")
     const [userList, setUserList] = useState("")
 
     useEffect(() => {
@@ -26,6 +26,20 @@ function UserList({searchBoolean}) {
             setMaster(res.data.master)
             setManagerList(res.data.manangerlist)
             setUserList(res.data.user_list)
+        }).catch(error => {
+            console.log(error)
+        })
+    }
+
+    const handleOutMyClub = (outid) => {
+        axios.delete(userOutUrl(id)+`?userid=${outid}`, 
+        {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`
+            }
+        }).then(res => {
+            alert("나가")
+            getUserList();
         }).catch(error => {
             console.log(error)
         })
@@ -52,7 +66,7 @@ function UserList({searchBoolean}) {
                                 </tr>
                             </thead>
                             <tbody>
-                            {master && (
+                                {master && (
                                     <tr>
                                         <td>{master.username}</td>
                                         <td>{master.user_instroduction}</td>
@@ -64,7 +78,7 @@ function UserList({searchBoolean}) {
                                         <td>{item.username}</td>
                                         <td>{item.user_instroduction}</td>
                                         <td>운영진</td>
-                                        <td style={{ textAlign: "center", fontSize: "20px" , paddingLeft:"0vw" }}><CgCloseR /></td>
+                                        <td onClick={() => handleOutMyClub(item.id)} style={{ textAlign: "center", fontSize: "20px", paddingLeft: "0vw" }}><CgCloseR /></td>
                                     </tr>
                                 ))}
                                 {userList && userList.map((item) => (
@@ -72,7 +86,7 @@ function UserList({searchBoolean}) {
                                         <td>{item.username}</td>
                                         <td>{item.user_instroduction}</td>
                                         <td>유저</td>
-                                        <td style={{ textAlign: "center", fontSize: "20px" , paddingLeft:"0vw" }}><CgCloseR /></td>
+                                        <td onClick={() => handleOutMyClub(item.id)} style={{ textAlign: "center", fontSize: "20px", paddingLeft: "0vw" }}><CgCloseR /></td>
                                     </tr>
                                 ))}
                             </tbody>

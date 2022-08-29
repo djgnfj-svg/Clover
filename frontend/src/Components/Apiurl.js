@@ -12,11 +12,14 @@ export const clubAuth = (id) =>  `http://127.0.0.1:8000/api/club/${id}/get_right
 export const applyUrl = (id) =>  `http://127.0.0.1:8000/api/club/${id}/manager/appli_list/` //신청자 리스트 , post 시 가입받아주기
 export const applyOutUrl = (id)=> `http://127.0.0.1:8000/api/club/${id}/manager/appli_list/` // +?userid=3  가입 거절 + 쿼리로 userid 보내주기
 export const userListurl = (id) => `http://127.0.0.1:8000/api/club/${id}/manager/` // 클럽 유저리스트
+export const userOutUrl = (id) => `http://127.0.0.1:8000/api/club/${id}/master/expulsion_user/`
 export const clubthumbnail = (id) => `http://127.0.0.1:8000/api/club/${id}/change_thumbnail/`
 export const clubinfoImgUrl = (id) => `http://127.0.0.1:8000/api/club/${id}/img/`
 
 //유저 
 export const userInfoUrl = 'http://127.0.0.1:8000/api/profile/'
+export const userInfoUpdateUrl = (userid) => `http://127.0.0.1:8000/api/profile/${userid}/`
+export const passwordChnage = `http://127.0.0.1:8000/api/accounts/password/change/`
 
 
 
