@@ -9,20 +9,11 @@ function SearchResult({data}) {
   const navigate = useNavigate("")
 
   const [clubData,setClubData] = useState("")
+  
 
   useEffect(() => {
     setClubData(data)
   },[data])
-
-  useEffect(() => {
-    axios.get(searchurl,{
-      headers : {
-        Authorization: `Bearer ${localStorage.getItem('access_token')}`
-      }
-    }).then(res => {
-      setClubData(res.data)
-    })
-  },[])
 
   const handleApply = (id) => {
     navigate(`/club/${id}`)

@@ -46,8 +46,7 @@ function SearchForm({test}) {
         })
         .then(res => {
           setSearchList(res.data)
-          test(searchList)
-          console.log(res)
+          test(res.data)
         }).catch(error => {
           console.log(error)
         })
@@ -62,7 +61,7 @@ function SearchForm({test}) {
             gender: categoryGenderId
         })
     }, [one || userSearch])
-    
+
     useEffect(() => {
         handleClickSearch() 
     },[searchParams])
