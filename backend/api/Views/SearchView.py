@@ -28,14 +28,13 @@ class SearchViewSet(viewsets.ReadOnlyModelViewSet):
 		query = request.query_params.get('query', None)
 
 		q = Q()
-		print(days)
 		# print(range_age)
 		# print(time_zone)
 		# print(gender)
 		# print(query)
-		# if days:
-		# 	for day in days:
-		# 		q &= Q(range_age=day)
+		if days:
+			for day in days:
+				q |= Q(days__icontains=day)
 		
 		if range_age:
 			q &= Q(range_age=range_age)
@@ -46,5 +45,4 @@ class SearchViewSet(viewsets.ReadOnlyModelViewSet):
 		if query:
 			q &= Q(title__contains=query)
 		rtn = Club.objects.filter(q)
-		print(q)
 		return Response(ClubViewSerializer(rtn,many=True,context = {'request' : request}).data)
