@@ -231,8 +231,10 @@ function ClubSetting({ info }) {
         }
     }
     const handleFinishBtn = () => {
-        axios.put(clubDetail(id),userInput,
+        axios.put(clubDetail(id),
             {
+                topic,
+                brief_introduction,
                 days : categoryDayid,
                 time_zone : categoryTimeId,
                 range_age : categoryAgeId,
