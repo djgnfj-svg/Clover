@@ -64,7 +64,8 @@ function SearchForm({test}) {
 
     useEffect(() => {
         handleClickSearch() 
-    },[searchParams])
+    },[query 
+        || searchParams])
 
     const CategoryDays = {
         CategoryTitle: '날짜',

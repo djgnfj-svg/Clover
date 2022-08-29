@@ -53,7 +53,7 @@ function ClubSetting({ info }) {
                     topic: res.data.topic,
                     brief_introduction: res.data.brief_introduction,
                 })
-                setCategoryDayId(res.data.days)
+                // setCategoryDayId(res.data.days)
                 setCategoryTimeId(res.data.time_zone)
                 setCategoryAgeId(res.data.range_age)
                 setCategoryGenderId(res.data.gender)
