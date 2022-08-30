@@ -15,6 +15,7 @@ export const userListurl = (id) => `http://127.0.0.1:8000/api/club/${id}/manager
 export const userOutUrl = (id) => `http://127.0.0.1:8000/api/club/${id}/master/expulsion_user/`
 export const clubthumbnail = (id) => `http://127.0.0.1:8000/api/club/${id}/change_thumbnail/`
 export const clubinfoImgUrl = (id) => `http://127.0.0.1:8000/api/club/${id}/img/`
+export const clubRankUrl = (id) => `http://127.0.0.1:8000/api/club/${id}/master/appointManager/` 
 
 //유저 
 export const userInfoUrl = 'http://127.0.0.1:8000/api/profile/'

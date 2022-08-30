@@ -25,7 +25,7 @@ function ClubSetting({ info }) {
     const [thumbnail, setThumbnail] = useState()
     const [thumbnailUrl, setThumbnailUrl] = useState();
 
-    const [categoryDayid, setCategoryDayId] = useState([]);
+    const [categoryDayid, setCategoryDayId] = useState(["hi"]);
     const [categoryTimeId, setCategoryTimeId] = useState([]);
     const [categoryAgeId, setCategoryAgeId] = useState([]);
     const [categoryGenderId, setCategoryGenderId] = useState([]);
@@ -53,7 +53,7 @@ function ClubSetting({ info }) {
                     topic: res.data.topic,
                     brief_introduction: res.data.brief_introduction,
                 })
-                setCategoryDayId(res.data.days)
+                setCategoryDayId((categoryDayid.concat(res.data.days)))
                 setCategoryTimeId(res.data.time_zone)
                 setCategoryAgeId(res.data.range_age)
                 setCategoryGenderId(res.data.gender)
@@ -287,7 +287,7 @@ function ClubSetting({ info }) {
                                     {item.categoryMenu.map((Menuitem) => (
                                         <div className=
                                             {
-                                               categoryDayid.includes(Menuitem.subName) ? 'select_category' : ""
+                                              categoryDayid.includes(Menuitem.subName) ? 'select_category' : ""
                                                     ||
                                                     Menuitem.subName === categoryTimeId ? 'select_category' : ""
                                                         ||

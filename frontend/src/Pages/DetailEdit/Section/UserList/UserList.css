@@ -2,6 +2,11 @@ th ,td{
     padding-top: 2rem;
     width: max-content;
     padding-left: 5vw;
+    position: relative;
+}
+tr td span{
+    margin-left: 5px;
+    margin-bottom: 3px;
 }
 .tab-content{
     text-align: left;
@@ -38,4 +43,23 @@ th ,td{
 }
 .Edit_inputForm span{
     margin-left: 30px;
+}
+.editUserRank{
+    position: relative;
+    left: 337px;
+    background-color: rgb(212, 212, 212);
+    color: rgb(103, 103, 103);
+    text-align: center;
+    width: max-content;
+    padding: 0.5rem 0.5rem;
+    border-radius: 10px;
+}
+td button{
+    margin-left: 10px;
+    width: 85px;
+    height: 30px;
+    font-size: 13px;
+    background-color: rgb(230, 230, 230);
+    border: none;
+    border-radius: 10px;
 }
