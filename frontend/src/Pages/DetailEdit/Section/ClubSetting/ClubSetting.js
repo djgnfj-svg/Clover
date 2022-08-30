@@ -236,12 +236,13 @@ function ClubSetting({ info }) {
         }
     }
     const handleFinishBtn = () => {
-        
+        let arr = categoryDayid.filter(categoryDayid => categoryDayid !== "hi")
+
         axios.put(clubDetail(id),
             {
                 topic,
                 brief_introduction,
-                days : categoryDayid,
+                days : arr,
                 time_zone : categoryTimeId,
                 range_age : categoryAgeId,
                 gender : categoryGenderId
