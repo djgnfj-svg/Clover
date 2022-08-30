@@ -18,7 +18,7 @@ class ClubViewSerializer(serializers.ModelSerializer):
 
 class ClubDetailSerializer(serializers.ModelSerializer):
 	title = serializers.CharField(max_length = 20, read_only=True)
-	days = serializers.ListField()
+	days = serializers.ListField(required=False)
 	class Meta:
 		model = Club
 		fields = ['title','topic', 'brief_introduction',
