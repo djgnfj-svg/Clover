@@ -31,7 +31,9 @@ function Add_modal({ show }) {
         if(title.length  < 2 ){
           alert("제목을 2글자 이상 입력해주세요 !");
         }else if(topic < 2){
-          alert("주제을 2글자 이내로 써주세요"); 
+          alert("주제을 2글자 이상로 써주세요"); 
+        }else if(brief_introduction < 2){
+          alert("소개를 2글자 이상 입력해주세요")
         }else{
           axios.post(makeClubUrl,
           clubData,
@@ -45,7 +47,7 @@ function Add_modal({ show }) {
               alert("클럽 생성")
               navigate(`/club/${res.data.id}/`)
           }).catch(error => {
-            console.log(error)
+            alert("동일한 클럽명이 존재합니다.")
           })
         }
         }
