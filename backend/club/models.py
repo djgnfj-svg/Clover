@@ -11,34 +11,34 @@ class Club(models.Model):
 	# 상세정보
 
 	# +를 통해서 요일을 받을 것이다
-	days = models.JSONField(null=True, blank=True)
+	days = models.JSONField(null=False, blank=True, default=[])
 
 	AGE_CHOICES  = (
-		(None, ''),
+		('', 'NUll'),
 		('Over10','10세 이상'),
 		('Over20','20세 이상'),
 		('Over30','30세 이상'),
 		('Over40','40세 이상'),
 		('Over50','50세 이상'),
 	)
-	range_age = models.CharField(choices=AGE_CHOICES, max_length=30, null=True)
+	range_age = models.CharField(choices=AGE_CHOICES,default=AGE_CHOICES[0][0], max_length=30, null=False)
 
 	TIME_CHOICES = (
-		(None, ''),
+		('', None),
 		('1','00~06시'),
 		('2','06~12시'),
 		('3','12~18시'),
 		('4','18~24시'),
 	) 
-	time_zone = models.CharField(choices=TIME_CHOICES, max_length=30, null=True)
+	time_zone = models.CharField(choices=TIME_CHOICES,default=TIME_CHOICES[0][0], max_length=30, null=False)
 
 	GENDER_CHOICES = (
-		(None, ''),
+		('', 'NUll'),
 		('M','남자'),
 		('W','여자'),
 		('A','성별무관'),
 	)	
-	gender = models.CharField(choices=GENDER_CHOICES, max_length=30, null=True)
+	gender = models.CharField(choices=GENDER_CHOICES,default=GENDER_CHOICES[0][0], max_length=30, null=False)
 
 	master = models.ForeignKey(User, on_delete=models.CASCADE, related_name="master")
 	manager_list = models.ManyToManyField(User, related_name="manager_list", null=True)

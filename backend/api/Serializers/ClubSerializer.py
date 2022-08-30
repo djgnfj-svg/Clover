@@ -1,3 +1,4 @@
+from email.policy import default
 from rest_framework import serializers, exceptions
 
 from accounts.models import User
@@ -18,14 +19,14 @@ class ClubViewSerializer(serializers.ModelSerializer):
 
 class ClubDetailSerializer(serializers.ModelSerializer):
 	title = serializers.CharField(max_length = 20, read_only=True)
-	days = serializers.ListField(required=False)
+	days = serializers.ListField(required=False, default=None)
 	class Meta:
 		model = Club
 		fields = ['title','topic', 'brief_introduction',
 		'description', 'range_age',
 		'days', 'time_zone', 'gender']
 	def update(self, instance, validated_data):
-		print("test")
+		print(validated_data['days'])
 		return super().update(instance, validated_data)
 
 class ClubRoughSerializder(serializers.ModelSerializer):
