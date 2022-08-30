@@ -1,10 +1,16 @@
 # 화
 0. 버그수정
 1. 테스트 코드작성
+    - 테스트의 범위
+        1. 유닛테스트
+        2. 버그수정 테스트
+        3. 
     - account
     - club
     - api
 2. 문서작성(readme 외 여러개, 움짤 등 추가)
+    1. serialzier 개편
+    2. 문서작성
 3. 이력서 작성 밑 제출(남들이 만든 템플릿 따라쓰자 거기에 나의 내용을 넣자)
 
 # 수
@@ -20,3 +26,4 @@
 짜잘하게 정리할꺼
 1. django ListField 빈문자 혀용 -> ListField(required=False)
 2. black_list token에 대하여
+3. 테스트 정의

@@ -14,6 +14,7 @@ class Club(models.Model):
 	days = models.JSONField(null=True, blank=True)
 
 	AGE_CHOICES  = (
+		(None, ''),
 		('Over10','10세 이상'),
 		('Over20','20세 이상'),
 		('Over30','30세 이상'),
@@ -23,6 +24,7 @@ class Club(models.Model):
 	range_age = models.CharField(choices=AGE_CHOICES, max_length=30, null=True)
 
 	TIME_CHOICES = (
+		(None, ''),
 		('1','00~06시'),
 		('2','06~12시'),
 		('3','12~18시'),
@@ -31,6 +33,7 @@ class Club(models.Model):
 	time_zone = models.CharField(choices=TIME_CHOICES, max_length=30, null=True)
 
 	GENDER_CHOICES = (
+		(None, ''),
 		('M','남자'),
 		('W','여자'),
 		('A','성별무관'),
