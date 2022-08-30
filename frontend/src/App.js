@@ -20,8 +20,9 @@ function App() {
 
 	const [checked , setChecked] = useState(false)
 	useEffect(() => {
-		setChecked(!!IsLogin())
-	},[])
+
+		setChecked(!!IsLogin)
+	})
 
 
 	return (
@@ -33,7 +34,7 @@ function App() {
 				<Route path='/signup' element={<SignUp />} />
 				<Route path="/club" element={<SearchClubPage />} />
 				<Route path="/club/:id" element={<ClubDetailPage />} />
-				{checked && (
+				{!!IsLogin() && (
 					<>
 						<Route path='/useredit' element={<UserProfile />} />
 						<Route path="/club/:id/edit" element={<DetailEdit />} />
