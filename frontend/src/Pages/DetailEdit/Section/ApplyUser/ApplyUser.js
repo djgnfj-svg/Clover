@@ -25,6 +25,7 @@ function ApplyUser({successApply}) {
         })
             .then(res => {
                 setApplyList(res.data);
+                console.log(res.data)
             }).catch(error => {
                 console.log(error)
             })
@@ -76,7 +77,7 @@ function ApplyUser({successApply}) {
                             {applyList.map((item) => (
                                 <tr>
                                     <td>{item.username}</td>
-                                    <td>{item.description}</td>
+                                    <td>{item.user_instroduction}</td>
                                     <td style={{ display: "flex", textAlign: "right" }}>
                                         <button onClick={() => handleSucessApply(item.id)}>가입</button>
                                         <button onClick={() => handleOutApply(item.id)}>거절</button>

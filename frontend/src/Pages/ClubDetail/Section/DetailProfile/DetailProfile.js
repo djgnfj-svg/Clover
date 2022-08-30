@@ -116,7 +116,7 @@ function DetailProfile({profile , auth}) {
         <div className='clubinfo_description'>{profile.brief_introduction} </div>
         {(auth.right === "master" || auth.right === 'manager') &&  (
           <div className='clubinfo_edit'>
-            <button onClick={() => navigate(`/club/${id}/edit`)}>Edit Club</button>
+            <button onClick={() => navigate(`/club/${id}/edit`)}>클럽 수정</button>
             <button ref={dropdownRef} onClick={() => handleClickDropdown()}>•••</button>
           </div>
         )}

@@ -14,12 +14,14 @@ import UserProfile from './Pages/UserProfile/UserProfile';
 import IsLogin from './Components/IsLogin';
 import NoneUser from './Pages/NoneUser/NoneUser';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 function App() {
 
-	const getRight = () => {
-		axios.get()
-	}
+	const [checked , setChecked] = useState(false)
+	useEffect(() => {
+		setChecked(!!IsLogin())
+	},[])
 
 
 	return (
@@ -31,7 +33,7 @@ function App() {
 				<Route path='/signup' element={<SignUp />} />
 				<Route path="/club" element={<SearchClubPage />} />
 				<Route path="/club/:id" element={<ClubDetailPage />} />
-				{!!IsLogin() && (
+				{checked && (
 					<>
 						<Route path='/useredit' element={<UserProfile />} />
 						<Route path="/club/:id/edit" element={<DetailEdit />} />
