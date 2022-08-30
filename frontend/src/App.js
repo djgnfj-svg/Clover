@@ -13,8 +13,15 @@ import DetailEdit from './Pages/DetailEdit/DetailEdit';
 import UserProfile from './Pages/UserProfile/UserProfile';
 import IsLogin from './Components/IsLogin';
 import NoneUser from './Pages/NoneUser/NoneUser';
+import axios from 'axios';
 
 function App() {
+
+	const getRight = () => {
+		axios.get()
+	}
+
+
 	return (
 		<div className="App">
 			<MyNavbar />

@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom';
-import { clubDetail } from '../../Components/Apiurl';
+import { clubAuth, clubDetail } from '../../Components/Apiurl';
 import ApplyUser from './Section/ApplyUser/ApplyUser';
 import ClubInfo from './Section/ClubInfo/ClubInfo';
 import UserList from './Section/UserList/UserList';
@@ -18,10 +18,13 @@ function DetailEdit() {
   const navigate = useNavigate("")
 
   const [profile, setProfile] = useState();
+  const [auth , setAuth] = useState()
   const [searchBoolean , setSearchBoolean] = useState(false)
+
 
   useEffect(() => {
     getClubData()
+    getAUth();
   }, [])
 
   const getClubData = () => {
@@ -44,6 +47,23 @@ function DetailEdit() {
     } else {
 
     }
+  }
+
+  const getAUth = () => {
+    axios.get(clubAuth(id) , {
+      headers : {
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`
+      }
+    }).then(res => {
+      setAuth(res.data.right)
+      if(res.data.right === 'master' || res.data.right === 'manager'){
+
+      }else{
+        alert("운영진이 아닙니다 나가주세요 !")
+        navigate(-1)
+      }
+      
+    })
   }
 
   const handleClick = (bl) => {

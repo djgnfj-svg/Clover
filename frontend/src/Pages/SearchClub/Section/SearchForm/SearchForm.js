@@ -60,12 +60,11 @@ function SearchForm({test}) {
             range_age: categoryAgeId,
             gender: categoryGenderId
         })
-    }, [one || userSearch])
+    }, [one , userSearch])
 
     useEffect(() => {
         handleClickSearch() 
-    },[query 
-        || searchParams])
+    },[query , searchParams])
 
     const CategoryDays = {
         CategoryTitle: '날짜',
@@ -198,7 +197,7 @@ function SearchForm({test}) {
     }
 
     const handleRemoveCategory = (Num) => {
-        let arr = categoryDayid.filter(categoryDayid => categoryDayid.indexOf(Num))
+        let arr = categoryDayid.filter(categoryDayid => categoryDayid !== Num)
 
         if (categoryDayid.includes(Num)) {
             setCategoryDayId(arr)
