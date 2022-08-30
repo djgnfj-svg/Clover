@@ -237,13 +237,12 @@ function ClubSetting({ info }) {
     }
     const handleFinishBtn = () => {
         let arr = categoryDayid.filter(categoryDayid => categoryDayid === "hi" )
-        let lays = arr.filter(arrays => arrays === "None" )
 
         axios.put(clubDetail(id),
             {
                 topic,
                 brief_introduction,
-                days : lays,
+                days : arr,
                 time_zone : categoryTimeId,
                 range_age : categoryAgeId,
                 gender : categoryGenderId
