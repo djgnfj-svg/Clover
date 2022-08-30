@@ -53,14 +53,14 @@ function ClubSetting({ info }) {
                     topic: res.data.topic,
                     brief_introduction: res.data.brief_introduction,
                 })
-                // setCategoryDayId(res.data.days)
+                setCategoryDayId(res.data.days)
                 setCategoryTimeId(res.data.time_zone)
                 setCategoryAgeId(res.data.range_age)
                 setCategoryGenderId(res.data.gender)
                 setThumbnail(res.data.thumbnail)
                 setThumbnailUrl(res.data.thumbnail)
             })
-    }
+    } 
 
     const onChangeInput = (e) => {
         const { name, value } = e.target
@@ -223,7 +223,7 @@ function ClubSetting({ info }) {
     }
 
     const handleRemoveCategory = (Num) => {
-        let arr = categoryDayid.filter(categoryDayid => categoryDayid.indexOf(Num))
+        let arr = categoryDayid.filter(categoryDayid => categoryDayid !== Num)
 
         if (categoryDayid.includes(Num)) {
             setCategoryDayId(arr)
@@ -236,6 +236,7 @@ function ClubSetting({ info }) {
         }
     }
     const handleFinishBtn = () => {
+        
         axios.put(clubDetail(id),
             {
                 topic,
@@ -286,7 +287,7 @@ function ClubSetting({ info }) {
                                     {item.categoryMenu.map((Menuitem) => (
                                         <div className=
                                             {
-                                                categoryDayid.includes(Menuitem.subName) ? 'select_category' : ""
+                                               categoryDayid.includes(Menuitem.subName) ? 'select_category' : ""
                                                     ||
                                                     Menuitem.subName === categoryTimeId ? 'select_category' : ""
                                                         ||
