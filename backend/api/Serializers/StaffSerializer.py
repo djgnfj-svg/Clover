@@ -20,10 +20,6 @@ class StaffSerializer(serializers.ModelSerializer):
 		model = User
 		fields = ['id','username']
 
-
-class AddUserSerializer(serializers.Serializer):
-	userid = serializers.IntegerField(default=0)
-
 class UserlistSz(serializers.ModelSerializer):
 	master = AppliSerializer()
 	user_list = AppliSerializer(many=True)

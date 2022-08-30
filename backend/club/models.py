@@ -50,9 +50,6 @@ class Club(models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 
-	def Joinclub(self, user:User):
-		self.user_list.add(user)
-
 	def PlusUsernum(self):
 		self.usernum += 1
 		self.save()

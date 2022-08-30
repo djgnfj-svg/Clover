@@ -41,9 +41,9 @@ class testAccounts(APITestCase):
         }
         response = self.client.post(self.signup_url, signup_data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-    def test_register_have_same_email(self):
+    # def test_register_have_same_email(self):
 
-    def test_register_have_same_username(self):
-    def test_register_un_same_password1_2(self):
-    def test_login(self):
-    def test_login_fail(self):
+    # def test_register_have_same_username(self):
+    # def test_register_un_same_password1_2(self):
+    # def test_login(self):
+    # def test_login_fail(self):

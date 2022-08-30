@@ -23,10 +23,9 @@ class ClubDetailSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Club
 		fields = ['title','topic', 'brief_introduction',
-		'description', 'range_age',
-		'days', 'time_zone', 'gender']
+		'description', 'range_age',	'days', 'time_zone', 'gender']
+	
 	def update(self, instance, validated_data):
-		print(validated_data['days'])
 		return super().update(instance, validated_data)
 
 class ClubRoughSerializder(serializers.ModelSerializer):
@@ -47,14 +46,16 @@ class ClubRoughSerializder(serializers.ModelSerializer):
 			master = user,
 			creator = user,
 		)
+		
 		if img_data.getlist('thumbnail'):
 			thumbnail = img_data.getlist('thumbnail')[0]
 			instance.thumbnail = thumbnail
 		instance.save()
+		
 		return instance
 
-class JoinClubRoughSerializder(serializers.Serializer):
-	clubid = serializers.IntegerField(default=0)
+class ClubIdSerializder(serializers.Serializer):
+	club_id = serializers.IntegerField(default=0)
 
-class ManagerAppointSz(serializers.Serializer):
+class UseridSz(serializers.Serializer):
 	user_id = serializers.IntegerField()

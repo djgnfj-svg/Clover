@@ -8,15 +8,15 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from api.Utils.Error_msg import error_msg, success_msg
 from api.Utils.Permission import IsManager
-from api.Serializers.StaffSerializer import AddUserSerializer, StaffSerializer, AppliSerializer, UserlistSz
-from api.Serializers.ClubSerializer import JoinClubRoughSerializder
+from api.Serializers.StaffSerializer import StaffSerializer, AppliSerializer, UserlistSz
+from api.Serializers.ClubSerializer import UseridSz
 
 from accounts.models import User
 
 from club.models import Club
 
 class ClubManagerView(viewsets.GenericViewSet, mixins.DestroyModelMixin):
-	serializer_class = JoinClubRoughSerializder
+	serializer_class = UseridSz
 	queryset = Club.objects.all()
 	authentication_classes = [SessionAuthentication, JWTAuthentication]
 	permission_classes = [IsManager]
@@ -24,14 +24,14 @@ class ClubManagerView(viewsets.GenericViewSet, mixins.DestroyModelMixin):
 	def list(self, request, club_id):
 		return Response(UserlistSz(Club.objects.get(id=club_id)).data)
 
-	@action(detail=False, methods=['get'],name="appli_list", serializer_class=AddUserSerializer)
+	@action(detail=False, methods=['get'], name="appli_list")
 	def appli_list(self, request, club_id):
 		temp = Club.objects.get(id=club_id).appli_list.all()
 		return Response(AppliSerializer(temp, many=True).data)
 
 	@appli_list.mapping.post
 	def appli_list_post(self, requset, club_id):
-		user=User.objects.get(id = requset.data['userid'])
+		user=User.objects.get(id = requset.data['user_id'])
 		club = Club.objects.get(id=club_id)
 		if user in club.user_list.all():
 			return Response(error_msg(2001), status=status.HTTP_403_FORBIDDEN)
@@ -44,9 +44,9 @@ class ClubManagerView(viewsets.GenericViewSet, mixins.DestroyModelMixin):
 
 	@appli_list.mapping.delete
 	def appli_list_delete(self, request, club_id, pk=None):
-		userid = int(request.GET.get('userid'))
+		user_id = int(request.GET.get('user_id'))
 		club = Club.objects.get(id = club_id)
-		club.appli_list.remove(userid)
+		club.appli_list.remove(user_id)
 
 		temp = Club.objects.get(id=club_id).appli_list.all()
 		return Response(StaffSerializer(temp,many=True).data)

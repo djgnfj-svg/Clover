@@ -8,8 +8,8 @@ from rest_framework.decorators import action
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from api.Serializers.ClubSerializer import (
-	ClubRoughSerializder, JoinClubRoughSerializder,ClubDetailSerializer,
-	ClubThumbnailSerializer, ClubViewSerializer
+	ClubRoughSerializder,ClubDetailSerializer, UseridSz,
+	ClubIdSerializder,ClubThumbnailSerializer, ClubViewSerializer
 )
 
 from api.Utils.Error_msg import error_msg, success_msg
@@ -75,14 +75,14 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 	
 	#클럽해체
 	@action(detail=True, methods=['delete'],permission_classes=[IsMaster,], \
-		serializer_class=JoinClubRoughSerializder, name="dissolution_club")
+		serializer_class=UseridSz, name="dissolution_club")
 	def dissolution_club(self,request, pk):
 		instance = self.get_object()
 		instance.delete()
 		return Response(success_msg(2002))
 
 	@action(detail=True, methods=['put'], name="thumbnail",\
-		serializer_class=ClubThumbnailSerializer)
+		serializer_class=ClubThumbnailSerializer, permission_classes=[IsMaster,])
 	def change_thumbnail(self, request, pk):
 		instance = self.get_object()
 		serialzier = self.get_serializer(data = request.data, context={'request' : request})
@@ -95,22 +95,28 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 		return Response(error_msg(403))
 
 	#신청
-	@action(detail=False, methods=['post'],	serializer_class=JoinClubRoughSerializder, name="joinclub")
+	@action(detail=False, methods=['post'],	serializer_class=ClubIdSerializder, name="joinclub")
 	def joinclub(self, request):
-		club = get_object_or_404(Club, id=request.data['clubid'])
-		if request.user in club.user_list.all():
+		club = get_object_or_404(Club, id = request.data['club_id'])
+
+		if request.user in club.user_list.all() or request.user == club.master:
 			return Response(error_msg(2001), status=status.HTTP_403_FORBIDDEN)
+		
 		club.appli_list.add(request.user.id)
-		return Response(success_msg(1001))
+		return Response(success_msg(1003))
 
 	#탈퇴
-	@action(detail=False, methods=['post'],	serializer_class=JoinClubRoughSerializder,name="outclub")
+	@action(detail=False, methods=['post'],	serializer_class=ClubIdSerializder,name="outclub")
 	def outclub(self, request):
-		club = get_object_or_404(Club, id=request.data['clubid'])
+		# 신청하는 사람이 본인이여야함
+		club = get_object_or_404(Club, id=request.data['club_id'])
 		try :
 			temp = club.user_list.get(id = request.user.id)
 		except :
-			return Response(error_msg(404),status=status.HTTP_404_NOT_FOUND)
+			if request.user == club.master:
+				return Response(error_msg(2003), status=status.HTTP_403_FORBIDDEN)
+			else :
+				return Response(error_msg(404),status=status.HTTP_404_NOT_FOUND)
 		club.user_list.remove(temp.id)
 		club.MinusUsernum()
 		return Response(success_msg(1002))
