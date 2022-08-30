@@ -54,3 +54,6 @@ class ClubRoughSerializder(serializers.ModelSerializer):
 
 class JoinClubRoughSerializder(serializers.Serializer):
 	clubid = serializers.IntegerField(default=0)
+
+class ManagerAppointSz(serializers.Serializer):
+	user_id = serializers.IntegerField()

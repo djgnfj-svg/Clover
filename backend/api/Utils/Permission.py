@@ -13,7 +13,7 @@ class IsManager(permissions.BasePermission):
 	def has_permission(self, request, view):
 		club_id = int(view.kwargs['club_id'])
 		obj = get_object_or_404(Club, id = club_id)
-		if request.user in obj.managerlist.all() or\
+		if request.user in obj.manager_list.all() or\
 			request.user == obj.master:
 			return True
 		return False

@@ -27,8 +27,8 @@ class AddUserSerializer(serializers.Serializer):
 class UserlistSz(serializers.ModelSerializer):
 	master = AppliSerializer()
 	user_list = AppliSerializer(many=True)
-	managerlist = AppliSerializer(many=True)
+	manager_list = AppliSerializer(many=True)
 	class Meta:
 		model = Club
-		fields = ['id', 'master', 'managerlist', "user_list"]
+		fields = ['id', 'master', 'manager_list', "user_list"]
 	

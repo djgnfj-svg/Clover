@@ -37,7 +37,7 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 		return super().get_serializer(*args, **kwargs)
 
 	#클럽생성
-	def create(self, request, *args, **kwargs):
+	def create(self, request):
 		serializer = self.get_serializer(data=request.data, context={'request' : request})
 		if serializer.is_valid():
 			rtn = serializer.create(request, serializer.data)
@@ -53,7 +53,7 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 		user = requset.user
 		if club.master == user:
 			return Response({"right" : "master"})
-		elif user in club.managerlist.all():
+		elif user in club.manager_list.all():
 			return Response({"right" : "manager"})
 		elif user in club.user_list.all():
 			return Response({"right" : "subscriber"})
@@ -62,7 +62,7 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 	
 
 	#클럽수정
-	def update(self, request, pk, *args, **kwargs):
+	def update(self, request, pk):
 		instance = self.get_object()
 		serializer = self.get_serializer(instance, data=request.data)
 		if serializer.is_valid():

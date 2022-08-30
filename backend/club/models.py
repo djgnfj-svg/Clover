@@ -37,8 +37,8 @@ class Club(models.Model):
 	)	
 	gender = models.CharField(choices=GENDER_CHOICES, max_length=30, null=True)
 
-	master = models.ForeignKey(User, on_delete=models.CASCADE, related_name="club_master")
-	managerlist = models.ManyToManyField(User, related_name="club_managerlist", null=True)
+	master = models.ForeignKey(User, on_delete=models.CASCADE, related_name="master")
+	manager_list = models.ManyToManyField(User, related_name="manager_list", null=True)
 	user_list = models.ManyToManyField(User, related_name="user_list", null=False)
 	appli_list = models.ManyToManyField(User,related_name="appli_list", null=True)
 
