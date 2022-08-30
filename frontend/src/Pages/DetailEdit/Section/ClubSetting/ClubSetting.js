@@ -236,7 +236,7 @@ function ClubSetting({ info }) {
         }
     }
     const handleFinishBtn = () => {
-        let arr = categoryDayid.filter(categoryDayid => categoryDayid !== "hi")
+        let arr = categoryDayid.filter(categoryDayid => categoryDayid === "hi")
 
         axios.put(clubDetail(id),
             {
