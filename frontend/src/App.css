@@ -3,6 +3,7 @@
   background-color: rgb(249, 249, 249);
   min-height: 930px;
   height: max-content;
+  min-width: max-content;
 }
 
 .App-logo {

@@ -270,4 +270,11 @@
 .Dropdown_AddClub:hover ,  .Dropdown_Logout:hover ,  .Dropdown_settingProfile:hover{
     background-color: rgb(244, 244, 244);
 }
+.Dropdown_profile img{
+    object-fit: cover;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+}
 

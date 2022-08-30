@@ -20,7 +20,6 @@ class SearchViewSet(viewsets.ReadOnlyModelViewSet):
 	permission_classes = [AllowAny]
 
 	def list(self, request):
-		print(request.query_params)
 		range_age = request.query_params.get('range_age',None)
 		days = request.GET.getlist('days[]',None)
 		time_zone = request.query_params.get('time_zone',None)

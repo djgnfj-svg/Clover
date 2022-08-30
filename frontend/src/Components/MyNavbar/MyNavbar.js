@@ -11,17 +11,17 @@ function MyNavbar() {
   const url = window.location.pathname
   const page = url.split("/")[1]
   const navigate = useNavigate("")
-  
+
   const ref = useRef()
 
   const [isLogin, setIsLogin] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
-  const [showModal , setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false)
 
-  const [userInfo , setUserInfo] = useState({
-    username : "",
-    brief_introduction : "",
-    thumbnail:"",
+  const [userInfo, setUserInfo] = useState({
+    username: "",
+    brief_introduction: "",
+    thumbnail: "",
   })
 
   const pageurls = {
@@ -37,7 +37,7 @@ function MyNavbar() {
 
   })
   const { home, club, test } = selectPages;
-  const { username , brief_introduction , thumbnail} = userInfo
+  const { username, brief_introduction, thumbnail } = userInfo
 
   useEffect(() => {
     if (!!IsLogin()) {
@@ -91,7 +91,7 @@ function MyNavbar() {
   }
   const modalClose = () => {
     setShowModal(!showModal)
-}
+  }
 
   const handleClickCategory = (e) => {
     const { className } = e.target
@@ -106,25 +106,26 @@ function MyNavbar() {
   }
 
   const handleClickProfile = () => {
-    axios.get(userInfoUrl , {
-      headers : {
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`
+    axios.get(userInfoUrl, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`
       }
     })
-    .then(res => {
-      setUserInfo({
-        ...userInfo,
-        username : res.data[0].username,
-        brief_introduction : res.data[0].description
+      .then(res => {
+        setUserInfo({
+          ...userInfo,
+          username: res.data[0].username,
+          brief_introduction: res.data[0].description,
+          thumbnail: res.data[0].image
+        })
+        console.log(res.data)
+      }).catch(error => {
+        console.log(error)
       })
-      console.log(res.data)
-    }).catch(error => {
-      console.log(error)
-    })
-    
-    if(!isOpen){
+
+    if (!isOpen) {
       setIsOpen(true)
-    }else{
+    } else {
       setIsOpen(false)
     }
   }
@@ -133,15 +134,15 @@ function MyNavbar() {
     e.preventDefault();
     navigate("/useredit")
   }
- 
+
   const handleLogoutBtn = () => {
-    const logout =  window.confirm('정말 로그아웃 하시겟습니까?')
-    if(!!logout){
+    const logout = window.confirm('정말 로그아웃 하시겟습니까?')
+    if (!!logout) {
       localStorage.clear();
       setIsLogin(false)
       navigate("/login")
       setIsOpen(false)
-    }else{
+    } else {
       alert("왜 에러야")
     }
   }
@@ -174,9 +175,16 @@ function MyNavbar() {
         {isLogin && userInfo ? (
           <div>
             <button ref={ref} className="ProfileBtn" onClick={() => handleClickProfile()}>
-            <span className="material-symbols-outlined" style={{position:"relative" ,marginRight:"20px" , fontSize:"30px"}}>
+              {thumbnail ? (
+                <img src={thumbnail} className="material-symbols-outlined" style={{ width: "40px", height: "40px", borderRadius: "50%", position: "relative", objectFit: "cover", marginRight: "20px", fontSize: "30px" }} />
+                )
+                :
+                (
+                  <span className="material-symbols-outlined" style={{position:"relative" ,marginRight:"23px" , fontSize:"30px"}}>
                     account_circle
                   </span>
+                )
+              }
               <span class="material-symbols-outlined">
                 keyboard_arrow_down
               </span>
@@ -184,27 +192,34 @@ function MyNavbar() {
             {isOpen && (
               <div className='Profile_Dropdown'>
                 <div className='Dropdown_profile'>
+                {thumbnail ? (
+                  <img src={thumbnail} />
+                )
+                :
+                (
                   <span className="material-symbols-outlined">
                     account_circle
                   </span>
+                )
+              }
                   <div className='Profile_name'>
-                    <span style={{fontWeight :"bold" , color:"black" , fontSize:"18px"}}>{userInfo.username}</span>
+                    <span style={{ fontWeight: "bold", color: "black", fontSize: "18px" }}>{userInfo.username}</span>
                     <span className='Profile_category'>{brief_introduction}</span>
                   </div>
                 </div>
                 <div className='Dropdown_AddClub' onClick={modalClose}>
-                <span class="material-symbols-outlined">
-                  diversity_3
-                </span>
+                  <span class="material-symbols-outlined">
+                    diversity_3
+                  </span>
                   <span>모임 만들기</span>
                 </div>
                 <div className='Dropdown_settingProfile' onClick={(e) => handleEditProfile(e)}>
-                <span class="material-symbols-outlined">
+                  <span class="material-symbols-outlined">
                     settings
                   </span>
                   <span>프로필 수정</span>
                 </div>
-                  <hr className='line'></hr>
+                <hr className='line'></hr>
                 <div onClick={(e) => handleLogoutBtn(e)} className='Dropdown_Logout'>
                   <span className="material-symbols-outlined">
                     lock_open
