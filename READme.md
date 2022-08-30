@@ -46,9 +46,13 @@
 - 회원가입
 - 마이페이지
 - 프로필 업데이트
+
+    ![프로필](https://user-images.githubusercontent.com/87049249/187430371-026dcc86-9dc7-4ff8-b8d0-21fb99d55541.gif)
+
 ### 클럽
 - Club Search
-- ![ezgif com-gif-maker](https://user-images.githubusercontent.com/87049249/187418272-4d5fa374-9e51-4956-856f-7e67f1732b7d.gif)
+
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/87049249/187418272-4d5fa374-9e51-4956-856f-7e67f1732b7d.gif)
 
 (움짤예정)
 - Club 신청/가입/탈퇴 관리
@@ -78,12 +82,6 @@
 - 유저 클럽 생성 제한 갯수 정하기
 
 #### Front
-- 클럽 edit 페이지 버그 (1순위)
-- 클럽 상세보기 페이지 로그인 불필요 (1순위)
-- 매니저 임명, 제명 (1순위)
-- 권한설정 전부(1순위)
-- 똑같은 이름의 클럽을 만들었을때 불가알림(1순위)
-- 클럽 search 입력이 카테고리 선택시 동작하지 않습니다(1순위)
 - 반응형 (2순위)
 - 디자인 (2순위)
 - 클럽해체하기(이메일인증 필요할듯) (5순위)
