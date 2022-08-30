@@ -58,7 +58,7 @@
     * Master
         - 공지사항 CRUD (추후 업데이트)
 
-              ![클럽 기본값 변경](https://user-images.githubusercontent.com/87049249/187453155-37496d69-e88e-48a5-b227-4df8a1d25d00.gif)
+            ![클럽 기본값 변경](https://user-images.githubusercontent.com/87049249/187470749-7630cd38-1618-4310-8e3f-1f207bf31811.gif)
 
         - 클럽 프로필 수정 (이미지 , 주제 , 소개)
         - 클럽 소개 수정
