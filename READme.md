@@ -47,12 +47,13 @@
 - 마이페이지
 - 프로필 업데이트
 
-    ![프로필](https://user-images.githubusercontent.com/87049249/187430371-026dcc86-9dc7-4ff8-b8d0-21fb99d55541.gif)
+    ![프로필수정](https://user-images.githubusercontent.com/87049249/187436419-06bea31c-4af4-4b0b-ab20-a29549e4bda4.gif)
+
 
 ### 클럽
 - Club Search
 
-    !![프로필수정](https://user-images.githubusercontent.com/87049249/187436419-06bea31c-4af4-4b0b-ab20-a29549e4bda4.gif)
+    ![ezgif com-gif-maker](https://user-images.githubusercontent.com/87049249/187418272-4d5fa374-9e51-4956-856f-7e67f1732b7d.gif)
 
 (움짤예정)
 - Club 신청/가입/탈퇴 관리
