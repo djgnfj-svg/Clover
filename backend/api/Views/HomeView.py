@@ -7,7 +7,7 @@ from api.Serializers.ClubSerializer import ClubViewSerializer
 from club.models import Club
 
 class HomePagination(PageNumberPagination):
-	page_size = 5
+	page_size = 4
 
 class HomeViewSet(viewsets.ReadOnlyModelViewSet):
 	queryset = Club.objects.all().order_by("-created_at")

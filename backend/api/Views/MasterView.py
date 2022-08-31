@@ -26,14 +26,21 @@ class ClubMasterView(viewsets.GenericViewSet, mixins.ListModelMixin):
 		serializer = self.get_serializer(instance)
 		return Response(serializer.data)
 
+	#유저강퇴
 	@action(detail=False, methods=['delete'], name="user_expulsion")
 	def expulsion_user(self, request, club_id):
 		user_id = request.GET.get("user_id", None)
 		user = get_object_or_404(User,id=user_id)
 		club = get_object_or_404(Club,id=club_id)
-		club.user_list.remove(user.id)
-		return Response(success_msg(200))
-
+		if user in club.user_list.all():
+			club.user_list.remove(user.id)
+			club.MinusUsernum()
+			return Response(success_msg(200))
+		if user in club.manager_list.all():
+			club.manager_list.remove(user.id)
+			club.MinusUsernum()
+			return Response(success_msg(200))
+		return Response(error_msg(2100),status=status.HTTP_404_NOT_FOUND)
 	# 매니져 임명 post
 	@action(detail=False, methods=['post'],	serializer_class=UseridSz,\
 			 name="appointmanager")
