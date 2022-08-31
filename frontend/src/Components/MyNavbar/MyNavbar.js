@@ -167,15 +167,7 @@ function MyNavbar() {
       <div className={club ? "selectCategory" : "NavCategoryClub"} >
         <p className="NavClub" onClick={(e) => handleClickCategory(e)}>Search</p>
       </div>
-
-      {/* {isLogin && (
-        <div className="NavNotice">
-        <span className="material-symbols-outlined">
-        notifications_active
-        </span>
-        </div>
-      )
-} */}
+    
       <div className="NavProfile">
         {isLogin && userInfo ? (
           <div>
