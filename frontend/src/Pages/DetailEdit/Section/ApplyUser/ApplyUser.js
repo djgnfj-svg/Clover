@@ -33,7 +33,7 @@ function ApplyUser({successApply}) {
 
     const handleSucessApply = (userid) => {
         axios.post(applyUrl(id), {
-            userid : userid
+            user_id : userid
         },
         {
             headers : {
@@ -47,7 +47,7 @@ function ApplyUser({successApply}) {
         })
     }
     const handleOutApply = (ids) => {
-        axios.delete(applyOutUrl(id)+`?userid=${ids}` ,
+        axios.delete(applyOutUrl(id)+`?user_id=${ids}` ,
             {
                 headers : {
                     Authorization: `Bearer ${localStorage.getItem('access_token')}`

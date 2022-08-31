@@ -62,7 +62,7 @@ function DetailProfile({profile , auth}) {
 
     if(checkApply){
       axios.post(applyClub,{
-        clubid : id
+        club_id : id
       },
       {
         headers : {

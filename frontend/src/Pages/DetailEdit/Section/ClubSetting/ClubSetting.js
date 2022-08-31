@@ -253,7 +253,6 @@ function ClubSetting({ info }) {
                }
              })
             .then(res => {
-                console.log(res)
                 alert("변경 성공")
             }).catch(error => {
                 console.log(error)

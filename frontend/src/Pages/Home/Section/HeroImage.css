@@ -13,3 +13,6 @@
     margin: 0 auto;
     object-fit: contain;
 }
+.rank h4{
+    color: rgb(91, 91, 91);
+}

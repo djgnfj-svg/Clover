@@ -78,6 +78,11 @@ function MyNavbar() {
   }, [url])
 
   useEffect(() => {
+    handleClickProfile()
+    setIsOpen(false)
+  },[])
+
+  useEffect(() => {
     if (isOpen) document.addEventListener('click', handleClickOutSide)
     return () => {
       document.removeEventListener('click', handleClickOutSide)
