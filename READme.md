@@ -1,15 +1,15 @@
 # 프로젝트명 : Clover
 
 ##### url : ...Not yet
-##### last_update : 2022-08-30
+##### last_update : 2022-08-31
 ##### 프로젝트 기간 : 2022-08-01 ~ 진행중
 
 ---
 
 ## 🙉개발인원 2명
 
-##### Back-end : 송영재
-#####  Front-end : 박형석
+##### Back-end : [송영재](https://github.com/djgnfj-svg)
+##### Front-end : [박형석](https://github.com/b-hyoung)
 
 ---
 
@@ -22,7 +22,7 @@
 ## Backend(송영재)
 
 - Django, Python, DRF
-- Mysql : DB구축
+- Mysql
 - RESTful API
 - AWS-EC2, RDS (진행중)
 
@@ -34,9 +34,9 @@
 ## 👜문서
 
 - [ERD](https://www.erdcloud.com/d/DNgJfr4MgsQM9eRR5)(송영재)
-- [API문서](미완)(송영재)
+- [API문서](https://documenter.getpostman.com/view/17607098/VUqrPHfM)(송영재)[수정중]
 - [시스템흐름도](https://lapis-apparatus-de5.notion.site/976166f095ee4b83a52ed96b5afee510)(박형석)
-- [화면 정의서](미완)(박형석)
+- [화면 정의서](https://ovenapp.io/project/cTG1LaK6lb574BCB2LGNEd9CZl3qVXzU#4lLFl)(박형석)
 
 ---
 
@@ -68,7 +68,6 @@
             ![유저권한변경](https://user-images.githubusercontent.com/87049249/187470144-1be5a331-19ea-4d42-9246-2f4adea04593.gif)
         - 클럽 해체하기 
     * Manager
-        - 공지사항  ( 추후 업데이트 )
         - 신청관리
         
 ---
