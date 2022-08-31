@@ -19,11 +19,6 @@ import { useEffect, useState } from 'react';
 function App() {
 
 	const [checked , setChecked] = useState(false)
-	useEffect(() => {
-
-		setChecked(!!IsLogin)
-	})
-
 
 	return (
 		<div className="App">
