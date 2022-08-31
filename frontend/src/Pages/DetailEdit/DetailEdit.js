@@ -20,7 +20,7 @@ function DetailEdit() {
   const [profile, setProfile] = useState();
   const [auth , setAuth] = useState()
   const [searchBoolean , setSearchBoolean] = useState(false)
-
+  const [days, ] = useState()
 
   useEffect(() => {
     getClubData()
@@ -48,6 +48,7 @@ function DetailEdit() {
 
     }
   }
+
 
   const getAUth = () => {
     axios.get(clubAuth(id) , {
