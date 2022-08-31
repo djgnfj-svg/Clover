@@ -14,7 +14,7 @@ class ClubViewSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Club
 		fields = ['id', 'title','topic', 'brief_introduction',
-		'description', 'range_age',
+		'description', 'range_age', 'usernum',
 		'days', 'time_zone', 'gender', 'thumbnail']
 
 class ClubDetailSerializer(serializers.ModelSerializer):
@@ -22,7 +22,7 @@ class ClubDetailSerializer(serializers.ModelSerializer):
 	days = serializers.ListField(required=False)
 	class Meta:
 		model = Club
-		fields = ['title','topic', 'brief_introduction',
+		fields = ['title','topic', 'brief_introduction', 'usernum',
 		'description', 'range_age',	'days', 'time_zone', 'gender']
 	
 	def update(self, instance, validated_data):
