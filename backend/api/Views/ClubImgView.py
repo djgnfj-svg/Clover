@@ -17,7 +17,7 @@ class ClubDetailImgView(viewsets.ModelViewSet):
         if serializer.is_valid():
             rtn = serializer.create(club_id, serializer.data)
             if rtn :
-                return Response(self.get_serializer(rtn).data)
+                return Response(self.get_serializer(rtn).data, status=status.HTTP_201_CREATED)
         else:
             return Response(error_msg(serializer=serializer), status=status.HTTP_400_BAD_REQUEST)
 

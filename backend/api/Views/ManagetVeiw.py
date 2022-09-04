@@ -33,6 +33,7 @@ class ClubManagerView(viewsets.GenericViewSet, mixins.DestroyModelMixin):
 	def appli_list_post(self, requset, club_id):
 		user=User.objects.get(id = requset.data['user_id'])
 		club = Club.objects.get(id=club_id)
+		# todo 이코드를 신청쪽에 넣으면 깔끔해 지는걸까?
 		if user in club.user_list.all():
 			return Response(error_msg(2001), status=status.HTTP_403_FORBIDDEN)
 		if user not in club.appli_list.all():

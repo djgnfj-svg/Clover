@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 
-from rest_framework import viewsets, status, mixins
+from rest_framework import viewsets, status, mixins, exceptions
 from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import action
@@ -40,22 +40,22 @@ class ClubMasterView(viewsets.GenericViewSet, mixins.ListModelMixin):
 			club.manager_list.remove(user.id)
 			club.MinusUsernum()
 			return Response(success_msg(200))
-		return Response(error_msg(2100),status=status.HTTP_404_NOT_FOUND)
+		return Response(error_msg(2401),status=status.HTTP_404_NOT_FOUND)
 	# 매니져 임명 post
 	@action(detail=False, methods=['post'],	serializer_class=UseridSz,\
-			 name="appointmanager")
-	def appointManager(self, request, club_id):
+			 name="appoint-manager",url_path="appoint-manager")
+	def appoint_manager(self, request, club_id):
 		user_id = request.data["user_id"]
 		user = User.objects.get(id=user_id)
 		club = Club.objects.get(id = club_id)
 		if user not in club.user_list.all():
-			raise Response(error_msg(2100), status=status.HTTP_404_NOT_FOUND)
+			raise exceptions.PermissionDenied(error_msg(2401))
 		club.manager_list.add(user.id)
 		club.user_list.remove(user.id)
 		return Response(success_msg(200))
 
 	# 매니져 삭제 delete
-	@appointManager.mapping.delete
+	@appoint_manager.mapping.delete
 	def expulsionManager(self, request, club_id):
 		manager_id = request.GET.get("manager_id",None)
 		user = User.objects.get(id=manager_id)
@@ -64,7 +64,7 @@ class ClubMasterView(viewsets.GenericViewSet, mixins.ListModelMixin):
 			Response(error_msg(403), status=status.HTTP_403_FORBIDDEN)
 		
 		if user not in club.manager_list.all():
-			raise Response(error_msg(2101), status=status.HTTP_404_NOT_FOUND)
+			raise exceptions.NotFound(error_msg(2401))
 
 		club.manager_list.remove(user.id)
 		club.user_list.add(user.id)

@@ -42,7 +42,7 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 		if serializer.is_valid():
 			rtn = serializer.create(request, serializer.data)
 			if rtn :
-				return Response(self.get_serializer(rtn).data)
+				return Response(self.get_serializer(rtn).data, status=status.HTTP_201_CREATED)
 		else:
 			return Response(error_msg(serializer=serializer), status=status.HTTP_400_BAD_REQUEST)
 	
@@ -65,21 +65,19 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 	def update(self, request, pk):
 		instance = self.get_object()
 		serializer = self.get_serializer(instance, data=request.data)
-		print(request.data)
 		if serializer.is_valid():
 			serializer.save()
 			return Response(serializer.data)
-		print(error_msg(serializer=serializer))
 		return Response(error_msg(serializer=serializer), status=status.HTTP_400_BAD_REQUEST)
 
 	
 	#클럽해체
 	@action(detail=True, methods=['delete'],permission_classes=[IsMaster,], \
 		serializer_class=UseridSz, name="dissolution_club")
-	def dissolution_club(self,request, pk):
+	def dissolution_club(self, request, pk):
 		instance = self.get_object()
 		instance.delete()
-		return Response(success_msg(2002))
+		return Response(success_msg(2002), status=status.HTTP_204_NO_CONTENT)
 
 	@action(detail=True, methods=['put'], name="thumbnail",\
 		serializer_class=ClubThumbnailSerializer, permission_classes=[IsMaster,])
@@ -88,15 +86,12 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 		serialzier = self.get_serializer(data = request.data, context={'request' : request})
 		if serialzier.is_valid():
 			serialzier.update(instance, request.data)
-			return Response(success_msg(2002))
-		# instance.thumbnail = request.data["thumbnail"]
-		# print(type(request.data["thumbnail"]))
-		# instance.update(thumbnail)
-		return Response(error_msg(403))
+			return Response(success_msg(200))
+		return Response(error_msg(403),status=status.HTTP_400_BAD_REQUEST)
 
 	#신청
-	@action(detail=False, methods=['post'],	serializer_class=ClubIdSerializder, name="joinclub")
-	def joinclub(self, request):
+	@action(detail=False, methods=['post'],	serializer_class=ClubIdSerializder,)
+	def userappli(self, request):
 		club = get_object_or_404(Club, id = request.data['club_id'])
 
 		if request.user in club.user_list.all() or request.user == club.master:
@@ -106,17 +101,16 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 		return Response(success_msg(1003))
 
 	#탈퇴
-	@action(detail=False, methods=['post'],	serializer_class=ClubIdSerializder,name="outclub")
+	@userappli.mapping.delete
 	def outclub(self, request):
-		# 신청하는 사람이 본인이여야함
-		club = get_object_or_404(Club, id=request.data['club_id'])
+		club = get_object_or_404(Club, id = request.GET.get('club_id'))
 		try :
 			temp = club.user_list.get(id = request.user.id)
 		except :
 			if request.user == club.master:
 				return Response(error_msg(2003), status=status.HTTP_403_FORBIDDEN)
 			else :
-				return Response(error_msg(404),status=status.HTTP_404_NOT_FOUND)
+				return Response(error_msg(404), status=status.HTTP_404_NOT_FOUND)
 		club.user_list.remove(temp.id)
 		club.MinusUsernum()
 		return Response(success_msg(1002))
