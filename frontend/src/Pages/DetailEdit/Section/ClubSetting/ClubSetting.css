@@ -127,3 +127,10 @@
     width: 100px;
     height: 40px;
 }
+
+.notMaster{
+    width: 100%;
+    text-align: center;
+    color: red;
+    font-size: 25px;
+}

@@ -122,9 +122,9 @@
 }
 
 .NavProfile{
-    position: absolute;
-    right: 110px;
+    position: relative;
     align-items: center;
+    left:400px;
 }
 .NavProfile .ProfileBtn{
     width: max-content;

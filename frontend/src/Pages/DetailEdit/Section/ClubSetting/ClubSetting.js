@@ -4,7 +4,7 @@ import { clubDetail, clubthumbnail, searchurl } from '../../../../Components/Api
 import axios from 'axios'
 import './ClubSetting.css'
 
-function ClubSetting({ info }) {
+function ClubSetting({ auth }) {
     const navigate = useNavigate("")
     const { id } = useParams("")
     const inputRef = useRef();
@@ -21,7 +21,7 @@ function ClubSetting({ info }) {
         topic: "",
         brief_introduction: "",
     })
-    
+
     const [thumbnail, setThumbnail] = useState()
     const [thumbnailUrl, setThumbnailUrl] = useState();
 
@@ -33,7 +33,7 @@ function ClubSetting({ info }) {
 
     const { topic, brief_introduction } = userInput
 
-    
+
 
     useEffect(() => {
         getClubData();
@@ -60,7 +60,7 @@ function ClubSetting({ info }) {
                 setThumbnail(res.data.thumbnail)
                 setThumbnailUrl(res.data.thumbnail)
             })
-    } 
+    }
 
     const onChangeInput = (e) => {
         const { name, value } = e.target
@@ -243,16 +243,16 @@ function ClubSetting({ info }) {
             {
                 topic,
                 brief_introduction,
-                days : arr,
-                time_zone : categoryTimeId,
-                range_age : categoryAgeId,
-                gender : categoryGenderId
+                days: arr,
+                time_zone: categoryTimeId,
+                range_age: categoryAgeId,
+                gender: categoryGenderId
             },
-               {
-               headers : {
-                 Authorization: `Bearer ${localStorage.getItem('access_token')}`
-               }
-             })
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('access_token')}`
+                }
+            })
             .then(res => {
                 alert("변경 성공")
             }).catch(error => {
@@ -267,8 +267,12 @@ function ClubSetting({ info }) {
                     <div className='Setting_Profile'>
                         <div className='Profile_imgboxs'>
                             <img className='img_boxs' name='thumbnail' style={{ backgroundImage: `url(${thumbnailUrl})` }} />
-                            <input type="file" id="upload" accept="image/*" ref={inputRef} onChange={onUploadImage} />
-                            <label htmlFor='fileLabel' />
+                            {auth === 'master' && (
+                                <>
+                                    <input type="file" id="upload" accept="image/*" ref={inputRef} onChange={onUploadImage} />
+                                    <label htmlFor='fileLabel' />
+                                </>
+                            )}
 
                         </div>
                         <hr />
@@ -288,7 +292,7 @@ function ClubSetting({ info }) {
                                     {item.categoryMenu.map((Menuitem) => (
                                         <div className=
                                             {
-                                              categoryDayid.includes(Menuitem.subName) ? 'select_category' : ""
+                                                categoryDayid.includes(Menuitem.subName) ? 'select_category' : ""
                                                     ||
                                                     Menuitem.subName === categoryTimeId ? 'select_category' : ""
                                                         ||
@@ -303,9 +307,13 @@ function ClubSetting({ info }) {
                             </div>
                         ))}
                     </div>
-                    <div className='setting_infobtn'>
-                        <button onClick={() => handleFinishBtn()}>완료</button>
-                    </div>
+                    {auth === 'master' ? (
+                        <div className='setting_infobtn'>
+                            <button onClick={() => handleFinishBtn()}>완료</button>
+                        </div>
+                    ) : (
+                        <h3 className='notMaster'>매니저는 변경할 수 없어요</h3>
+                    )}
                 </div>
             )}
         </>
