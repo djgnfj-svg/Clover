@@ -28,11 +28,11 @@ function App() {
 				<Route path="/login" element={<Login />} />
 				<Route path='/signup' element={<SignUp />} />
 				<Route path="/club" element={<SearchClubPage />} />
-				<Route path="/club/:id" element={<ClubDetailPage />} />
+				<Route path="/clubs/:id" element={<ClubDetailPage />} />
 				{!!IsLogin() && (
 					<>
 						<Route path='/useredit' element={<UserProfile />} />
-						<Route path="/club/:id/edit" element={<DetailEdit />} />
+						<Route path="/clubs/:id/edit" element={<DetailEdit />} />
 						<Route path="/clover" element={<Clover />} />
 					</>
 				)}

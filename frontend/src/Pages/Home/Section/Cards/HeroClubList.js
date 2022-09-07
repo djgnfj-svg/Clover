@@ -41,7 +41,7 @@ function HeroClubList() {
               <div style={{height:"maxContent" , marginTop:"5px"}}>{item.brief_introduction}</div>
             </Card.Text>
               <div style={{textAlign:"right"}}>
-                <Button variant="primary" onClick={() => navigate(`/club/${item.id}`)}>상세보기</Button>
+                <Button variant="primary" onClick={() => navigate(`/clubs/${item.id}`)}>상세보기</Button>
               </div>
           </Card.Body>
         </Card>

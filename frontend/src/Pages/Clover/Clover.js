@@ -33,7 +33,7 @@ function Clover() {
   }
 
   const handleApply = (clubid) => {
-    navigate(`/club/${clubid}`)
+    navigate(`/clubs/${clubid}`)
   }
 
 

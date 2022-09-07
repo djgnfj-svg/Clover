@@ -15,7 +15,6 @@ class AppliSerializer(serializers.ModelSerializer):
 		return user_instroduction.description
 
 class StaffSerializer(serializers.ModelSerializer):
-	right = serializers.SerializerMethodField("get_right")
 	class Meta:
 		model = User
 		fields = ['id','username']

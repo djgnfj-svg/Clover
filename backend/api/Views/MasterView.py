@@ -4,6 +4,7 @@ from rest_framework import viewsets, status, mixins, exceptions
 from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import action
+from rest_framework.throttling import UserRateThrottle
 
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
@@ -20,6 +21,7 @@ class ClubMasterView(viewsets.GenericViewSet, mixins.ListModelMixin):
 	serializer_class = UserlistSz
 	authentication_classes = [JWTAuthentication, SessionAuthentication]
 	permission_classes = [IsMaster]
+	# throttle_classes = [UserRateThrottle]
 
 	def list(self, request, club_id, *args, **kwargs):
 		instance = get_object_or_404(Club, id=club_id)
