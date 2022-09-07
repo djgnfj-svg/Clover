@@ -4,7 +4,7 @@ export const makeClubUrl = 'http://127.0.0.1:8000/api/clubs/' // 모달 클럽 �
 export const getNewList = 'http://127.0.0.1:8000/api/home/' // 홈페이지 최신클럽 4개
 export const clubList = 'http://127.0.0.1:8000/api/club/' // 전체 클럽 리스트
 export const applyClub = 'http://127.0.0.1:8000/api/club/userappli/' // 클럽 가입 
-export const ExitCluburl = `http://127.0.0.1:8000/api/clubs/userappli/` // 클럽 탈퇴
+export const ExitCluburl = `http://127.0.0.1:8000/api/clubs/userappli/` // 클럽 탈퇴 del
 
 export const clubDetail = (id) =>  `http://127.0.0.1:8000/api/clubs/${id}/` // 클럽 상세정보 + id값 필요  , 클럽 수정포함
 export const searchurl = 'http://127.0.0.1:8000/api/search/' //클럽카테고리  서치 query url
@@ -12,7 +12,7 @@ export const clubAuth = (id) =>  `http://127.0.0.1:8000/api/clubs/${id}/get_righ
 //클럽에딧
 export const userListurl = (id) => `http://127.0.0.1:8000/api/clubs/${id}/manager/` // 클럽 유저리스트
 export const applyUrl = (id) =>  `http://127.0.0.1:8000/api/clubs/${id}/manager/appli_list/` //신청자 리스트 , post 시 가입받아주기
-export const applyOutUrl = (id)=> `http://127.0.0.1:8000/api/club/${id}/manager/appli_list/` // +?userid=3  가입 거절 + 쿼리로 userid 보내주기
+export const applyOutUrl = (id)=> `http://127.0.0.1:8000/api/clubs/${id}/manager/appli_list/` // +?userid=3  가입 거절 + 쿼리로 userid 보내주기
 export const userOutUrl = (id) => `http://127.0.0.1:8000/api/club/${id}/master/expulsion_user/` // 유저강퇴
 export const clubthumbnail = (id) => `http://127.0.0.1:8000/api/club/${id}/change_thumbnail/`
 export const clubinfoImgUrl = (id) => `http://127.0.0.1:8000/api/club/${id}/img/`
