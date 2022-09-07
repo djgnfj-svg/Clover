@@ -10,8 +10,8 @@ export const clubDetail = (id) =>  `http://127.0.0.1:8000/api/clubs/${id}/` // �
 export const searchurl = 'http://127.0.0.1:8000/api/search/' //클럽카테고리  서치 query url
 export const clubAuth = (id) =>  `http://127.0.0.1:8000/api/clubs/${id}/get_right/` //권한
 //클럽에딧
-export const userListurl = (id) => `http://127.0.0.1:8000/api/club/${id}/manager/` // 클럽 유저리스트
-export const applyUrl = (id) =>  `http://127.0.0.1:8000/api/club/${id}/manager/appli_list/` //신청자 리스트 , post 시 가입받아주기
+export const userListurl = (id) => `http://127.0.0.1:8000/api/clubs/${id}/manager/` // 클럽 유저리스트
+export const applyUrl = (id) =>  `http://127.0.0.1:8000/api/clubs/${id}/manager/appli_list/` //신청자 리스트 , post 시 가입받아주기
 export const applyOutUrl = (id)=> `http://127.0.0.1:8000/api/club/${id}/manager/appli_list/` // +?userid=3  가입 거절 + 쿼리로 userid 보내주기
 export const userOutUrl = (id) => `http://127.0.0.1:8000/api/club/${id}/master/expulsion_user/` // 유저강퇴
 export const clubthumbnail = (id) => `http://127.0.0.1:8000/api/club/${id}/change_thumbnail/`

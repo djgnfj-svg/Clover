@@ -124,7 +124,6 @@ function MyNavbar() {
           brief_introduction: res.data[0].description,
           thumbnail: res.data[0].image
         })
-        console.log(res.data)
       }).catch(error => {
         console.log(error)
       })

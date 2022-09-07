@@ -35,7 +35,6 @@ function DetailEdit() {
       })
       .then(res => {
         setProfile(res.data)
-        console.log(res.data)
       })
   }
 
@@ -81,7 +80,7 @@ function DetailEdit() {
           <Col sm={3}>
             <Nav variant="pills" className="flex-column">
               <Nav.Item>
-                <Nav.Link eventKey="setting">클럽 관리</Nav.Link>
+                <Nav.Link eventKey="setting" auth={auth}>클럽 관리</Nav.Link>
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link eventKey="info">클럽 소개</Nav.Link>
@@ -117,7 +116,7 @@ function DetailEdit() {
             {profile && (
               <Tab.Content>
                 <Tab.Pane eventKey="setting">
-                  <ClubSetting info={profile} />
+                  <ClubSetting auth={auth} info={profile} />
                 </Tab.Pane>
                 <Tab.Pane eventKey="info">
                   <ClubInfo file={profile} />
