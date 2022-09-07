@@ -45,7 +45,7 @@ function Add_modal({ show }) {
           }).then(res => {
               show();
               alert("클럽 생성")
-              navigate(`/club/${res.data.id}/`)
+              navigate(`/clubs/${res.data.id}/`)
           }).catch(error => {
             alert("동일한 클럽명이 존재합니다.")
           })

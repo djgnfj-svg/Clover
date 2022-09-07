@@ -16,7 +16,7 @@ function SearchResult({data}) {
   },[data])
 
   const handleApply = (id) => {
-    navigate(`/club/${id}`)
+    navigate(`/clubs/${id}`)
   } 
 
   return (
