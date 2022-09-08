@@ -85,9 +85,7 @@ function DetailProfile({profile , auth}) {
     let checkApply = window.confirm("정말 탈퇴하시겟습니까?")
 
     if(checkApply){
-      axios.post(ExitCluburl,{
-        clubid : id
-      },
+      axios.delete(ExitCluburl+`?club_id=${id}`,
       {
         headers : {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`
@@ -95,7 +93,7 @@ function DetailProfile({profile , auth}) {
       })
       .then(res => {
         console.log(res.data)
-        alert("길드를 탈퇴했습니다")
+        alert("클럽을 탈퇴했습니다")
         navigate("/")
       }).catch(error => {
         console.log(error)

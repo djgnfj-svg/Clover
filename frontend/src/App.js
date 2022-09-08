@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { Routes, Route } from 'react-router-dom'
+import {  BrowserRouter as Router , Routes, Route } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.css';
 import Home from './Pages/Home/Home';
 import MyNavbar from './Components/MyNavbar/MyNavbar';
@@ -17,8 +17,6 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 function App() {
-
-	const [checked , setChecked] = useState(false)
 
 	return (
 		<div className="App">

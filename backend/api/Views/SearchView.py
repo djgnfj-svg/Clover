@@ -39,6 +39,5 @@ class SearchViewSet(viewsets.ReadOnlyModelViewSet):
 			q &= Q(gender=gender)
 		if query:
 			q &= Q(title__contains=query)
-			print(q)
 		rtn = Club.objects.filter(q)
 		return Response(ClubViewSerializer(rtn,many=True,context = {'request' : request}).data)

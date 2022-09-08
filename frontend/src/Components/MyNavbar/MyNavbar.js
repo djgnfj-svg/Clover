@@ -9,6 +9,7 @@ import { userInfoUrl } from '../Apiurl'
 function MyNavbar() {
 
   const url = window.location.pathname
+  const logoutUrl = 'http://127.0.0.1:8000/api/accounts/logout/'
   const page = url.split("/")[1]
   const navigate = useNavigate("")
 
@@ -80,7 +81,7 @@ function MyNavbar() {
   useEffect(() => {
     handleClickProfile()
     setIsOpen(false)
-  },[])
+  }, [])
 
   useEffect(() => {
     if (isOpen) document.addEventListener('click', handleClickOutSide)
@@ -123,7 +124,6 @@ function MyNavbar() {
           brief_introduction: res.data[0].description,
           thumbnail: res.data[0].image
         })
-        console.log(res.data)
       }).catch(error => {
         console.log(error)
       })
@@ -143,105 +143,112 @@ function MyNavbar() {
   const handleLogoutBtn = () => {
     const logout = window.confirm('정말 로그아웃 하시겟습니까?')
     if (!!logout) {
-      localStorage.clear();
-      setIsLogin(false)
-      navigate("/login")
-      setIsOpen(false)
-    } else {
-      alert("왜 에러야")
+      axios.post(logoutUrl, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`
+        }
+      }).then(res => {
+        localStorage.clear();
+        setIsLogin(false)
+        setIsOpen(false)
+        alert("로그아웃 성공")
+        navigate("/login")
+      }).catch(error => {
+        alert("404 Error")
+      })
     }
   }
 
-  return (
-    <div className="MyNavbar">
-      <div className="Nav_title" onClick={() => navigate("/")}>Clover</div>
+    return (
+      <div className="MyNavbar">
+        <div className="Nav_title" onClick={() => navigate("/")}>Clover</div>
 
-      <div className={home ? "selectCategory" : "NavCategoryHome"} >
-        <p className='NavHome' onClick={(e) => handleClickCategory(e)}>Home</p>
-      </div>
+        <div className={home ? "selectCategory" : "NavCategoryHome"} >
+          <p className='NavHome' onClick={(e) => handleClickCategory(e)}>Home</p>
+        </div>
 
-      <div className={test ? "selectCategory" : "NavCategoryTest"}>
-        <p className='NavTest' onClick={(e) => handleClickCategory(e)}>Club</p>
-      </div>
+        <div className={test ? "selectCategory" : "NavCategoryTest"}>
+          <p className='NavTest' onClick={(e) => handleClickCategory(e)}>Club</p>
+        </div>
 
-      <div className={club ? "selectCategory" : "NavCategoryClub"} >
-        <p className="NavClub" onClick={(e) => handleClickCategory(e)}>Search</p>
-      </div>
-    
-      <div className="NavProfile">
-        {isLogin && userInfo ? (
-          <div>
-            <button ref={ref} className="ProfileBtn" onClick={() => handleClickProfile()}>
-              {thumbnail ? (
-                <img src={thumbnail} className="material-symbols-outlined" style={{ width: "40px", height: "40px", borderRadius: "50%", position: "relative", objectFit: "cover", marginRight: "20px", fontSize: "30px" }} />
-                )
-                :
-                (
-                  <span className="material-symbols-outlined" style={{position:"relative" ,marginRight:"23px" , fontSize:"30px"}}>
-                    account_circle
-                  </span>
-                )
-              }
-              <span class="material-symbols-outlined">
-                keyboard_arrow_down
-              </span>
-            </button>
-            {isOpen && (
-              <div className='Profile_Dropdown'>
-                <div className='Dropdown_profile'>
+        <div className={club ? "selectCategory" : "NavCategoryClub"} >
+          <p className="NavClub" onClick={(e) => handleClickCategory(e)}>Search</p>
+        </div>
+
+        <div className="NavProfile">
+          {isLogin && userInfo ? (
+            <div>
+              <button ref={ref} className="ProfileBtn" onClick={() => handleClickProfile()}>
                 {thumbnail ? (
-                  <img src={thumbnail} />
+                  <img src={thumbnail} className="material-symbols-outlined" style={{ width: "40px", height: "40px", borderRadius: "50%", position: "relative", objectFit: "cover", marginRight: "20px", fontSize: "30px" }} />
                 )
-                :
-                (
-                  <span className="material-symbols-outlined">
-                    account_circle
-                  </span>
-                )
-              }
-                  <div className='Profile_name'>
-                    <span style={{ fontWeight: "bold", color: "black", fontSize: "18px" }}>{userInfo.username}</span>
-                    <span className='Profile_category'>{brief_introduction}</span>
+                  :
+                  (
+                    <span className="material-symbols-outlined" style={{ position: "relative", marginRight: "23px", fontSize: "30px" }}>
+                      account_circle
+                    </span>
+                  )
+                }
+                <span class="material-symbols-outlined">
+                  keyboard_arrow_down
+                </span>
+              </button>
+              {isOpen && (
+                <div className='Profile_Dropdown'>
+                  <div className='Dropdown_profile'>
+                    {thumbnail ? (
+                      <img src={thumbnail} />
+                    )
+                      :
+                      (
+                        <span className="material-symbols-outlined">
+                          account_circle
+                        </span>
+                      )
+                    }
+                    <div className='Profile_name'>
+                      <span style={{ fontWeight: "bold", color: "black", fontSize: "18px" }}>{userInfo.username}</span>
+                      <span className='Profile_category'>{brief_introduction}</span>
+                    </div>
+                  </div>
+                  <div className='Dropdown_AddClub' onClick={modalClose}>
+                    <span class="material-symbols-outlined">
+                      diversity_3
+                    </span>
+                    <span>모임 만들기</span>
+                  </div>
+                  <div className='Dropdown_settingProfile' onClick={(e) => handleEditProfile(e)}>
+                    <span class="material-symbols-outlined">
+                      settings
+                    </span>
+                    <span>프로필 수정</span>
+                  </div>
+                  <hr className='line'></hr>
+                  <div onClick={(e) => handleLogoutBtn(e)} className='Dropdown_Logout'>
+                    <span className="material-symbols-outlined">
+                      lock_open
+                    </span>
+                    <span>로그아웃</span>
                   </div>
                 </div>
-                <div className='Dropdown_AddClub' onClick={modalClose}>
-                  <span class="material-symbols-outlined">
-                    diversity_3
-                  </span>
-                  <span>모임 만들기</span>
-                </div>
-                <div className='Dropdown_settingProfile' onClick={(e) => handleEditProfile(e)}>
-                  <span class="material-symbols-outlined">
-                    settings
-                  </span>
-                  <span>프로필 수정</span>
-                </div>
-                <hr className='line'></hr>
-                <div onClick={(e) => handleLogoutBtn(e)} className='Dropdown_Logout'>
-                  <span className="material-symbols-outlined">
-                    lock_open
-                  </span>
-                  <span>로그아웃</span>
-                </div>
-              </div>
-            )}
-          </div>
-        )
-          :
-          <div className='Nav_Login'>
-            <button onClick={() => navigate("/signup")}>회원가입</button>
-            <button onClick={() => navigate("/login")}>로그인</button>
-          </div>
-        }
-        {showModal && <Add_modal show={modalClose} />}
+              )}
+            </div>
+          )
+            :
+            <div className='Nav_Login'>
+              <button onClick={() => navigate("/signup")}>회원가입</button>
+              <button onClick={() => navigate("/login")}>로그인</button>
+            </div>
+          }
+          {showModal && <Add_modal show={modalClose} />}
+        </div>
       </div>
-    </div>
-  )
-}
+    )
+  }
 
 
-export default MyNavbar
-{/* {showDropdown && (
+  export default MyNavbar
+  {/* {showDropdown && (
     <div>
         <div>회원 정보 수정</div>
         <div>설정</div>
@@ -249,7 +256,7 @@ export default MyNavbar
     </div>
     )} */}
 
-{/* {isOpen && (
+  {/* {isOpen && (
               <div className='Profile_Dropdown'>
                 <div>
                   <span className="material-symbols-outlined">
