@@ -46,12 +46,14 @@
 - 회원가입
 - 마이페이지
 - 프로필 업데이트
+    
     ![프로필수정](https://user-images.githubusercontent.com/87049249/187436419-06bea31c-4af4-4b0b-ab20-a29549e4bda4.gif)
 
 ### 클럽
+
 - Club Search
     
-    ![서치](https://user-images.githubusercontent.com/87049249/187605676-30409659-8e9b-4e5e-9b2a-1774e5283328.gif)
+    ![서치](https://user-images.githubusercontent.com/87049249/189044524-b831af5f-67d2-4e04-848d-6e048de49063.gif)
 
 - Club 신청/가입/탈퇴 관리
 - Club 관리자(Manager, Master) 기능
