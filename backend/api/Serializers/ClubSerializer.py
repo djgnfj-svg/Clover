@@ -24,9 +24,6 @@ class ClubDetailSerializer(serializers.ModelSerializer):
 		model = Club
 		fields = ['title','topic', 'brief_introduction', 'usernum',
 		'description', 'range_age',	'days', 'time_zone', 'gender']
-	
-	def update(self, instance, validated_data):
-		return super().update(instance, validated_data)
 
 class ClubRoughSerializder(serializers.ModelSerializer):
 	class Meta:
