@@ -127,25 +127,26 @@ WSGI_APPLICATION = 'Clover.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 AUTH_USER_MODEL = 'accounts.User'
-if ENV == 'dev':
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': get_secret('DB_NAME'),
-            'USER' : get_secret('DB_USER'),
-            'HOST' : get_secret('DB_HOST'),
-            'PORT' : '3306',
-            'OPTIONS' : {
-                'init_command' : "'SET sql_mode='STRICT_TRANS_TABLES'"
-            }
-        }
-    }
-else:
-    DATABASES = {
-        'ENGINE' : 'django.db.backend.mysql',
+# if ENV == 'dev':
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.mysql',
+#             'NAME': get_secret('DB_NAME'),
+#             'USER' : get_secret('DB_USER'),
+#             'HOST' : get_secret('DB_HOST'),
+#             'PORT' : '3306',
+#             # 'OPTIONS' : {
+#             #     'init_command' : "'SET sql_mode='STRICT_TRANS_TABLES'"
+#             # }
+#         }
+#     }
+# else:
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
