@@ -51,7 +51,7 @@
 ### 클럽
 - Club Search
     
-    ![서치](https://user-images.githubusercontent.com/87049249/187605676-30409659-8e9b-4e5e-9b2a-1774e5283328.gif)
+    !![서치](https://user-images.githubusercontent.com/87049249/189043596-6a2f8f33-584e-4697-90b7-1d0342f744c1.gif)
 
 - Club 신청/가입/탈퇴 관리
 - Club 관리자(Manager, Master) 기능
