@@ -46,6 +46,7 @@ function MyNavbar() {
     } else if (!IsLogin()) {
       setIsLogin(false)
     }
+    console.log(IsLogin())
   }, [localStorage.getItem('access_token')])
 
   useEffect(() => {
@@ -154,7 +155,8 @@ function MyNavbar() {
         alert("로그아웃 성공")
         navigate("/login")
       }).catch(error => {
-        alert("404 Error")
+        localStorage.clear()
+        navigate('/login')
       })
     }
   }

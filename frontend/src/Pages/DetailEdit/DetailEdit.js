@@ -108,6 +108,9 @@ function DetailEdit() {
               <Nav.Item>
                 <Nav.Link eventKey="apply">가입 신청</Nav.Link>
               </Nav.Item>
+              <Nav.Item>
+                <Nav.Link onClick={() => handleClickPrev()}>이전 페이지</Nav.Link>
+              </Nav.Item>
             </Nav>
           </Col>
         )}
@@ -143,6 +146,7 @@ function DetailEdit() {
                 <ApplyUser />
               </Tab.Pane>
             </Tab.Content>
+            
           </Col>
         )}
       </Row>

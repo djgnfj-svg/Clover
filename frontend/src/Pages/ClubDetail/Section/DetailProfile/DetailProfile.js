@@ -8,7 +8,6 @@ function DetailProfile({profile , auth}) {
 
   const dropdownRef = useRef()
   const dropdownUserRef = useRef()
-  
 
   const navigate = useNavigate();
   const {id } = useParams()
