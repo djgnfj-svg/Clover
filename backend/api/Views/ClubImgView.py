@@ -16,8 +16,7 @@ class ClubDetailImgView(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data, context={'request' : request})
         if serializer.is_valid():
             rtn = serializer.create(club_id, serializer.data)
-            if rtn :
-                return Response(self.get_serializer(rtn).data)
+            return Response(self.get_serializer(rtn).data)
         else:
             return Response(error_msg(serializer=serializer), status=status.HTTP_400_BAD_REQUEST)
 

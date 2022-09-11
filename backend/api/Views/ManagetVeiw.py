@@ -8,7 +8,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from api.Utils.Error_msg import error_msg, success_msg
 from api.Utils.Permission import IsManager
-from api.Serializers.StaffSerializer import StaffSerializer, AppliSerializer, UserlistSz
+from api.Serializers.StaffSerializer import StaffSerializer, AppliSerializer, UserlistSerializer
 from api.Serializers.ClubSerializer import UseridSz
 
 from accounts.models import User
@@ -20,9 +20,6 @@ class ClubManagerView(viewsets.GenericViewSet, mixins.DestroyModelMixin):
 	queryset = Club.objects.all()
 	authentication_classes = [SessionAuthentication, JWTAuthentication]
 	permission_classes = [IsManager]
-
-	def list(self, request, club_id):
-		return Response(UserlistSz(Club.objects.get(id=club_id)).data)
 
 	@action(detail=False, methods=['get'], name="appli_list")
 	def appli_list(self, request, club_id):
@@ -37,9 +34,12 @@ class ClubManagerView(viewsets.GenericViewSet, mixins.DestroyModelMixin):
 			return Response(error_msg(2001), status=status.HTTP_403_FORBIDDEN)
 		if user not in club.appli_list.all():
 			return Response(error_msg(2002), status=status.HTTP_403_FORBIDDEN)
+
+		# todo 이부분 함수로 만들어야하나?
 		club.user_list.add(user)
 		club.appli_list.remove(user)
 		club.PlusUsernum()
+
 		return Response(success_msg(1001))
 
 	@appli_list.mapping.delete
@@ -47,6 +47,5 @@ class ClubManagerView(viewsets.GenericViewSet, mixins.DestroyModelMixin):
 		user_id = int(request.GET.get('user_id'))
 		club = Club.objects.get(id = club_id)
 		club.appli_list.remove(user_id)
-
 		temp = Club.objects.get(id=club_id).appli_list.all()
 		return Response(StaffSerializer(temp,many=True).data)

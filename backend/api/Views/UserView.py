@@ -7,7 +7,6 @@ from rest_framework.permissions import IsAuthenticated
 
 from allauth.account.models import EmailConfirmation, EmailConfirmationHMAC
 
-from api.Views.HomeView import HomePagination
 from api.Utils.Error_msg import error_msg
 from api.Serializers.UserSerializer import UserPofileSerializer
 
@@ -38,12 +37,10 @@ class ConfirmEmailView(APIView):
         qs = qs.select_related("email_address__user")
         return qs
 
-# todo fix post, add put
 class UserProfileViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin,
             mixins.UpdateModelMixin, mixins.ListModelMixin):
     serializer_class = UserPofileSerializer
     queryset = UserProfile.objects.all()
-    pagination_class = HomePagination
     permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):

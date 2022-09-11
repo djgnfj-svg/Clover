@@ -41,8 +41,7 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 		serializer = self.get_serializer(data=request.data, context={'request' : request})
 		if serializer.is_valid():
 			rtn = serializer.create(request, serializer.data)
-			if rtn :
-				return Response(self.get_serializer(rtn).data)
+			return Response(self.get_serializer(rtn).data)
 		else:
 			return Response(error_msg(serializer=serializer), status=status.HTTP_400_BAD_REQUEST)
 	
@@ -65,11 +64,9 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 	def update(self, request, pk):
 		instance = self.get_object()
 		serializer = self.get_serializer(instance, data=request.data)
-		print(request.data)
 		if serializer.is_valid():
 			serializer.save()
 			return Response(serializer.data)
-		print(error_msg(serializer=serializer))
 		return Response(error_msg(serializer=serializer), status=status.HTTP_400_BAD_REQUEST)
 
 	
@@ -89,26 +86,21 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 		if serialzier.is_valid():
 			serialzier.update(instance, request.data)
 			return Response(success_msg(2002))
-		# instance.thumbnail = request.data["thumbnail"]
-		# print(type(request.data["thumbnail"]))
-		# instance.update(thumbnail)
-		return Response(error_msg(403))
+		return Response(error_msg(403), status=status.HTTP_400_BAD_REQUEST)
 
 	#신청
 	@action(detail=False, methods=['post'],	serializer_class=ClubIdSerializder, name="joinclub")
 	def joinclub(self, request):
 		club = get_object_or_404(Club, id = request.data['club_id'])
-
-		if request.user in club.user_list.all() or request.user == club.master:
+		if (request.user in club.user_list.all()) or \
+			(request.user == club.master):
 			return Response(error_msg(2001), status=status.HTTP_403_FORBIDDEN)
-		
 		club.appli_list.add(request.user.id)
 		return Response(success_msg(1003))
 
 	#탈퇴
 	@action(detail=False, methods=['post'],	serializer_class=ClubIdSerializder,name="outclub")
 	def outclub(self, request):
-		# 신청하는 사람이 본인이여야함
 		club = get_object_or_404(Club, id=request.data['club_id'])
 		try :
 			temp = club.user_list.get(id = request.user.id)

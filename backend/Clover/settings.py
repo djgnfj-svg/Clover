@@ -18,6 +18,7 @@ from django.core.exceptions import ImproperlyConfigured
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+ENV = os.environ.get("DJANGO_ENV", 'dev')
 
 
 secret_file = os.path.join(BASE_DIR, '.secrets.json')  # secrets.json 파일 위치를 명시
@@ -40,8 +41,10 @@ def get_secret(setting):
 SECRET_KEY = get_secret("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
+if ENV == 'dev':
+    DEBUG = True
+else:
+    DEBUG = False
 ALLOWED_HOSTS = []
 
 
@@ -124,14 +127,26 @@ WSGI_APPLICATION = 'Clover.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 AUTH_USER_MODEL = 'accounts.User'
-
+# if ENV == 'dev':
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.mysql',
+#             'NAME': get_secret('DB_NAME'),
+#             'USER' : get_secret('DB_USER'),
+#             'HOST' : get_secret('DB_HOST'),
+#             'PORT' : '3306',
+#             # 'OPTIONS' : {
+#             #     'init_command' : "'SET sql_mode='STRICT_TRANS_TABLES'"
+#             # }
+#         }
+#     }
+# else:
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

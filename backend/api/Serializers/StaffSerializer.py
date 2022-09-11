@@ -20,7 +20,7 @@ class StaffSerializer(serializers.ModelSerializer):
 		model = User
 		fields = ['id','username']
 
-class UserlistSz(serializers.ModelSerializer):
+class UserlistSerializer(serializers.ModelSerializer):
 	master = AppliSerializer()
 	user_list = AppliSerializer(many=True)
 	manager_list = AppliSerializer(many=True)

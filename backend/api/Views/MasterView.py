@@ -10,19 +10,20 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from api.Utils.Error_msg import error_msg, success_msg
 from api.Utils.Permission import IsMaster
 from api.Serializers.ClubSerializer import UseridSz
-from api.Serializers.StaffSerializer import UserlistSz
+from api.Serializers.StaffSerializer import UserlistSerializer
 
 from club.models import Club
 
 from accounts.models import User
 
 class ClubMasterView(viewsets.GenericViewSet, mixins.ListModelMixin):
-	serializer_class = UserlistSz
+	serializer_class = UserlistSerializer
 	authentication_classes = [JWTAuthentication, SessionAuthentication]
 	permission_classes = [IsMaster]
 
-	def list(self, request, club_id, *args, **kwargs):
-		instance = get_object_or_404(Club, id=club_id)
+	# todo restful 규칙대로면 마스터의 정보만이 나와야함
+	def list(self, request, club_id):
+		instance = get_object_or_404(Club, id=club_id)		
 		serializer = self.get_serializer(instance)
 		return Response(serializer.data)
 
@@ -32,6 +33,7 @@ class ClubMasterView(viewsets.GenericViewSet, mixins.ListModelMixin):
 		user_id = request.GET.get("user_id", None)
 		user = get_object_or_404(User,id=user_id)
 		club = get_object_or_404(Club,id=club_id)
+
 		if user in club.user_list.all():
 			club.user_list.remove(user.id)
 			club.MinusUsernum()
@@ -41,6 +43,7 @@ class ClubMasterView(viewsets.GenericViewSet, mixins.ListModelMixin):
 			club.MinusUsernum()
 			return Response(success_msg(200))
 		return Response(error_msg(2100),status=status.HTTP_404_NOT_FOUND)
+
 	# 매니져 임명 post
 	@action(detail=False, methods=['post'],	serializer_class=UseridSz,\
 			 name="appointmanager")
@@ -60,6 +63,7 @@ class ClubMasterView(viewsets.GenericViewSet, mixins.ListModelMixin):
 		manager_id = request.GET.get("manager_id",None)
 		user = User.objects.get(id=manager_id)
 		club = Club.objects.get(id=club_id)
+
 		if club.master != User.objects.get(id=request.user.id):
 			Response(error_msg(403), status=status.HTTP_403_FORBIDDEN)
 		

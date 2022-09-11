@@ -10,13 +10,10 @@ from api.Utils.Error_msg import success_msg
 
 from club.models import Club
 
-class HomePagination(PageNumberPagination):
-	page_size = 12
 
 class SearchViewSet(viewsets.ReadOnlyModelViewSet):
 	queryset = Club.objects.all().order_by("-created_at")
 	serializer_class = ClubViewSerializer
-	pagination_class = HomePagination
 	permission_classes = [AllowAny]
 
 	def list(self, request):
@@ -30,7 +27,6 @@ class SearchViewSet(viewsets.ReadOnlyModelViewSet):
 		if days:
 			for day in days:
 				q |= Q(days__icontains=day)
-		
 		if range_age:
 			q &= Q(range_age=range_age)
 		if time_zone:
@@ -39,5 +35,6 @@ class SearchViewSet(viewsets.ReadOnlyModelViewSet):
 			q &= Q(gender=gender)
 		if query:
 			q &= Q(title__contains=query)
+
 		rtn = Club.objects.filter(q)
 		return Response(ClubViewSerializer(rtn,many=True,context = {'request' : request}).data)

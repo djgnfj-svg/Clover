@@ -30,6 +30,7 @@ class UserPofileSerializer(serializers.ModelSerializer):
 	username = serializers.SerializerMethodField('get_username')
 	affiliated_club = serializers.SerializerMethodField('get_affiliated_club')
 	my_club = serializers.SerializerMethodField('get_my_club')
+
 	#todo 나중에 setting 에 있는 데이터로 바꾸기
 	url = 'http://127.0.0.1:8000'
 	class Meta:
@@ -44,17 +45,17 @@ class UserPofileSerializer(serializers.ModelSerializer):
 	def get_affiliated_club(self, obj):
 		# 지금 유져리스트에 이 유저가 들어가 있는 클럽
 		user_id = User.objects.get(id = obj.user_id)
-		sz = ClubViewSerializer(Club.objects.filter(user_list = user_id.id), many=True)
-		for i in sz.data:
+		serializer = ClubViewSerializer(Club.objects.filter(user_list = user_id.id), many=True)
+		for i in serializer.data:
 			i['thumbnail'] = self.url + i['thumbnail']
-		return sz.data		
+		return serializer.data		
 	
 	def get_my_club(self, obj):
 		user_id = User.objects.get(id = obj.user_id)
-		sz = ClubViewSerializer(Club.objects.filter(master = user_id), many=True)
-		for i in sz.data:
+		serializer = ClubViewSerializer(Club.objects.filter(master = user_id), many=True)
+		for i in serializer.data:
 			i['thumbnail'] = self.url + i['thumbnail']
-		return sz.data
+		return serializer.data
 
 	def save(self, **kwargs):
 		# 인풋으로 들어온 유저와 로그인 되어있는 유저가 다르면 false해주자
