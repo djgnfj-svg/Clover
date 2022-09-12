@@ -3,8 +3,8 @@
 export const makeClubUrl = 'http://127.0.0.1:8000/api/clubs/' // 모달 클럽 생성
 export const getNewList = 'http://127.0.0.1:8000/api/home/' // 홈페이지 최신클럽 4개
 export const clubList = 'http://127.0.0.1:8000/api/club/' // 전체 클럽 리스트
-export const applyClub = 'http://127.0.0.1:8000/api/clubs/userappli/' // 클럽 가입 
-export const ExitCluburl = `http://127.0.0.1:8000/api/clubs/userappli/` // 클럽 탈퇴 del
+export const applyClub = 'http://127.0.0.1:8000/api/clubs/joinclub/' // 클럽 가입 
+export const ExitCluburl = `http://127.0.0.1:8000/api/clubs/outclub/` // 클럽 탈퇴 del
 
 export const clubDetail = (id) =>  `http://127.0.0.1:8000/api/clubs/${id}/` // 클럽 상세정보 + id값 필요  , 클럽 수정포함
 export const searchurl = 'http://127.0.0.1:8000/api/search/' //클럽카테고리  서치 query url
