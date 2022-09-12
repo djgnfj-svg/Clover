@@ -164,18 +164,19 @@ function MyNavbar() {
     return (
       <div className="MyNavbar">
         <div className="Nav_title" onClick={() => navigate("/")}>Clover</div>
+        <div className='Nav_Menubar'>
+          <div className={home ? "selectCategory" : "NavCategoryHome"} >
+            <p className='NavHome' onClick={(e) => handleClickCategory(e)}>Home</p>
+          </div>
 
-        <div className={home ? "selectCategory" : "NavCategoryHome"} >
-          <p className='NavHome' onClick={(e) => handleClickCategory(e)}>Home</p>
-        </div>
+          <div className={test ? "selectCategory" : "NavCategoryTest"}>
+            <p className='NavTest' onClick={(e) => handleClickCategory(e)}>Club</p>
+          </div>
 
-        <div className={test ? "selectCategory" : "NavCategoryTest"}>
-          <p className='NavTest' onClick={(e) => handleClickCategory(e)}>Club</p>
-        </div>
-
-        <div className={club ? "selectCategory" : "NavCategoryClub"} >
-          <p className="NavClub" onClick={(e) => handleClickCategory(e)}>Search</p>
-        </div>
+          <div className={club ? "selectCategory" : "NavCategoryClub"} >
+            <p className="NavClub" onClick={(e) => handleClickCategory(e)}>Search</p>
+          </div>
+      </div>
 
         <div className="NavProfile">
           {isLogin && userInfo ? (

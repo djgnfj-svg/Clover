@@ -44,46 +44,34 @@ function Login() {
   
 
   return (
-    <div className='Wrapper_Login'>
-      <div className='Login'>
-        <div className='Login_Title'>
-          Clover
-        </div>
-        <div className='Login_Form'>
-          <input className='Id'
-            name='email'
-            onChange={handleChangeInput}
-            onKeyDown={handleEnterPress}
-            value={email}
-          />
-          <input className='Password'
-            name='password'
-            type='password'
-            onChange={handleChangeInput}
-            onKeyDown={handleEnterPress}
-            value={password}
-            />
-        </div>
-          {/* <div className='Login_Status'>
-          {/* <span class="material-symbols-outlined">
-            check_box
-          </span>
-          <span className='Login_statustext'>
-            로그인 상태유지
-          </span>
-          </div> */} 
-          <div className='Clover_login'>
-            <button className='login_btn' onClick={() => handleClickLogin()}>Clover 로그인</button>
-            <button className='sign_up' onClick={() => navigate("/signup")}>회원가입</button>
-            <button className='find_id'>아이디찾기</button>
-            <button className='find_password'>비밀번호 찾기</button>
-          </div>
-          <div className='social_login'>
-            <button className='social_google'>Google 로그인</button>
-            <button className='social_naver'>Naver 로그인</button>
-          </div>
-      </div>
-    </div>
+    <>
+		<main className="login_main">
+			<form class="form_class" style={{backgroundColor:"white"}}>
+				<div className="form_div">
+					<div className="social_login">
+						<div className="social_google">
+							<img src={`${process.env.PUBLIC_URL}/image/btn_google.png`} />
+							<span>Google로 진행하기</span>
+						</div>
+						<div className="social_naver">
+							<img src={`${process.env.PUBLIC_URL}/image/btn_naver.png`} />
+							<span>Naver로 진행하기</span>
+						</div>
+					</div>
+					<hr />
+					<label>이메일:</label>
+					<input name='email' className="field_class" type="text" placeholder="이메일주소를 입력하세요" onKeyDown={(e) => handleEnterPress(e)} onChange={handleChangeInput} value={email} />
+					<label>비밀번호:</label>
+					<input name="password" id="pass" className="field_class" type="password" placeholder="비밀번호를 입력하세요" onKeyDown={(e) => handleEnterPress(e)} onChange={handleChangeInput} value={password} />
+					<button className="submit_class" style={{backgroundColor:"2a9f5c"}} onClick={(e) => handleClickLogin(e)}>로그인</button>
+				</div>
+				<div className="info_div">
+					<p>Clover가 처음이신가요?</p>
+					<a href='#' onClick={() => navigate("/signup")}>가입하기</a>
+				</div>
+			</form>
+		</main>
+		</>
   )
 }
 
