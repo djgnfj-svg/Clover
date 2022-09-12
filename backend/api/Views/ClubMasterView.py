@@ -9,7 +9,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from api.Utils.Error_msg import error_msg, success_msg
 from api.Utils.Permission import IsMaster
-from api.Serializers.ClubSerializer import UseridSz
+from api.Serializers.ClubSerializer import UserIdSerializer
 from api.Serializers.StaffSerializer import UserlistSerializer
 
 from club.models import Club
@@ -36,7 +36,7 @@ class ClubMasterView(viewsets.GenericViewSet, mixins.ListModelMixin):
 
 		if user in club.user_list.all():
 			club.user_list.remove(user.id)
-			club.MinusUsernum()
+			club.MinusUsernum() # todo usernum을 구지 db에 담아야하나?
 			return Response(success_msg(200))
 		if user in club.manager_list.all():
 			club.manager_list.remove(user.id)
@@ -45,7 +45,7 @@ class ClubMasterView(viewsets.GenericViewSet, mixins.ListModelMixin):
 		return Response(error_msg(2100),status=status.HTTP_404_NOT_FOUND)
 
 	# 매니져 임명 post
-	@action(detail=False, methods=['post'],	serializer_class=UseridSz,\
+	@action(detail=False, methods=['post'],	serializer_class=UserIdSerializer,\
 			 name="appointmanager")
 	def appointManager(self, request, club_id):
 		user_id = request.data["user_id"]

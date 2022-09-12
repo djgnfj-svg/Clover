@@ -49,24 +49,24 @@ class SearchTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         response_data = json.loads(response.content)
-        sz = ClubViewSerializer(Club.objects.filter(title__contains=self.title),many=True).data
+        serialzier = ClubViewSerializer(Club.objects.filter(title__contains=self.title),many=True).data
 
         self.assertEqual(len(response_data), Club.objects.filter(title__contains=self.title).count())
         for i in range(len(response_data)):
-            self.assertEqual(response_data[i]['id'], sz[i]['id'])
+            self.assertEqual(response_data[i]['id'], serialzier[i]['id'])
 
     def test_search_days(self):
-        response = self.client.get("/api/search/?days=Mon")
+        response = self.client.get("/api/search/?days[]=Mon")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         response_data = json.loads(response.content)
-        sz = ClubViewSerializer(Club.objects.filter(days__icontains=self.days),many=True).data
+        day = self.days[0]
+        serialzier = ClubViewSerializer(Club.objects.filter(days__icontains=day),many=True).data
 
-        print(response.data)
-        self.assertEqual(len(response_data), Club.objects.filter(title__contains=self.days).count())
+        self.assertEqual(len(response_data), Club.objects.filter(days__icontains=day).count())
 
         for i in range(len(response_data)):
-            self.assertEqual(response_data[i]['id'], sz[i]['id'])
+            self.assertEqual(response_data[i]['id'], serialzier[i]['id'])
 
     def test_search_range_age(self):
         response = self.client.get("/api/search/")

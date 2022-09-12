@@ -8,7 +8,7 @@ from rest_framework.decorators import action
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from api.Serializers.ClubSerializer import (
-	ClubRoughSerializder,ClubDetailSerializer, UseridSz,
+	ClubRoughSerializder,ClubDetailSerializer, UserIdSerializer,
 	ClubIdSerializder,ClubThumbnailSerializer, ClubViewSerializer
 )
 
@@ -17,9 +17,7 @@ from api.Utils.Permission import IsMaster
 
 from club.models import Club
 
-class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
-	mixins.RetrieveModelMixin, mixins.UpdateModelMixin):
-
+class ClubViewSet(viewsets.ModelViewSet):
 	serializer_class = ClubRoughSerializder
 	queryset = Club.objects.all()
 	authentication_classes = [SessionAuthentication, JWTAuthentication]
@@ -45,7 +43,7 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 		else:
 			return Response(error_msg(serializer=serializer), status=status.HTTP_400_BAD_REQUEST)
 	
-	#클럽 권한
+	#클럽 권한 가져오기
 	@action(detail=True, methods=['get'])
 	def get_right(self, requset, pk):
 		club = self.get_object()
@@ -72,7 +70,7 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 	
 	#클럽해체
 	@action(detail=True, methods=['delete'],permission_classes=[IsMaster,], \
-		serializer_class=UseridSz, name="dissolution_club")
+		serializer_class=UserIdSerializer, name="dissolution_club")
 	def dissolution_club(self,request, pk):
 		instance = self.get_object()
 		instance.delete()
@@ -93,7 +91,7 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 	def joinclub(self, request):
 		club = get_object_or_404(Club, id = request.data['club_id'])
 		if (request.user in club.user_list.all()) or \
-			(request.user == club.master):
+			(request.user == club.master) or (request.user in club.manager_list.all()):
 			return Response(error_msg(2001), status=status.HTTP_403_FORBIDDEN)
 		club.appli_list.add(request.user.id)
 		return Response(success_msg(1003))
@@ -113,3 +111,4 @@ class ClubViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, \
 		club.MinusUsernum()
 		return Response(success_msg(1002))
 	# todo 신청취소
+	# todo 유저리스트

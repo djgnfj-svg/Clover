@@ -6,9 +6,7 @@ from dj_rest_auth.registration.serializers import RegisterSerializer
 from rest_framework import serializers
 
 from accounts.models import User, UserProfile
-
 from api.Serializers.ClubSerializer import ClubViewSerializer
-
 from club.models import Club
 
 class UserSerializer(serializers.ModelSerializer):

@@ -10,7 +10,6 @@ class Club(models.Model):
 	thumbnail = models.ImageField(upload_to="images", null=False, default='defaultimg.jpg')
 	# 상세정보
 
-	# +를 통해서 요일을 받을 것이다
 	days = models.JSONField(null=False, blank=True, default=[])
 
 	AGE_CHOICES  = (

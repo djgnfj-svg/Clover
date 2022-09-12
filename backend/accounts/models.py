@@ -59,12 +59,6 @@ class UserVerification(models.Model):
 
 class UserProfile(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
-	image = models.ImageField(blank=True, upload_to='images/profile_img', null=True,)
-	description = models.TextField(null=False, default="본인어필하세요")
+	image = models.ImageField(blank=True, upload_to='images/defaultimg.jpg', null=True,)
+	description = models.TextField(null=False, default="본인을 어필해 주세요")
 	club_list = models.JSONField(null=True)
-
-	# 최대 가입 클럽 관리 
-	# def clean(self, *args, **kwargs):
-	# 	if self.club_list.count() > 3:
-	# 		raise ValidationError("가입할 수 있는 클럽은 최대 3개입니다.")
-	# 	return super(Club,self).clean(*args, *kwargs)

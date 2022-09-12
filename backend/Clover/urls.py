@@ -21,6 +21,7 @@ from django.views.generic import TemplateView
 
 from api.urls import router
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),

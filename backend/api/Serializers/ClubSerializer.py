@@ -48,11 +48,10 @@ class ClubRoughSerializder(serializers.ModelSerializer):
 			thumbnail = img_data.getlist('thumbnail')[0]
 			instance.thumbnail = thumbnail
 		instance.save()
-		
 		return instance
 
 class ClubIdSerializder(serializers.Serializer):
 	club_id = serializers.IntegerField(default=0)
 
-class UseridSz(serializers.Serializer):
-	user_id = serializers.IntegerField()
+class UserIdSerializer(serializers.Serializer):
+	user_id = serializers.IntegerField(default=0)
