@@ -102,3 +102,152 @@
     margin-bottom: 20px;
 }
 
+/* Clover */
+
+
+.sign_up_main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 94vh;
+  width: 100%;
+  background-color: rgb(254,254,254);
+}
+.sign_title{
+  text-align: left;
+  font-size: 1.5rem;
+  border-bottom: 1px solid #cfcfcf;
+  margin-bottom: 30px;
+  color: #F95700;
+}
+.form_class {
+  width: 500px;
+  padding: 40px;
+  border-radius: 8px;
+  background-color: white;
+  font-family: 'system-ui';
+  box-shadow: 5px 5px 7px 5px rgb(0,0,0,0.3);
+}
+.form_div {
+  text-align: left;
+  text-transform: uppercase;
+}
+.form_div > label {
+  letter-spacing: 3px;
+  font-size: 1rem;
+}
+.info_div {
+  text-align: center;
+  margin-top: 20px;
+}
+.info_div {
+  letter-spacing: 1px;
+}
+.field_class {
+  position: relative;
+  width: 100%;
+  border-radius: 6px;
+  border-style: solid;
+  border-width: 1px;
+  padding: 5px 0px;
+  text-indent: 6px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-family: 'system-ui';
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+}
+
+.field_errorClass{
+  width: 100%;
+  border-radius: 6px;
+  border-style: solid;
+  border-width: 1px;
+  padding: 5px 0px;
+  text-indent: 6px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-family: 'system-ui';
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  background-color: rgb(251, 210, 210);
+  
+}
+.field_errorClass::placeholder{
+  font-size: 15px;
+  color: #313131;
+}
+
+
+
+.submit_class {
+  border-style: none;
+  border-radius: 5px;
+  background-color: #FFE6D4;
+  padding: 8px 20px;
+  font-family: 'system-ui';
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  display: block;
+  margin: auto;
+  margin-top: 10px;
+  box-shadow: 2px 2px 5px rgb(0,0,0,0.2);
+  cursor: pointer;
+}
+
+.submit_class:disabled{
+  background-color: gray !important;
+}
+
+
+footer {
+  height: 10vh;
+  background-color: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: -5px -5px 10px rgb(0,0,0,0.3);
+}
+footer > p {
+  text-align: center;
+  font-family: 'system-ui';
+  letter-spacing: 3px;
+}
+footer > p > a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+.errorMsg{
+  position: relative;
+  font-size:13.5px;
+  color:red;
+  margin-top:-15px;
+  margin-bottom:10px;
+  padding-left:0.3rem;
+}
+
+.blank_txt{
+  position: relative;
+  font-size:13.5px;
+  margin-top:-15px;
+  margin-bottom:10px;
+  padding-left:0.3rem;
+  color: red;
+}
+.succes_check{
+
+}
+.succes_check img{
+  object-fit: cover;
+  width: 15px;
+  height: 15px;
+}
+.sign_welcome{
+    text-align: center;
+    color: #F95700;
+    font-size: 18px;
+}
+

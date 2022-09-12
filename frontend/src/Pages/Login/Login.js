@@ -29,12 +29,14 @@ function Login() {
     }
   }
 
-  const handleClickLogin = () => {
+  const handleClickLogin = (e) => {
+    e.preventDefault();
     axios.post(loginUrl,loginForm)
     .then(res => {
-      navigate("/")
       localStorage.setItem('access_token' , res.data.access_token)
       localStorage.setItem('refresh_token' , res.data.refresh_token)
+      alert("로그인 성공")
+      navigate("/")
     })
     .catch(error => {
       alert("이메일 또는 비밀번호가 잘못됐습니다.")

@@ -3,6 +3,7 @@ import './Clover.css'
 import axios from 'axios'
 import { userInfoUrl } from '../../Components/Apiurl'
 import { useNavigate } from 'react-router-dom';
+import IsLogin from '../../Components/IsLogin';
 
 //affiliated_club 
 //my_club
@@ -17,6 +18,13 @@ function Clover() {
   useEffect(() => {
     getClubList()
   }, [])
+
+  useEffect(() => {
+    if(!IsLogin()){
+      alert("로그인 후 이용해주세요")
+      navigate("/login")
+    }
+  },[])
 
   const getClubList = () => {
     axios.get(userInfoUrl, {

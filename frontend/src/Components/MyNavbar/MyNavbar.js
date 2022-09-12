@@ -46,7 +46,6 @@ function MyNavbar() {
     } else if (!IsLogin()) {
       setIsLogin(false)
     }
-    console.log(IsLogin())
   }, [localStorage.getItem('access_token')])
 
   useEffect(() => {
@@ -113,26 +112,28 @@ function MyNavbar() {
   }
 
   const handleClickProfile = () => {
-    axios.get(userInfoUrl, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('access_token')}`
-      }
-    })
-      .then(res => {
-        setUserInfo({
-          ...userInfo,
-          username: res.data[0].username,
-          brief_introduction: res.data[0].description,
-          thumbnail: res.data[0].image
-        })
-      }).catch(error => {
-        console.log(error)
+    if (!!IsLogin()) {
+      axios.get(userInfoUrl, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`
+        }
       })
+        .then(res => {
+          setUserInfo({
+            ...userInfo,
+            username: res.data[0].username,
+            brief_introduction: res.data[0].description,
+            thumbnail: res.data[0].image
+          })
+        }).catch(error => {
+          console.log(error)
+        })
 
-    if (!isOpen) {
-      setIsOpen(true)
-    } else {
-      setIsOpen(false)
+      if (!isOpen) {
+        setIsOpen(true)
+      } else {
+        setIsOpen(false)
+      }
     }
   }
 
@@ -161,97 +162,97 @@ function MyNavbar() {
     }
   }
 
-    return (
-      <div className="MyNavbar">
-        <div className="Nav_title" onClick={() => navigate("/")}>Clover</div>
-        <div className='Nav_Menubar'>
-          <div className={home ? "selectCategory" : "NavCategoryHome"} >
-            <p className='NavHome' onClick={(e) => handleClickCategory(e)}>Home</p>
-          </div>
+  return (
+    <div className="MyNavbar">
+      <div className="Nav_title" onClick={() => navigate("/")}>Clover</div>
+      <div className='Nav_Menubar'>
+        <div className={home ? "selectCategory" : "NavCategoryHome"} >
+          <p className='NavHome' onClick={(e) => handleClickCategory(e)}>Home</p>
+        </div>
 
-          <div className={test ? "selectCategory" : "NavCategoryTest"}>
-            <p className='NavTest' onClick={(e) => handleClickCategory(e)}>Club</p>
-          </div>
+        <div className={test ? "selectCategory" : "NavCategoryTest"}>
+          <p className='NavTest' onClick={(e) => handleClickCategory(e)}>Club</p>
+        </div>
 
-          <div className={club ? "selectCategory" : "NavCategoryClub"} >
-            <p className="NavClub" onClick={(e) => handleClickCategory(e)}>Search</p>
-          </div>
-      </div>
-
-        <div className="NavProfile">
-          {isLogin && userInfo ? (
-            <div>
-              <button ref={ref} className="ProfileBtn" onClick={() => handleClickProfile()}>
-                {thumbnail ? (
-                  <img src={thumbnail} className="material-symbols-outlined" style={{ width: "40px", height: "40px", borderRadius: "50%", position: "relative", objectFit: "cover", marginRight: "20px", fontSize: "30px" }} />
-                )
-                  :
-                  (
-                    <span className="material-symbols-outlined" style={{ position: "relative", marginRight: "23px", fontSize: "30px" }}>
-                      account_circle
-                    </span>
-                  )
-                }
-                <span class="material-symbols-outlined">
-                  keyboard_arrow_down
-                </span>
-              </button>
-              {isOpen && (
-                <div className='Profile_Dropdown'>
-                  <div className='Dropdown_profile'>
-                    {thumbnail ? (
-                      <img src={thumbnail} />
-                    )
-                      :
-                      (
-                        <span className="material-symbols-outlined">
-                          account_circle
-                        </span>
-                      )
-                    }
-                    <div className='Profile_name'>
-                      <span style={{ fontWeight: "bold", color: "black", fontSize: "18px" }}>{userInfo.username}</span>
-                      <span className='Profile_category'>{brief_introduction}</span>
-                    </div>
-                  </div>
-                  <div className='Dropdown_AddClub' onClick={modalClose}>
-                    <span class="material-symbols-outlined">
-                      diversity_3
-                    </span>
-                    <span>모임 만들기</span>
-                  </div>
-                  <div className='Dropdown_settingProfile' onClick={(e) => handleEditProfile(e)}>
-                    <span class="material-symbols-outlined">
-                      settings
-                    </span>
-                    <span>프로필 수정</span>
-                  </div>
-                  <hr className='line'></hr>
-                  <div onClick={(e) => handleLogoutBtn(e)} className='Dropdown_Logout'>
-                    <span className="material-symbols-outlined">
-                      lock_open
-                    </span>
-                    <span>로그아웃</span>
-                  </div>
-                </div>
-              )}
-            </div>
-          )
-            :
-            <div className='Nav_Login'>
-              <button onClick={() => navigate("/signup")}>회원가입</button>
-              <button onClick={() => navigate("/login")}>로그인</button>
-            </div>
-          }
-          {showModal && <Add_modal show={modalClose} />}
+        <div className={club ? "selectCategory" : "NavCategoryClub"} >
+          <p className="NavClub" onClick={(e) => handleClickCategory(e)}>Search</p>
         </div>
       </div>
-    )
-  }
+
+      <div className="NavProfile">
+        {isLogin && userInfo ? (
+          <div>
+            <button ref={ref} className="ProfileBtn" onClick={() => handleClickProfile()}>
+              {thumbnail ? (
+                <img src={thumbnail} className="material-symbols-outlined" style={{ width: "40px", height: "40px", borderRadius: "50%", position: "relative", objectFit: "cover", marginRight: "20px", fontSize: "30px" }} />
+              )
+                :
+                (
+                  <span className="material-symbols-outlined" style={{ position: "relative", marginRight: "23px", fontSize: "30px" }}>
+                    account_circle
+                  </span>
+                )
+              }
+              <span class="material-symbols-outlined">
+                keyboard_arrow_down
+              </span>
+            </button>
+            {isOpen && (
+              <div className='Profile_Dropdown'>
+                <div className='Dropdown_profile'>
+                  {thumbnail ? (
+                    <img src={thumbnail} />
+                  )
+                    :
+                    (
+                      <span className="material-symbols-outlined">
+                        account_circle
+                      </span>
+                    )
+                  }
+                  <div className='Profile_name'>
+                    <span style={{ fontWeight: "bold", color: "black", fontSize: "18px" }}>{userInfo.username}</span>
+                    <span className='Profile_category'>{brief_introduction}</span>
+                  </div>
+                </div>
+                <div className='Dropdown_AddClub' onClick={modalClose}>
+                  <span class="material-symbols-outlined">
+                    diversity_3
+                  </span>
+                  <span>모임 만들기</span>
+                </div>
+                <div className='Dropdown_settingProfile' onClick={(e) => handleEditProfile(e)}>
+                  <span class="material-symbols-outlined">
+                    settings
+                  </span>
+                  <span>프로필 수정</span>
+                </div>
+                <hr className='line'></hr>
+                <div onClick={(e) => handleLogoutBtn(e)} className='Dropdown_Logout'>
+                  <span className="material-symbols-outlined">
+                    lock_open
+                  </span>
+                  <span>로그아웃</span>
+                </div>
+              </div>
+            )}
+          </div>
+        )
+          :
+          <div className='Nav_Login'>
+            <button onClick={() => navigate("/signup")}>회원가입</button>
+            <button onClick={() => navigate("/login")}>로그인</button>
+          </div>
+        }
+        {showModal && <Add_modal show={modalClose} />}
+      </div>
+    </div>
+  )
+}
 
 
-  export default MyNavbar
-  {/* {showDropdown && (
+export default MyNavbar
+{/* {showDropdown && (
     <div>
         <div>회원 정보 수정</div>
         <div>설정</div>
@@ -259,7 +260,7 @@ function MyNavbar() {
     </div>
     )} */}
 
-  {/* {isOpen && (
+{/* {isOpen && (
               <div className='Profile_Dropdown'>
                 <div>
                   <span className="material-symbols-outlined">

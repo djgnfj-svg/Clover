@@ -11,6 +11,7 @@ import ClubInfo from './Section/ClubInfo/ClubInfo';
 import UserList from './Section/UserList/UserList';
 import ClubSetting from './Section/ClubSetting/ClubSetting';
 import DeleteClub from './Section/DeleteClub/DeleteClub';
+import IsLogin from '../../Components/IsLogin';
 
 function DetailEdit() {
 
@@ -25,6 +26,12 @@ function DetailEdit() {
     getClubData()
     getAUth();
   }, [])
+  useEffect(() => {
+    if(!IsLogin()){
+      alert("로그인 후 이용해주세요")
+      navigate("/login")
+    }
+  },[])
 
   const getClubData = () => {
     axios.get(clubDetail(id),

@@ -10,15 +10,22 @@ import EditPassword from './Section/EditPassword/EditPassword';
 import SecedeUser from './Section/SecedeUser/SecedeUser';
 import axios from 'axios';
 import { userInfoUrl } from '../../Components/Apiurl';
+import IsLogin from '../../Components/IsLogin';
 
 function UserProfile() {
     const navigate = useNavigate("")
 
-    const [userInfo , setUserInfo] = useState();
+    const [userInfo, setUserInfo] = useState();
 
     useEffect(() => {
         getUserInfo()
-    },[])
+    }, [])
+    useEffect(() => {
+        if (!IsLogin()) {
+            alert("로그인 후 이용해주세요")
+            navigate("/login")
+        }
+    }, [])
 
     const handleClickPrev = () => {
         const yes = window.confirm("이전 페이지로 이동하시겟습니까?")
@@ -29,13 +36,13 @@ function UserProfile() {
     }
 
     const getUserInfo = () => {
-        axios.get(userInfoUrl , {
-            headers : {
-                  Authorization: `Bearer ${localStorage.getItem('access_token')}`
+        axios.get(userInfoUrl, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`
             }
-          }).then(res =>{
+        }).then(res => {
             setUserInfo(res.data[0])
-          })
+        })
     }
 
 

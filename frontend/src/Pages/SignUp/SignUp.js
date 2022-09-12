@@ -30,8 +30,14 @@ function SignUp() {
     })
   }
 
-  const onClickSignUpBtn = () => {
-    axios.post(signUrl, signForm)
+  const onClickSignUpBtn = (e) => {
+    e.preventDefault()
+    if(password1.length < 6){
+      alert("6글자 이상 숫자와 영문이 포함된 비밀번호를 입력해주세요")
+    }else if(password1 !== password2){
+      alert("두 비밀번호가 다릅니다.")
+    }else {
+      axios.post(signUrl, signForm)
       .then(res => {
         alert("회원가입 성공")
         localStorage.setItem('access_token', res.data.access_token)
@@ -39,72 +45,32 @@ function SignUp() {
         navigate("/");
       })
       .catch(error => {
-        setError(error.response.data)
-        alert("입력값이 잘못됐어요!")
+        setError(error)
+        alert("이미 존재하는 이메일입니다.")
       })
+    }
   }
 
   return (
-    <div className="wrapper_SignUp">
-      <div className="SignUP">
-        <div className="SignUp_Title">
-          Clover
-        </div>
-      </div>
-        <div className="SignUp_Form">
-          <label>이름</label>
-          <input className="signup_inputname"
-            onChange={handleChangeInput}
-            placeholder="Name"
-            type="name"
-            name="username"
-            value={username} />
-          {error && error.username !== undefined && (
-            <span>이미존재하는 이름입니다.</span>
-          )}
-
+    <main className="sign_up_main">
+      <form className="form_class">
+        <div className='sign_title'>가입하기</div>
+        <div className="form_div">
+          <label>닉네임</label>
+          <input className="field_class" type="text" placeholder="닉네임을 입력하세요" autoFocus onChange={handleChangeInput} name='username' value={username} maxLength="10" />
           <label>이메일</label>
-          <input className="signup_inputemail"
-            onChange={handleChangeInput}
-            placeholder="e-mail"
-            name="email"
-            value={email} />
-             {error && error.email !== undefined && (
-            <span>이메일이 중복됐거나 형식이 잘못됐습니다</span>
-          )}
-
+          <input name='email' className="field_class" type="text" placeholder="이메일주소를 입력하세요" onChange={handleChangeInput}  value={email} />
           <label>비밀번호</label>
-          <input className="signup_inputpassword"
-            onChange={handleChangeInput}
-            placeholder="Password"
-            type="password"
-            name="password1"
-            value={password1} />
-             {error && error.password1 !== undefined && (
-            <span>이메일과 비슷한단어가 포함됐거나 8글자 이상 영어와 숫자를 포함되지않앗습니다</span>
-          )}
-
+          <input name="password1" id="pass"  className="field_class" type="password" placeholder="비밀번호를 입력하세요" onChange={handleChangeInput} value={password1} />
           <label>비밀번호 확인</label>
-          <input className="signup_inputpassword_confirm"
-            onChange={handleChangeInput}
-            placeholder="Confrim Password"
-            name="password2"
-            type='password'
-            value={password2} />
-             {error && error.email !== undefined && (
-            <span>위 패스워드와 동일한 패스워드를 입력해주세요.</span>
-          )}
-
+          <input name="password2" id="pass" className="field_class" type="password" placeholder="비밀번호를 입력하세요" onChange={handleChangeInput} value={password2} />
+          <button className="submit_class" onClick={(e) => onClickSignUpBtn(e)}>회원가입</button>
         </div>
-      <div className="SignUp_btn">
-        <button
-          onClick={() => onClickSignUpBtn()}
-          className="SignUp_text"
-          type="subit">
-          가입하기
-        </button>
-      </div>
-    </div>
+        <div className="info_div">
+          <p>이미회원이라면 <a href="#" onClick={() => navigate("/login")}>로그인</a></p>
+        </div>
+      </form>
+    </main>
   )
 }
 

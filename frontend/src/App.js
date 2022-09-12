@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import {  BrowserRouter as Router , Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.css';
 import Home from './Pages/Home/Home';
 import MyNavbar from './Components/MyNavbar/MyNavbar';
@@ -18,6 +18,16 @@ import { useEffect, useState } from 'react';
 
 function App() {
 
+	const [isLog, setIsLog] = useState(false)
+
+	useEffect(() => {
+		if (!!IsLogin()) {
+			setIsLog(true)
+		} else {
+			setIsLog(false)
+		}
+	}, [localStorage.getItem('accss_token')])
+
 	return (
 		<div className="App">
 			<MyNavbar />
@@ -27,13 +37,9 @@ function App() {
 				<Route path='/signup' element={<SignUp />} />
 				<Route path="/club" element={<SearchClubPage />} />
 				<Route path="/clubs/:id" element={<ClubDetailPage />} />
-				{!!IsLogin() && (
-					<>
-						<Route path='/useredit' element={<UserProfile />} />
-						<Route path="/clubs/:id/edit" element={<DetailEdit />} />
-						<Route path="/clover" element={<Clover />} />
-					</>
-				)}
+				<Route path='/useredit' element={<UserProfile />} />
+				<Route path="/clubs/:id/edit" element={<DetailEdit />} />
+				<Route path="/clover" element={<Clover />} />
 				<Route path="*" element={<NoneUser />} />
 			</Routes>
 		</div>
