@@ -15,11 +15,16 @@ from accounts.models import User
 
 from club.models import Club
 
-class ClubManagerView(viewsets.GenericViewSet, mixins.DestroyModelMixin):
-	serializer_class = UseridSz
+class ClubManagerView(viewsets.GenericViewSet, mixins.DestroyModelMixin, mixins.ListModelMixin):
+	serializer_class = UserlistSerializer
 	queryset = Club.objects.all()
 	authentication_classes = [SessionAuthentication, JWTAuthentication]
 	permission_classes = [IsManager]
+
+	def get_serializer_class(self):
+		if self.action == 'appli_list_post':
+			self.serializer_class = UseridSz
+		return super().get_serializer_class()
 
 	@action(detail=False, methods=['get'], name="appli_list")
 	def appli_list(self, request, club_id):

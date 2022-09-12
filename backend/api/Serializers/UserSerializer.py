@@ -1,3 +1,5 @@
+from django.db.models import Q
+
 from dj_rest_auth.serializers import UserDetailsSerializer
 from dj_rest_auth.registration.serializers import RegisterSerializer
 
@@ -44,8 +46,8 @@ class UserPofileSerializer(serializers.ModelSerializer):
 
 	def get_affiliated_club(self, obj):
 		# 지금 유져리스트에 이 유저가 들어가 있는 클럽
-		user_id = User.objects.get(id = obj.user_id)
-		serializer = ClubViewSerializer(Club.objects.filter(user_list = user_id.id), many=True)
+		user = User.objects.get(id = obj.user_id)
+		serializer = ClubViewSerializer(Club.objects.filter(Q(user_list = user.id) | Q(manager_list = user.id) ), many=True)
 		for i in serializer.data:
 			i['thumbnail'] = self.url + i['thumbnail']
 		return serializer.data		

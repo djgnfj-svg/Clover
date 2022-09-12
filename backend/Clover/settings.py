@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 import datetime
-import json, os, sys
+import json, os
 from pathlib import Path
 from django.core.exceptions import ImproperlyConfigured
 
@@ -45,7 +45,7 @@ if ENV == 'dev':
     DEBUG = True
 else:
     DEBUG = False
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -140,6 +140,7 @@ AUTH_USER_MODEL = 'accounts.User'
 #             # }
 #         }
 #     }
+
 # else:
 DATABASES = {
     'default': {
