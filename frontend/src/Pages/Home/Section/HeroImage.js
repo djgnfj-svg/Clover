@@ -5,9 +5,11 @@ import "./slick/slick.css"
 import "./slick/slick-theme.css";
 import { getNewList } from "../../../Components/Apiurl";
 import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
 function HeroImage() {
 
+  const navigate = useNavigate()
 
   const [newClubData, setNewClubData] = useState("")
 
@@ -40,7 +42,7 @@ function HeroImage() {
     <div className="hero_Main">
       <Slider {...settings}>
         {newClubData && newClubData.map((item) => (
-          <div className="rank">
+          <div className="rank" onClick={() => navigate(`/clubs/${item.id}`)}>
             <h4>{item.title}</h4>
             <img src={item.thumbnail} />
           </div>
