@@ -19,10 +19,29 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
 
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg       import openapi
+
 from api.urls import router
 
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Clover",
+        default_version='0.5',
+        description="Clover front와 소통을 하기 위해서 만든 문서입니다.",
+        terms_of_service="https://www.google.com/policies/terms/",
+        contact=openapi.Contact(email="djgnfj3795@gmail.com"), # 부가정보
+        license=openapi.License(name="djgnfj"),     # 부가정보
+    ),
+    public=True,
+    permission_classes=[permissions.AllowAny],
+)
 
 urlpatterns = [
+    path(r'swagger(?P<format>\.json|\.yaml)', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path(r'swagger', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path(r'redoc', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc-v1'),
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     # path('api/oauth/', include(login_patterns)),

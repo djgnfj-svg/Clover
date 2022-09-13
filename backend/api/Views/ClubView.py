@@ -7,6 +7,8 @@ from rest_framework.decorators import action
 
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
+from drf_yasg.utils       import swagger_auto_schema
+
 from api.Serializers.ClubSerializer import (
 	ClubRoughSerializder,ClubDetailSerializer, UserIdSerializer,
 	ClubIdSerializder,ClubThumbnailSerializer, ClubViewSerializer
@@ -18,6 +20,9 @@ from api.Utils.Permission import IsMaster
 from club.models import Club
 
 class ClubViewSet(viewsets.ModelViewSet):
+	"""
+	Club에 관한 api이다
+	"""
 	serializer_class = ClubRoughSerializder
 	queryset = Club.objects.all()
 	authentication_classes = [SessionAuthentication, JWTAuthentication]
@@ -33,8 +38,15 @@ class ClubViewSet(viewsets.ModelViewSet):
 		elif self.action == "retrieve" :
 			self.serializer_class = ClubViewSerializer
 		return super().get_serializer(*args, **kwargs)
+	def list(self, request, *args, **kwargs):
+		'''
+		이거보고 들어와두됨
 
+		모든클럽 겟또다제
+		'''
+		return super().list(request, *args, **kwargs)
 	#클럽생성
+	@swagger_auto_schema(query_serializer=ClubRoughSerializder)
 	def create(self, request):
 		serializer = self.get_serializer(data=request.data, context={'request' : request})
 		if serializer.is_valid():
